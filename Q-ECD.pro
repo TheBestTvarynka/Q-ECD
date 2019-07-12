@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,10 +26,12 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainguiwindow.cpp
+        mainguiwindow.cpp \
+    modes/modeinterface.cpp
 
 HEADERS += \
-        mainguiwindow.h
+        mainguiwindow.h \
+    modes/modeinterface.h
 
 FORMS += \
         mainguiwindow.ui
