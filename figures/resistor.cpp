@@ -2,9 +2,12 @@
 
 void Resistor::print()
 {
-    glLineWidth(5);
-    glBegin(GL_LINE_LOOP);
-    glVertex2i(x, y);
-    glVertex2i(x + 50, y + 100);
+    glColor3b(250.0, 50.0, 50.0);
+    glLineWidth(10);
+    glBegin(GL_LINES);
+    glVertex2i(x - 150, y);
+    glVertex2i(x - 225, y);
+    glVertex2i(x + 150, y);
+    glVertex2i(x + 225, y);
     glEnd();
 }

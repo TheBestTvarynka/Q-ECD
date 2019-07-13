@@ -2,7 +2,8 @@
 
 DataFigures::DataFigures()
 {
-
+    FigureInterface *tmp = new Resistor;
+    figures.push_back(tmp);
 }
 
 void DataFigures::print()

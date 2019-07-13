@@ -56,15 +56,25 @@ SOURCES       = ../main.cpp \
 		../mainguiwindow.cpp \
 		../modes/modeinterface.cpp \
 		../figures/figureinterface.cpp \
-		../figures/iobservable.cpp moc_mainguiwindow.cpp \
-		moc_modeinterface.cpp
+		../figures/iobservable.cpp \
+		../figures/resistor.cpp \
+		../data/datafigures.cpp \
+		../modes/objectmode.cpp \
+		../paintboard.cpp moc_mainguiwindow.cpp \
+		moc_modeinterface.cpp \
+		moc_paintboard.cpp
 OBJECTS       = main.o \
 		mainguiwindow.o \
 		modeinterface.o \
 		figureinterface.o \
 		iobservable.o \
+		resistor.o \
+		datafigures.o \
+		objectmode.o \
+		paintboard.o \
 		moc_mainguiwindow.o \
-		moc_modeinterface.o
+		moc_modeinterface.o \
+		moc_paintboard.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -144,11 +154,19 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../../Q-ECD.pro ../mainguiwindow.h \
 		../modes/modeinterface.h \
 		../figures/figureinterface.h \
-		../figures/iobservable.h ../main.cpp \
+		../figures/iobservable.h \
+		../figures/resistor.h \
+		../data/datafigures.h \
+		../modes/objectmode.h \
+		../paintboard.h ../main.cpp \
 		../mainguiwindow.cpp \
 		../modes/modeinterface.cpp \
 		../figures/figureinterface.cpp \
-		../figures/iobservable.cpp
+		../figures/iobservable.cpp \
+		../figures/resistor.cpp \
+		../data/datafigures.cpp \
+		../modes/objectmode.cpp \
+		../paintboard.cpp
 QMAKE_TARGET  = Q-ECD
 DESTDIR       = 
 TARGET        = Q-ECD
@@ -338,8 +356,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../mainguiwindow.h ../modes/modeinterface.h ../figures/figureinterface.h ../figures/iobservable.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../main.cpp ../mainguiwindow.cpp ../modes/modeinterface.cpp ../figures/figureinterface.cpp ../figures/iobservable.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../mainguiwindow.h ../modes/modeinterface.h ../figures/figureinterface.h ../figures/iobservable.h ../figures/resistor.h ../data/datafigures.h ../modes/objectmode.h ../paintboard.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../main.cpp ../mainguiwindow.cpp ../modes/modeinterface.cpp ../figures/figureinterface.cpp ../figures/iobservable.cpp ../figures/resistor.cpp ../data/datafigures.cpp ../modes/objectmode.cpp ../paintboard.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../mainguiwindow.ui $(DISTDIR)/
 
 
@@ -372,9 +390,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainguiwindow.cpp moc_modeinterface.cpp
+compiler_moc_header_make_all: moc_mainguiwindow.cpp moc_modeinterface.cpp moc_paintboard.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainguiwindow.cpp moc_modeinterface.cpp
+	-$(DEL_FILE) moc_mainguiwindow.cpp moc_modeinterface.cpp moc_paintboard.cpp
 moc_mainguiwindow.cpp: ../mainguiwindow.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
@@ -385,6 +403,17 @@ moc_modeinterface.cpp: ../modes/modeinterface.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/qkation/repositories/Q-ECD/build-Q-ECD-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/qkation/repositories/Q-ECD -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../modes/modeinterface.h -o moc_modeinterface.cpp
 
+moc_paintboard.cpp: ../paintboard.h \
+		../data/datafigures.h \
+		../figures/figureinterface.h \
+		../figures/iobservable.h \
+		../figures/resistor.h \
+		../modes/modeinterface.h \
+		../modes/objectmode.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/qkation/repositories/Q-ECD/build-Q-ECD-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/qkation/repositories/Q-ECD -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../paintboard.h -o moc_paintboard.cpp
+
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
@@ -393,7 +422,14 @@ compiler_uic_make_all: ui_mainguiwindow.h
 compiler_uic_clean:
 	-$(DEL_FILE) ui_mainguiwindow.h
 ui_mainguiwindow.h: ../mainguiwindow.ui \
-		/usr/lib/qt5/bin/uic
+		/usr/lib/qt5/bin/uic \
+		../paintboard.h \
+		../data/datafigures.h \
+		../figures/figureinterface.h \
+		../figures/iobservable.h \
+		../figures/resistor.h \
+		../modes/modeinterface.h \
+		../modes/objectmode.h
 	/usr/lib/qt5/bin/uic ../mainguiwindow.ui -o ui_mainguiwindow.h
 
 compiler_yacc_decl_make_all:
@@ -416,17 +452,45 @@ mainguiwindow.o: ../mainguiwindow.cpp ../mainguiwindow.h \
 modeinterface.o: ../modes/modeinterface.cpp ../modes/modeinterface.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o modeinterface.o ../modes/modeinterface.cpp
 
-figureinterface.o: ../figures/figureinterface.cpp ../figures/figureinterface.h
+figureinterface.o: ../figures/figureinterface.cpp ../figures/figureinterface.h \
+		../figures/iobservable.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o figureinterface.o ../figures/figureinterface.cpp
 
 iobservable.o: ../figures/iobservable.cpp ../figures/iobservable.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o iobservable.o ../figures/iobservable.cpp
+
+resistor.o: ../figures/resistor.cpp ../figures/resistor.h \
+		../figures/figureinterface.h \
+		../figures/iobservable.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o resistor.o ../figures/resistor.cpp
+
+datafigures.o: ../data/datafigures.cpp ../data/datafigures.h \
+		../figures/figureinterface.h \
+		../figures/iobservable.h \
+		../figures/resistor.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o datafigures.o ../data/datafigures.cpp
+
+objectmode.o: ../modes/objectmode.cpp ../modes/objectmode.h \
+		../modes/modeinterface.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objectmode.o ../modes/objectmode.cpp
+
+paintboard.o: ../paintboard.cpp ../paintboard.h \
+		../data/datafigures.h \
+		../figures/figureinterface.h \
+		../figures/iobservable.h \
+		../figures/resistor.h \
+		../modes/modeinterface.h \
+		../modes/objectmode.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o paintboard.o ../paintboard.cpp
 
 moc_mainguiwindow.o: moc_mainguiwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainguiwindow.o moc_mainguiwindow.cpp
 
 moc_modeinterface.o: moc_modeinterface.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_modeinterface.o moc_modeinterface.cpp
+
+moc_paintboard.o: moc_paintboard.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_paintboard.o moc_paintboard.cpp
 
 ####### Install
 

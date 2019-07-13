@@ -9,3 +9,34 @@ PaintBoard::PaintBoard(QWidget *parent, ModeInterface *start_state): QGLWidget(p
         mode = new ObjectMode;
     }
 }
+
+void PaintBoard::initializeGL()
+{
+    mode->initializeGL();
+}
+
+void PaintBoard::resizeGL(int w, int h)
+{
+    mode->resizeGL(w, h);
+}
+
+void PaintBoard::paintGL()
+{
+    mode->paintGL();
+    figures.print();
+}
+
+void PaintBoard::mousePressEvent(QMouseEvent *ap)
+{
+    mode->mousePressEvent(ap);
+}
+
+void PaintBoard::mouseMoveEvent(QMouseEvent *ap)
+{
+    mode->mouseMoveEvent(ap);
+}
+
+void PaintBoard::mouseReleaseEvent(QMouseEvent *ap)
+{
+    mode->mouseReleaseEvent(ap);
+}
