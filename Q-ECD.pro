@@ -32,7 +32,8 @@ SOURCES += \
     figures/iobservable.cpp \
     figures/resistor.cpp \
     data/datafigures.cpp \
-    modes/objectmode.cpp
+    modes/objectmode.cpp \
+    paintboard.cpp
 
 HEADERS += \
         mainguiwindow.h \
@@ -41,7 +42,8 @@ HEADERS += \
     figures/iobservable.h \
     figures/resistor.h \
     data/datafigures.h \
-    modes/objectmode.h
+    modes/objectmode.h \
+    paintboard.h
 
 FORMS += \
         mainguiwindow.ui
