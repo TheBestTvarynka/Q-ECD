@@ -30,14 +30,18 @@ SOURCES += \
     modes/modeinterface.cpp \
     figures/figureinterface.cpp \
     figures/iobservable.cpp \
-    figures/resistor.cpp
+    figures/resistor.cpp \
+    data/datafigures.cpp \
+    modes/objectmode.cpp
 
 HEADERS += \
         mainguiwindow.h \
     modes/modeinterface.h \
     figures/figureinterface.h \
     figures/iobservable.h \
-    figures/resistor.h
+    figures/resistor.h \
+    data/datafigures.h \
+    modes/objectmode.h
 
 FORMS += \
         mainguiwindow.ui
