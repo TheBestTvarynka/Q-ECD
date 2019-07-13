@@ -27,11 +27,15 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainguiwindow.cpp \
-    modes/modeinterface.cpp
+    modes/modeinterface.cpp \
+    figures/figureinterface.cpp \
+    figures/iobservable.cpp
 
 HEADERS += \
         mainguiwindow.h \
-    modes/modeinterface.h
+    modes/modeinterface.h \
+    figures/figureinterface.h \
+    figures/iobservable.h
 
 FORMS += \
         mainguiwindow.ui
