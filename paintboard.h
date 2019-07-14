@@ -8,6 +8,9 @@
 #include <QGLWidget>
 #include <QTimer>
 #include <QMouseEvent>
+#include <QPoint>
+
+using std::pair;
 
 class PaintBoard : public QGLWidget
 {
@@ -17,7 +20,10 @@ class PaintBoard : public QGLWidget
     DataFigures figures;
 
     int CenterX, CenterY;
+    QPoint Delta;
     double Scale;
+
+    QPoint start_position;
 public:
     PaintBoard(QWidget *parent = 0, ModeInterface *start_state = nullptr);
     void initializeGL();
