@@ -15,6 +15,9 @@ class PaintBoard : public QGLWidget
     QTimer mpTimer;
     ModeInterface *mode;
     DataFigures figures;
+
+    int CenterX, CenterY;
+    double Scale;
 public:
     PaintBoard(QWidget *parent = 0, ModeInterface *start_state = nullptr);
     void initializeGL();
