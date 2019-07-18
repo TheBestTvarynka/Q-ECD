@@ -6,9 +6,9 @@ DataFigures::DataFigures()
     figures.push_back(tmp);
 }
 
-void DataFigures::print()
+void DataFigures::print(double Scale)
 {
     for (int i = 0; i < figures.size(); i++) {
-        figures[i]->print();
+        figures[i]->print(Scale);
     }
 }

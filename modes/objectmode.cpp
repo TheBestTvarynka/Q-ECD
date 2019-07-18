@@ -39,20 +39,19 @@ void ObjectMode::paintGL(double Scale, QPoint &Delta)
     Center += Delta;
     Delta = QPoint(0, 0);
 
+    glColor3d(200, 200, 200);
+
     glPointSize(20);
     glBegin(GL_POINTS);
     glVertex2f(float(0), float(0));
     glEnd();
 
     glPointSize(int(Scale / 10));
-    glColor3i(150, 150, 150);
     glBegin(GL_POINTS);
 
     int nV = int(Weight / Scale) + 1;
     int nH = int(Height / Scale) + 1;
-//    double DeltaX = Center.x() % int(Scale), DeltaY = Center.y() % int(Scale);
     double DeltaX = Center.x() - int(Center.x() / Scale) * Scale, DeltaY = Center.y() - int(Center.y() / Scale) * Scale;
-    qDebug() << DeltaX << " " << DeltaY;
     for (int i = 0; i < nH; i++)
     {
         for (int j = 0; j < nV; j++)
@@ -60,17 +59,6 @@ void ObjectMode::paintGL(double Scale, QPoint &Delta)
             glVertex2f(float(j * Scale - Center.x() + DeltaX), float(i * Scale - Center.y() + DeltaY));
         }
     }
-//    for(int i = 0; i < 100; i++)
-//    {
-//        for (int j = 0; j < 100; j++)
-//        {
-//            glVertex2f(float(j * Scale - Center.x()), float(i * Scale - Center.y()));
-//        }
-//    }
-//    for(int i1 = 0; i1 < 100; i1++)
-//    {
-
-//    }
     glEnd();
 }
 

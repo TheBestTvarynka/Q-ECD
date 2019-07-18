@@ -7,11 +7,11 @@
 class FigureInterface : public IObservable
 {
 protected:
-    int x, y;
+    double x, y;
 public:
-    FigureInterface() : x(300), y(300) {}
+    FigureInterface() : x(10.0), y(10.0) {}
     FigureInterface(int X, int Y);
-    virtual void print() = 0;
+    virtual void print(double) = 0;
 };
 
 #endif // FIGUREINTERFACE_H

@@ -10,7 +10,7 @@ class DataFigures
     QVector<FigureInterface *> figures;
 public:
     DataFigures();
-    void print();
+    void print(double);
 };
 
 #endif // DATAFIGURES_H

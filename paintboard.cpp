@@ -26,7 +26,7 @@ void PaintBoard::resizeGL(int w, int h)
 void PaintBoard::paintGL()
 {
     mode->paintGL(Scale, Delta);
-    figures.print();
+    figures.print(Scale);
 }
 
 void PaintBoard::mousePressEvent(QMouseEvent *ap)
