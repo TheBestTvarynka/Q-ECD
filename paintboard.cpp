@@ -2,7 +2,6 @@
 
 PaintBoard::PaintBoard(QWidget *parent, ModeInterface *start_state): QGLWidget(parent)
 {
-    CenterX = CenterY = 0;
     Scale = 20;
     Delta.setX(0);
     Delta.setY(0);
@@ -45,11 +44,6 @@ void PaintBoard::mouseMoveEvent(QMouseEvent *ap)
     {
         Delta = ap->pos() - start_position;
         start_position = ap->pos();
-//        qDebug() << "================";
-//        qDebug() << start_position.x() << " " << start_position.y();
-//        qDebug() << ap->x() << " " << ap->y();
-//        qDebug() << "----------------";
-//        qDebug() << Delta.x() << " " << Delta.y();
     }
     mode->mouseMoveEvent(ap);
 }
@@ -57,4 +51,13 @@ void PaintBoard::mouseMoveEvent(QMouseEvent *ap)
 void PaintBoard::mouseReleaseEvent(QMouseEvent *ap)
 {
     mode->mouseReleaseEvent(ap);
+}
+
+void PaintBoard::wheelEvent(QWheelEvent *event)
+{
+    qDebug() << "Whell Event: " << event->angleDelta();
+    if (event->angleDelta().y() > 0)
+        mode->ScaleEvent(true, event->pos(), Scale);
+    else
+        mode->ScaleEvent(false, event->pos(), Scale);
 }

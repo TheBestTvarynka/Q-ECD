@@ -6,7 +6,6 @@
 
 class ObjectMode : public ModeInterface
 {
-    QPoint Center;
 public:
     explicit ObjectMode(QWidget *parent = 0);
     void initializeGL();

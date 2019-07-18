@@ -18,6 +18,8 @@ void ObjectMode::resizeGL(int w, int h)
     glLoadIdentity();
     glOrtho(0, w, h, 0, 0, 1);
     glViewport(0, 0, w, h);
+    glTranslated(Center.x(), Center.y(), 0);
+
     Weight = w;
     Height = h;
 }
@@ -37,14 +39,20 @@ void ObjectMode::paintGL(double Scale, QPoint &Delta)
     Center += Delta;
     Delta = QPoint(0, 0);
 
+    glPointSize(20);
+    glBegin(GL_POINTS);
+    glVertex2f(float(0), float(0));
+    glEnd();
+
     glPointSize(int(Scale / 10));
     glColor3i(150, 150, 150);
     glBegin(GL_POINTS);
 
     int nV = int(Weight / Scale) + 1;
     int nH = int(Height / Scale) + 1;
-    int DeltaX = Center.x() % int(Scale), DeltaY = Center.y() % int(Scale);
-//    qDebug() << DeltaX << " " << DeltaY;
+//    double DeltaX = Center.x() % int(Scale), DeltaY = Center.y() % int(Scale);
+    double DeltaX = Center.x() - int(Center.x() / Scale) * Scale, DeltaY = Center.y() - int(Center.y() / Scale) * Scale;
+    qDebug() << DeltaX << " " << DeltaY;
     for (int i = 0; i < nH; i++)
     {
         for (int j = 0; j < nV; j++)
@@ -52,6 +60,17 @@ void ObjectMode::paintGL(double Scale, QPoint &Delta)
             glVertex2f(float(j * Scale - Center.x() + DeltaX), float(i * Scale - Center.y() + DeltaY));
         }
     }
+//    for(int i = 0; i < 100; i++)
+//    {
+//        for (int j = 0; j < 100; j++)
+//        {
+//            glVertex2f(float(j * Scale - Center.x()), float(i * Scale - Center.y()));
+//        }
+//    }
+//    for(int i1 = 0; i1 < 100; i1++)
+//    {
+
+//    }
     glEnd();
 }
 
@@ -62,10 +81,10 @@ void ObjectMode::mousePressEvent(QMouseEvent *ap)
 
 void ObjectMode::mouseMoveEvent(QMouseEvent *ap)
 {
-    qDebug() << "Mouse Move" << ap->x();
+//    qDebug() << "Mouse Move" << ap->x();
 }
 
 void ObjectMode::mouseReleaseEvent(QMouseEvent *ap)
 {
-    qDebug() << "Mouse Release" << ap->x();
+    qDebug() << "Mouse Release" << ap->x() << " " << Center.x();
 }

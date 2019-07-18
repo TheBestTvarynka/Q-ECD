@@ -12,6 +12,7 @@ protected:
     Q_OBJECT
 public:
     int Weight, Height;
+    QPoint Center;
     explicit ModeInterface(QWidget *parent = 0);
     virtual void initializeGL() = 0;
     virtual void resizeGL(int w, int h) = 0;
@@ -19,6 +20,8 @@ public:
     virtual void mousePressEvent(QMouseEvent *) = 0;
     virtual void mouseMoveEvent(QMouseEvent *) = 0;
     virtual void mouseReleaseEvent(QMouseEvent *) = 0;
+
+    void ScaleEvent(bool, QPoint, double &);
 };
 
 #endif // MODEINTERFACE_H

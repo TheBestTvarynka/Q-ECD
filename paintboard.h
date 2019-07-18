@@ -9,6 +9,7 @@
 #include <QTimer>
 #include <QMouseEvent>
 #include <QPoint>
+#include <QWheelEvent>
 
 using std::pair;
 
@@ -16,13 +17,13 @@ class PaintBoard : public QGLWidget
 {
     Q_OBJECT
     QTimer mpTimer;
+
     ModeInterface *mode;
     DataFigures figures;
 
-    int CenterX, CenterY;
     QPoint Delta;
     double Scale;
-
+    // temp variavle. use when we drag a mouse
     QPoint start_position;
 public:
     PaintBoard(QWidget *parent = 0, ModeInterface *start_state = nullptr);
@@ -32,6 +33,7 @@ public:
     void mousePressEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
+    void wheelEvent(QWheelEvent *);
 };
 
 #endif // PAINTBOARD_H
