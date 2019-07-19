@@ -7,11 +7,11 @@
 class ObjectMode : public ModeInterface
 {
 public:
-    explicit ObjectMode(QWidget *parent = 0);
+    explicit ObjectMode(PaintBoard *, QWidget *parent = 0);
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL(double, QPoint &);
-    void mousePressEvent(QMouseEvent *);
+    void mousePressEvent(QMouseEvent *, double);
     void mouseMoveEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
 };

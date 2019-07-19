@@ -1,6 +1,7 @@
 #include "objectmode.h"
+#include "paintboard.h"
 
-ObjectMode::ObjectMode(QWidget *parent) : ModeInterface (parent) { Center = QPoint(0, 0);}
+ObjectMode::ObjectMode(PaintBoard *p, QWidget *parent) : ModeInterface (p, parent) { Center = QPoint(0, 0);}
 
 void ObjectMode::initializeGL()
 {
@@ -62,9 +63,10 @@ void ObjectMode::paintGL(double Scale, QPoint &Delta)
     glEnd();
 }
 
-void ObjectMode::mousePressEvent(QMouseEvent *ap)
+void ObjectMode::mousePressEvent(QMouseEvent *ap, double Scale)
 {
-    qDebug() << "Mouse Down " << ap->x();
+//    qDebug() << "Mouse Down " << ap->x();
+    Parent->GetDataFigures()->select_figure(ap->pos() - Center, Scale);
 }
 
 void ObjectMode::mouseMoveEvent(QMouseEvent *ap)

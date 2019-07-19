@@ -1,7 +1,12 @@
 #include "modeinterface.h"
+#include "paintboard.h"
 #include <QDebug>
+#include "paintboard.h"
 
-ModeInterface::ModeInterface(QWidget *parent): QGLWidget(parent) {}
+ModeInterface::ModeInterface(PaintBoard *p, QWidget *parent): QGLWidget(parent)
+{
+    Parent = p;
+}
 
 void ModeInterface::ScaleEvent(bool zoom, QPoint mouse, double &Scale)
 {

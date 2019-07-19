@@ -8,6 +8,7 @@ class capacitor: public FigureInterface
     float c;
 public:
     capacitor() : c(1) {}
+    capacitor(int X, int Y) : FigureInterface(X, Y) {}
     void print(double);
 };
 

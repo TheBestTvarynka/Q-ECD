@@ -34,6 +34,8 @@ public:
     void mouseMoveEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
     void wheelEvent(QWheelEvent *);
+
+    DataFigures *GetDataFigures() { return &figures; }
 };
 
 #endif // PAINTBOARD_H

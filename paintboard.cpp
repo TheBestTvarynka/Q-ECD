@@ -10,7 +10,9 @@ PaintBoard::PaintBoard(QWidget *parent, ModeInterface *start_state): QGLWidget(p
     mpTimer.start(10);
 
     if (start_state == nullptr)
-        mode = new ObjectMode;
+        mode = new ObjectMode(this);
+    figures.add(new Resistor(5, 7));
+    figures.add(new capacitor(4, 3));
 }
 
 void PaintBoard::initializeGL()
@@ -34,8 +36,9 @@ void PaintBoard::mousePressEvent(QMouseEvent *ap)
     if (ap->buttons() == Qt::MidButton)
     {
         start_position = ap->pos();
+        return;
     }
-    mode->mousePressEvent(ap);
+    mode->mousePressEvent(ap, Scale);
 }
 
 void PaintBoard::mouseMoveEvent(QMouseEvent *ap)
