@@ -2,7 +2,7 @@
 
 DataFigures::DataFigures()
 {
-    FigureInterface *tmp = new Resistor;
+    FigureInterface *tmp = new capacitor;
     figures.push_back(tmp);
 }
 

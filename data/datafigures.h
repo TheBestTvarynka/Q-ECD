@@ -4,6 +4,7 @@
 #include <QVector>
 #include "figures/figureinterface.h"
 #include "figures/resistor.h"
+#include "figures/capacitor.h"
 
 class DataFigures
 {
