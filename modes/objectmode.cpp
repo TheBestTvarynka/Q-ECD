@@ -39,7 +39,7 @@ void ObjectMode::paintGL(double Scale, QPoint &Delta)
     Center += Delta;
     Delta = QPoint(0, 0);
 
-    glColor3d(200, 200, 200);
+    glColor3d(0.0, 0.0, 1);
 
     glPointSize(20);
     glBegin(GL_POINTS);
