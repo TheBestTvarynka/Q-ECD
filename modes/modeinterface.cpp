@@ -3,7 +3,7 @@
 #include <QDebug>
 #include "paintboard.h"
 
-ModeInterface::ModeInterface(double s, PaintBoard *p, QWidget *parent): QGLWidget(parent)
+ModeInterface::ModeInterface(double s, PaintBoard *p, QWidget *parent)
 {
     Parent = p;
     scale = s;

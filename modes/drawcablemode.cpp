@@ -1,9 +1,8 @@
-#include "objectmode.h"
-#include "paintboard.h"
+#include "drawcablemode.h"
 
-ObjectMode::ObjectMode(PaintBoard *p, double s, QPoint c, QWidget *parent) : ModeInterface (s, p, parent) { Center = c;}
+DrawCableMode::DrawCableMode(PaintBoard *p, double s, QPoint c, QWidget *parent) : ModeInterface (s, p, parent) { Center = c;}
 
-void ObjectMode::initializeGL()
+void DrawCableMode::initializeGL()
 {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -13,7 +12,8 @@ void ObjectMode::initializeGL()
     glEnable(GL_BLEND);
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
-void ObjectMode::resizeGL(int w, int h)
+
+void DrawCableMode::resizeGL(int w, int h)
 {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -24,10 +24,11 @@ void ObjectMode::resizeGL(int w, int h)
     Weight = w;
     Height = h;
 }
-void ObjectMode::paintGL(QPoint &Delta)
+
+void DrawCableMode::paintGL(QPoint &Delta)
 {
     QColor background(220, 220, 220, 255);
-    //    qglClearColor(background);
+//    qglClearColor(background);
     glClearColor(220, 220, 220, 255);
 //    qglClearColor(Qt::gray);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -41,7 +42,7 @@ void ObjectMode::paintGL(QPoint &Delta)
     Center += Delta;
     Delta = QPoint(0, 0);
 
-    glColor3d(0.0, 0.0, 1);
+    glColor3d(1.0, 1.0, 0.0);
 
     glPointSize(20);
     glBegin(GL_POINTS);
@@ -53,6 +54,7 @@ void ObjectMode::paintGL(QPoint &Delta)
 
     int nV = int(Weight / scale) + 1;
     int nH = int(Height / scale) + 1;
+    qDebug() << nV << " " << nH;
     double DeltaX = Center.x() - int(Center.x() / scale) * scale, DeltaY = Center.y() - int(Center.y() / scale) * scale;
     for (int i = 0; i < nH; i++)
     {
@@ -64,22 +66,17 @@ void ObjectMode::paintGL(QPoint &Delta)
     glEnd();
 }
 
-void ObjectMode::mousePressEvent(QMouseEvent *ap)
+void DrawCableMode::mousePressEvent(QMouseEvent *)
 {
-//    qDebug() << "Mouse Down " << ap->x();
-    Parent->GetDataFigures()->select_figure(ap->pos() - Center, scale);
-    start_position = ap->pos();
+
 }
 
-void ObjectMode::mouseMoveEvent(QMouseEvent *ap)
+void DrawCableMode::mouseMoveEvent(QMouseEvent *)
 {
-//    qDebug() << "Mouse Move" << ap->x();
-    Parent->GetDataFigures()->MoveSelectedFigure(Parent->GetDataFigures()->GetSelectedFigure(), (ap->x() - start_position.x()) / scale, (ap->y() - start_position.y()) / scale);
-    start_position = ap->pos();
+    qDebug() << "Mouse Move: ";
 }
 
-void ObjectMode::mouseReleaseEvent(QMouseEvent *ap)
+void DrawCableMode::mouseReleaseEvent(QMouseEvent *)
 {
-//    qDebug() << "Mouse Release" << ap->x() << " " << Center.x();
-    Parent->GetDataFigures()->RoundCoordinates(Parent->GetDataFigures()->GetSelectedFigure());
+
 }

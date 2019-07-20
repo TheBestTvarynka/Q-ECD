@@ -5,12 +5,14 @@ PaintBoard::PaintBoard(QWidget *parent, ModeInterface *start_state): QGLWidget(p
     Scale = 20;
     Delta.setX(0);
     Delta.setY(0);
+    Center.setX(0);
+    Center.setY(0);
 
     connect(&mpTimer, SIGNAL(timeout()), this, SLOT(updateGL()));
     mpTimer.start(10);
 
     if (start_state == nullptr)
-        mode = new ObjectMode(this, Scale);
+        mode = new ObjectMode(this, Scale, QPoint(0, 0));
     figures.add(new Resistor(5, 7));
     figures.add(new capacitor(4, 3));
 }
@@ -28,6 +30,7 @@ void PaintBoard::resizeGL(int w, int h)
 void PaintBoard::paintGL()
 {
     mode->paintGL(Delta);
+    Center += Delta;
     figures.print(Scale);
 }
 
@@ -63,4 +66,10 @@ void PaintBoard::wheelEvent(QWheelEvent *event)
         mode->ScaleEvent(true, event->pos(), Scale);
     else
         mode->ScaleEvent(false, event->pos(), Scale);
+}
+
+void PaintBoard::SetMode(ModeInterface *new_Mode)
+{
+    delete mode;
+    mode = new_Mode;
 }

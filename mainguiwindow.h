@@ -2,6 +2,7 @@
 #define MAINGUIWINDOW_H
 
 #include <QMainWindow>
+#include <QDebug>
 
 namespace Ui {
 class MainGUIWindow;
@@ -17,6 +18,8 @@ public:
 
 private:
     Ui::MainGUIWindow *ui;
+private slots:
+    void ChangeMode();
 };
 
 #endif // MAINGUIWINDOW_H

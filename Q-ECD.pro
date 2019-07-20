@@ -35,7 +35,8 @@ SOURCES += \
     modes/objectmode.cpp \
     paintboard.cpp \
     figures/capacitor.cpp \
-    cables/cable.cpp
+    cables/cable.cpp \
+    modes/drawcablemode.cpp
 
 HEADERS += \
         mainguiwindow.h \
@@ -47,7 +48,8 @@ HEADERS += \
     modes/objectmode.h \
     paintboard.h \
     figures/capacitor.h \
-    cables/cable.h
+    cables/cable.h \
+    modes/drawcablemode.h
 
 FORMS += \
         mainguiwindow.ui
