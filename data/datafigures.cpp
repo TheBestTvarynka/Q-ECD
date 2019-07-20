@@ -37,3 +37,31 @@ void DataFigures::select_figure(QPoint position, double Scale)
     }
     selected_figure->SetMainColor(new double[3]{1.0, 0.0, 0.0});
 }
+
+void DataFigures::MoveSelectedFigure(FigureInterface *figure, double dX, double dY)
+{
+    figure->MoveFigure(dX, dY);
+}
+
+FigureInterface *DataFigures::GetSelectedFigure()
+{
+    if (selected_figure == nullptr)
+        return  nullptr;
+    return selected_figure;
+}
+
+void DataFigures::RoundCoordinates(FigureInterface *figure)
+{
+    double rest = figure->GetX() - int(figure->GetX());
+    double newX, newY;
+    if (rest >= 0/5)
+        newX = int(figure->GetX()) + 1;
+    else
+        newX = int(figure->GetX());
+    rest = figure->GetY() - int(figure->GetY());
+    if (rest >= 0/5)
+        newY = int(figure->GetY()) + 1;
+    else
+        newY = int(figure->GetY());
+    figure->SetPosition(newX, newY);
+}

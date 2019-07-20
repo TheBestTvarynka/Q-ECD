@@ -10,7 +10,7 @@ PaintBoard::PaintBoard(QWidget *parent, ModeInterface *start_state): QGLWidget(p
     mpTimer.start(10);
 
     if (start_state == nullptr)
-        mode = new ObjectMode(this);
+        mode = new ObjectMode(this, Scale);
     figures.add(new Resistor(5, 7));
     figures.add(new capacitor(4, 3));
 }
@@ -27,7 +27,7 @@ void PaintBoard::resizeGL(int w, int h)
 
 void PaintBoard::paintGL()
 {
-    mode->paintGL(Scale, Delta);
+    mode->paintGL(Delta);
     figures.print(Scale);
 }
 
@@ -38,7 +38,7 @@ void PaintBoard::mousePressEvent(QMouseEvent *ap)
         start_position = ap->pos();
         return;
     }
-    mode->mousePressEvent(ap, Scale);
+    mode->mousePressEvent(ap);
 }
 
 void PaintBoard::mouseMoveEvent(QMouseEvent *ap)

@@ -16,6 +16,9 @@ public:
     void print(double);
     void add(FigureInterface *);
     void select_figure(QPoint, double);
+    void MoveSelectedFigure(FigureInterface *, double, double);
+    FigureInterface *GetSelectedFigure();
+    void RoundCoordinates(FigureInterface *);
 };
 
 #endif // DATAFIGURES_H

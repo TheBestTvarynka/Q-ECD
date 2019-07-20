@@ -16,6 +16,8 @@ public:
     double GetX() { return x; }
     double GetY() { return y; }
     void SetMainColor(double [3]);
+    void SetPosition(double, double);
+    void MoveFigure(double, double);
 };
 
 #endif // FIGUREINTERFACE_H

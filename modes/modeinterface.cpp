@@ -3,9 +3,10 @@
 #include <QDebug>
 #include "paintboard.h"
 
-ModeInterface::ModeInterface(PaintBoard *p, QWidget *parent): QGLWidget(parent)
+ModeInterface::ModeInterface(double s, PaintBoard *p, QWidget *parent): QGLWidget(parent)
 {
     Parent = p;
+    scale = s;
 }
 
 void ModeInterface::ScaleEvent(bool zoom, QPoint mouse, double &Scale)
@@ -34,7 +35,7 @@ void ModeInterface::ScaleEvent(bool zoom, QPoint mouse, double &Scale)
         k *= 0.9;
     }
     new_Center.setY( int(mouse.y() - new_Scale * n - k) );
-    Scale = new_Scale;
+    scale = Scale = new_Scale;
 
 //    qDebug() << "zoom: " << zoom;
 //    qDebug() << new_Center.x() << " " << new_Center.y();

@@ -6,12 +6,13 @@
 
 class ObjectMode : public ModeInterface
 {
+    QPoint start_position;
 public:
-    explicit ObjectMode(PaintBoard *, QWidget *parent = 0);
+    explicit ObjectMode(PaintBoard *, double, QWidget *parent = 0);
     void initializeGL();
     void resizeGL(int w, int h);
-    void paintGL(double, QPoint &);
-    void mousePressEvent(QMouseEvent *, double);
+    void paintGL(QPoint &);
+    void mousePressEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
 };
