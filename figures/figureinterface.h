@@ -7,11 +7,17 @@
 class FigureInterface : public IObservable
 {
 protected:
-    int x, y;
+    double x, y;
+    double main_color[3];
 public:
-    FigureInterface() : x(300), y(300) {}
+    FigureInterface() : x(10.0), y(10.0) {}
     FigureInterface(int X, int Y);
-    virtual void print() = 0;
+    virtual void print(double) = 0;
+    double GetX() { return x; }
+    double GetY() { return y; }
+    void SetMainColor(double [3]);
+    void SetPosition(double, double);
+    void MoveFigure(double, double);
 };
 
 #endif // FIGUREINTERFACE_H

@@ -1,6 +1,7 @@
 #include "objectmode.h"
+#include "paintboard.h"
 
-ObjectMode::ObjectMode(QWidget *parent) : ModeInterface (parent) {}
+ObjectMode::ObjectMode(PaintBoard *p, double s, QWidget *parent) : ModeInterface (s, p, parent) { Center = QPoint(0, 0);}
 
 void ObjectMode::initializeGL()
 {
@@ -18,10 +19,14 @@ void ObjectMode::resizeGL(int w, int h)
     glLoadIdentity();
     glOrtho(0, w, h, 0, 0, 1);
     glViewport(0, 0, w, h);
+    glTranslated(Center.x(), Center.y(), 0);
+
+    Weight = w;
+    Height = h;
 }
-void ObjectMode::paintGL()
+void ObjectMode::paintGL(QPoint &Delta)
 {
-    QColor background(200, 200, 200, 255);
+    QColor background(220, 220, 220, 255);
     qglClearColor(background);
 //    qglClearColor(Qt::gray);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -29,16 +34,30 @@ void ObjectMode::paintGL()
     glEnable (GL_BLEND);
     // enable alfa
     glEnable(GL_BLEND);
-    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    glPointSize(5);
-    glColor3b(50, 50, 50);
+    glTranslated(Delta.x(), Delta.y(), 0);
+    Center += Delta;
+    Delta = QPoint(0, 0);
+
+    glColor3d(0.0, 0.0, 1);
+
+    glPointSize(20);
     glBegin(GL_POINTS);
-    for (int i = 0; i < 10; i++)
+    glVertex2f(float(0), float(0));
+    glEnd();
+
+    glPointSize(int(scale / 10));
+    glBegin(GL_POINTS);
+
+    int nV = int(Weight / scale) + 1;
+    int nH = int(Height / scale) + 1;
+    double DeltaX = Center.x() - int(Center.x() / scale) * scale, DeltaY = Center.y() - int(Center.y() / scale) * scale;
+    for (int i = 0; i < nH; i++)
     {
-        for (int j = 0; j < 10; j++)
+        for (int j = 0; j < nV; j++)
         {
-            glVertex2f(j * 75.0, i * 75.0);
+            glVertex2f(float(j * scale - Center.x() + DeltaX), float(i * scale - Center.y() + DeltaY));
         }
     }
     glEnd();
@@ -46,15 +65,20 @@ void ObjectMode::paintGL()
 
 void ObjectMode::mousePressEvent(QMouseEvent *ap)
 {
-    qDebug() << "Mouse Down";
+//    qDebug() << "Mouse Down " << ap->x();
+    Parent->GetDataFigures()->select_figure(ap->pos() - Center, scale);
+    start_position = ap->pos();
 }
 
 void ObjectMode::mouseMoveEvent(QMouseEvent *ap)
 {
-    qDebug() << "Mouse Move";
+//    qDebug() << "Mouse Move" << ap->x();
+    Parent->GetDataFigures()->MoveSelectedFigure(Parent->GetDataFigures()->GetSelectedFigure(), (ap->x() - start_position.x()) / scale, (ap->y() - start_position.y()) / scale);
+    start_position = ap->pos();
 }
 
 void ObjectMode::mouseReleaseEvent(QMouseEvent *ap)
 {
-    qDebug() << "Mouse Release";
+//    qDebug() << "Mouse Release" << ap->x() << " " << Center.x();
+    Parent->GetDataFigures()->RoundCoordinates(Parent->GetDataFigures()->GetSelectedFigure());
 }

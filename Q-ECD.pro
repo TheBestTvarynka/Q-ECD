@@ -33,7 +33,8 @@ SOURCES += \
     figures/resistor.cpp \
     data/datafigures.cpp \
     modes/objectmode.cpp \
-    paintboard.cpp
+    paintboard.cpp \
+    figures/capacitor.cpp
 
 HEADERS += \
         mainguiwindow.h \
@@ -43,7 +44,8 @@ HEADERS += \
     figures/resistor.h \
     data/datafigures.h \
     modes/objectmode.h \
-    paintboard.h
+    paintboard.h \
+    figures/capacitor.h
 
 FORMS += \
         mainguiwindow.ui

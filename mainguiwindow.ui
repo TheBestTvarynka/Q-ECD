@@ -6,32 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>663</width>
-    <height>464</height>
+    <width>686</width>
+    <height>478</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Q-ECD [no file]</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="PaintBoard" name="widget" native="true">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>621</width>
-      <height>391</height>
-     </rect>
-    </property>
-   </widget>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="PaintBoard" name="widget" native="true"/>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>663</width>
-     <height>25</height>
+     <width>686</width>
+     <height>23</height>
     </rect>
    </property>
   </widget>
