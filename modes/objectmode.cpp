@@ -1,7 +1,7 @@
 #include "objectmode.h"
 #include "paintboard.h"
 
-ObjectMode::ObjectMode(PaintBoard *p, double s, QPoint c, QWidget *parent) : ModeInterface (s, p, parent) { Center = c;}
+ObjectMode::ObjectMode(PaintBoard *p, double s, QPoint c, int w, int h) : ModeInterface (s, p, w, h) { Center = c;}
 
 void ObjectMode::initializeGL()
 {

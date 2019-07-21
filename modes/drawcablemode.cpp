@@ -1,6 +1,6 @@
 #include "drawcablemode.h"
 
-DrawCableMode::DrawCableMode(PaintBoard *p, double s, QPoint c, QWidget *parent) : ModeInterface (s, p, parent) { Center = c;}
+DrawCableMode::DrawCableMode(PaintBoard *p, double s, QPoint c, int w, int h) : ModeInterface (s, p, w, h) { Center = c; }
 
 void DrawCableMode::initializeGL()
 {
@@ -54,7 +54,7 @@ void DrawCableMode::paintGL(QPoint &Delta)
 
     int nV = int(Weight / scale) + 1;
     int nH = int(Height / scale) + 1;
-    qDebug() << nV << " " << nH;
+    qDebug() << Center.x() << " " << Center.y();
     double DeltaX = Center.x() - int(Center.x() / scale) * scale, DeltaY = Center.y() - int(Center.y() / scale) * scale;
     for (int i = 0; i < nH; i++)
     {

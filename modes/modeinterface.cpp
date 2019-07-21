@@ -3,10 +3,12 @@
 #include <QDebug>
 #include "paintboard.h"
 
-ModeInterface::ModeInterface(double s, PaintBoard *p, QWidget *parent)
+ModeInterface::ModeInterface(double s, PaintBoard *p, int w, int h)
 {
     Parent = p;
     scale = s;
+    Weight = w;
+    Height = h;
 }
 
 void ModeInterface::ScaleEvent(bool zoom, QPoint mouse, double &Scale)

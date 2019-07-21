@@ -18,5 +18,6 @@ MainGUIWindow::~MainGUIWindow()
 void MainGUIWindow::ChangeMode()
 {
     qDebug() << "change mode";
-    ui->widget->SetMode(new DrawCableMode(ui->widget, ui->widget->GetScale(), ui->widget->GetCenter()));
+    ui->widget->SetMode(new DrawCableMode(ui->widget, ui->widget->GetScale(), ui->widget->GetCenter(), ui->widget->width(), ui->widget->height()));
+
 }

@@ -8,7 +8,7 @@ class ObjectMode : public ModeInterface
 {
     QPoint start_position;
 public:
-    explicit ObjectMode(PaintBoard *, double, QPoint, QWidget *parent = 0);
+    explicit ObjectMode(PaintBoard *, double, QPoint, int, int);
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL(QPoint &);

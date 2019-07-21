@@ -37,7 +37,7 @@ public:
     void wheelEvent(QWheelEvent *);
 
     double GetScale() { return Scale; }
-    QPoint GetCenter() { return Center; }
+    QPoint GetCenter() { return mode->GetCenter(); }
 
     DataFigures *GetDataFigures() { return &figures; }
     void SetMode(ModeInterface *);

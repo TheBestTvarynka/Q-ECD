@@ -8,7 +8,7 @@ class DrawCableMode : public ModeInterface
 {
     QPoint start_position;
 public:
-    explicit DrawCableMode(PaintBoard *, double, QPoint, QWidget *parent = 0);
+    explicit DrawCableMode(PaintBoard *, double, QPoint, int, int);
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL(QPoint &);
