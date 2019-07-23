@@ -1,5 +1,11 @@
 #include "resistor.h"
 
+Resistor::Resistor(int X, int Y) : FigureInterface(X, Y), r(1)
+{
+    clamp_coordiantes[1] = Clamp1;
+    clamp_coordiantes[2] = Clamp2;
+}
+
 void Resistor::print(double Scale)
 {
     glLineWidth(float(Scale / 5));
@@ -18,4 +24,10 @@ void Resistor::print(double Scale)
     glVertex2d((x + 2) * Scale, y * Scale);
     glVertex2d((x + 4) * Scale, y * Scale);
     glEnd();
+}
+
+QPoint Resistor::SelectClamp(QPoint pos)
+{
+//    if ((pow(pos.x() - )) > ())
+    return QPoint(0, 0);
 }

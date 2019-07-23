@@ -7,9 +7,11 @@ class capacitor: public FigureInterface
 {
     float c;
 public:
-    capacitor() : c(1) {}
-    capacitor(int X, int Y) : FigureInterface(X, Y) {}
+    capacitor(int X, int Y);
     void print(double);
+    QPoint SelectClamp(QPoint);
+    static QPoint Clamp1(int X, int Y) { return QPoint(X + 4, Y); }
+    static QPoint Clamp2(int X, int Y) { return QPoint(X - 4, Y); }
 };
 
 #endif // CAPACITOR_H

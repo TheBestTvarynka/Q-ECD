@@ -7,9 +7,11 @@ class Resistor : public FigureInterface
 {
     float r;
 public:
-    Resistor() : r(1) {}
-    Resistor(int X, int Y) : FigureInterface(X, Y) {}
+    Resistor(int X, int Y);
     void print(double);
+    QPoint SelectClamp(QPoint);
+    static QPoint Clamp1(int X, int Y) { return QPoint(X + 4, Y); }
+    static QPoint Clamp2(int X, int Y) { return QPoint(X - 4, Y); }
 };
 
 #endif // RESISTOR_H

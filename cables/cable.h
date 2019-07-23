@@ -4,12 +4,17 @@
 #include <QVector>
 #include <QPoint>
 
-class Cable
+using std::pair;
+#include "cables/iobserver.h"
+
+
+class Cable : IObserver
 {
-    QVector<QPoint> points;
+    QVector<pair<double, double> > points;
 public:
     Cable(int, int);
     void print(double);
+    void update();
 };
 
 #endif // CABLE_H

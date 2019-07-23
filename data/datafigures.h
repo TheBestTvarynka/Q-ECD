@@ -19,6 +19,8 @@ public:
     void MoveSelectedFigure(FigureInterface *, double, double);
     FigureInterface *GetSelectedFigure();
     void RoundCoordinates(FigureInterface *);
+    // temporary function
+    QPoint SelectClamp(QPoint);
 };
 
 #endif // DATAFIGURES_H

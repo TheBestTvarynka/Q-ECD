@@ -2,5 +2,10 @@
 
 Cable::Cable(int x, int y)
 {
-    points.push_back(QPoint(x, y));
+    points.push_back(pair<double, double>(x, y));
+}
+
+void Cable::update()
+{
+
 }

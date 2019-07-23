@@ -5,9 +5,9 @@ IObservable::IObservable()
     // start connection
 }
 
-void IObservable::Register(int *obj, bool se)
+void IObservable::Register(IObserver *cable, int vertex, int clamp)
 {
-    connections.push_back(pair<int *, bool>(obj, se));
+    connections.push_back(Connector(cable, vertex, clamp));
 }
 
 void IObservable::Remove()
