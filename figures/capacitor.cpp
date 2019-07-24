@@ -21,8 +21,3 @@ void capacitor::print(double Scale)
     glVertex2d((x + 0.5) * Scale, (y - 1.5) * Scale);
     glEnd();
 }
-
-QPoint capacitor::SelectClamp(QPoint)
-{
-    return QPoint(0, 0);
-}

@@ -25,9 +25,3 @@ void Resistor::print(double Scale)
     glVertex2d((x + 4) * Scale, y * Scale);
     glEnd();
 }
-
-QPoint Resistor::SelectClamp(QPoint pos)
-{
-//    if ((pow(pos.x() - )) > ())
-    return QPoint(0, 0);
-}

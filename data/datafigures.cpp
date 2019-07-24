@@ -45,8 +45,8 @@ void DataFigures::MoveSelectedFigure(FigureInterface *figure, double dX, double 
 
 FigureInterface *DataFigures::GetSelectedFigure()
 {
-    if (selected_figure == nullptr)
-        return  nullptr;
+//    if (selected_figure == nullptr)
+//        return  nullptr;
     return selected_figure;
 }
 
@@ -64,4 +64,22 @@ void DataFigures::RoundCoordinates(FigureInterface *figure)
     else
         newY = int(figure->GetY());
     figure->SetPosition(newX, newY);
+}
+
+pair<QPoint, double> DataFigures::SelectClamp(QPoint mouse_pos, double Scale)
+{
+    if (figures.size() == 0)
+    {
+        return pair<QPoint, double>(QPoint(0, 0), double);
+    }
+    pair<QPoint, double> clamp, best_clamp = figures[0]->SelectClamp(mouse_pos, Scale, selected_figure->GetClams());
+    for (int i = 1; i < figures.size(); i++)
+    {
+        clamp = figures[1]->SelectClamp(mouse_pos, Scale, selected_figure->GetClams());
+        if (clamp.second < best_clamp.second)
+        {
+            best_clamp = clamp;
+        }
+    }
+    return best_clamp;
 }

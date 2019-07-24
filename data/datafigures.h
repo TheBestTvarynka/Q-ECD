@@ -20,7 +20,7 @@ public:
     FigureInterface *GetSelectedFigure();
     void RoundCoordinates(FigureInterface *);
     // temporary function
-    QPoint SelectClamp(QPoint);
+    pair<QPoint, double> SelectClamp(QPoint, double);
 };
 
 #endif // DATAFIGURES_H

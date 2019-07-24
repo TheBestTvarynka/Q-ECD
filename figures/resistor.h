@@ -9,7 +9,6 @@ class Resistor : public FigureInterface
 public:
     Resistor(int X, int Y);
     void print(double);
-    QPoint SelectClamp(QPoint);
     static QPoint Clamp1(int X, int Y) { return QPoint(X + 4, Y); }
     static QPoint Clamp2(int X, int Y) { return QPoint(X - 4, Y); }
 };

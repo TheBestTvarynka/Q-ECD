@@ -9,6 +9,29 @@ FigureInterface::FigureInterface(int X, int Y)
     main_color[2] = 0.0;
 }
 
+pair<QPoint, double> FigureInterface::SelectClamp(QPoint mouse_pos, double Scale, QMap<int, GetClampCoordinates> clamp_c)
+{
+    if (clamp_c.size() == 0)
+    {
+        return pair<QPoint, double>(QPoint(0, 0), -1.0);
+    }
+    QPoint clamp = (*clamp_c[0])(int(x), int(y));
+    QPoint best_clamp = clamp;
+    double min_distance = sqrt(pow((clamp.x()) * Scale - mouse_pos.x(), 2) + pow((clamp.y()) * Scale - mouse_pos.y(), 2));
+    double distance = min_distance;
+    for(int i = 1; i < clamp_c.size(); i++)
+    {
+        clamp = (*clamp_c[i])(int(x), int(y));
+        distance = sqrt(pow((clamp.x()) * Scale - mouse_pos.x(), 2) + pow((clamp.y()) * Scale - mouse_pos.y(), 2));
+        if (distance < min_distance)
+        {
+            min_distance = distance;
+            best_clamp = clamp;
+        }
+    }
+    return pair<QPoint, double>(best_clamp, min_distance);
+}
+
 void FigureInterface::SetMainColor(double color[3])
 {
     main_color[0] = color[0];
