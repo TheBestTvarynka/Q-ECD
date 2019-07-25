@@ -20,10 +20,11 @@ public:
     FigureInterface() : x(10.0), y(10.0) {}
     FigureInterface(int X, int Y);
     virtual void print(double) = 0;
-    pair<QPoint, double> SelectClamp(QPoint, double, QMap<int, GetClampCoordinates>);
+    pair<int, double> SelectClamp(QPoint, double, QMap<int, GetClampCoordinates>);
     double GetX() { return x; }
     double GetY() { return y; }
     QMap<int, GetClampCoordinates> GetClams() { return clamp_coordiantes; }
+    QPoint GetClamp(int clamp) { return (*clamp_coordiantes[clamp])(int(x), int(y));}
     void SetMainColor(double [3]);
     void SetPosition(double, double);
     void MoveFigure(double, double);

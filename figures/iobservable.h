@@ -3,14 +3,14 @@
 
 #include <QVector>
 
-#include "cables/iobserver.h"
+#include "cables/cable.h"
 
 struct Connector
 {
-    IObserver *cable;
+    Cable *cable;
     int vertex;
     int clamp;
-    Connector(IObserver *cb, int v, int cl)
+    Connector(Cable *cb, int v, int cl)
     {
         cable = cb;
         vertex = v;
@@ -29,7 +29,7 @@ protected:
     QVector<Connector> connections;
 public:
     IObservable();
-    void Register(IObserver *, int, int);
+    void Register(Cable *, int, int);
     void Remove();
     void Notify();
 };

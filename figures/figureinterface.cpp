@@ -1,4 +1,5 @@
 #include "figureinterface.h"
+#include <QDebug>
 
 FigureInterface::FigureInterface(int X, int Y)
 {
@@ -9,14 +10,14 @@ FigureInterface::FigureInterface(int X, int Y)
     main_color[2] = 0.0;
 }
 
-pair<QPoint, double> FigureInterface::SelectClamp(QPoint mouse_pos, double Scale, QMap<int, GetClampCoordinates> clamp_c)
+pair<int, double> FigureInterface::SelectClamp(QPoint mouse_pos, double Scale, QMap<int, GetClampCoordinates> clamp_c)
 {
     if (clamp_c.size() == 0)
     {
-        return pair<QPoint, double>(QPoint(0, 0), -1.0);
+        return pair<int, double>(-1, -1.0);
     }
     QPoint clamp = (*clamp_c[0])(int(x), int(y));
-    QPoint best_clamp = clamp;
+    int best_clamp = 0;
     double min_distance = sqrt(pow((clamp.x()) * Scale - mouse_pos.x(), 2) + pow((clamp.y()) * Scale - mouse_pos.y(), 2));
     double distance = min_distance;
     for(int i = 1; i < clamp_c.size(); i++)
@@ -26,10 +27,10 @@ pair<QPoint, double> FigureInterface::SelectClamp(QPoint mouse_pos, double Scale
         if (distance < min_distance)
         {
             min_distance = distance;
-            best_clamp = clamp;
+            best_clamp = i;
         }
     }
-    return pair<QPoint, double>(best_clamp, min_distance);
+    return pair<int, double>(best_clamp, min_distance);
 }
 
 void FigureInterface::SetMainColor(double color[3])

@@ -5,7 +5,7 @@ IObservable::IObservable()
     // start connection
 }
 
-void IObservable::Register(IObserver *cable, int vertex, int clamp)
+void IObservable::Register(Cable *cable, int vertex, int clamp)
 {
     connections.push_back(Connector(cable, vertex, clamp));
 }

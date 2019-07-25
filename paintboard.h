@@ -2,6 +2,7 @@
 #define PAINTBOARD_H
 
 #include "data/datafigures.h"
+#include "data/datacables.h"
 #include "modes/modeinterface.h"
 #include "modes/objectmode.h"
 #include "modes/drawcablemode.h"
@@ -20,6 +21,7 @@ class PaintBoard : public QGLWidget
     QTimer mpTimer;
     ModeInterface *mode;
     DataFigures figures;
+    DataCables cables;
 
     QPoint Delta;
     double Scale;
@@ -40,6 +42,7 @@ public:
     QPoint GetCenter() { return mode->GetCenter(); }
 
     DataFigures *GetDataFigures() { return &figures; }
+    DataCables *GetDataCables() { return &cables; }
     void SetMode(ModeInterface *);
 };
 

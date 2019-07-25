@@ -2,5 +2,5 @@
 
 IObserver::IObserver()
 {
-
+    observable = 0;
 }

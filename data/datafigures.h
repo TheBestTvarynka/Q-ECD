@@ -11,15 +11,16 @@ class DataFigures
 {
     QVector<FigureInterface *> figures;
     FigureInterface *selected_figure;
+    int selected_clamp;
 public:
     DataFigures();
     void print(double);
     void add(FigureInterface *);
     void select_figure(QPoint, double);
     void MoveSelectedFigure(FigureInterface *, double, double);
-    FigureInterface *GetSelectedFigure();
     void RoundCoordinates(FigureInterface *);
-    // temporary function
+    void Register(Cable *, int);
+    FigureInterface *GetSelectedFigure();
     pair<QPoint, double> SelectClamp(QPoint, double);
 };
 

@@ -37,7 +37,8 @@ SOURCES += \
     figures/capacitor.cpp \
     cables/cable.cpp \
     modes/drawcablemode.cpp \
-    cables/iobserver.cpp
+    cables/iobserver.cpp \
+    data/datacables.cpp
 
 HEADERS += \
         mainguiwindow.h \
@@ -51,7 +52,8 @@ HEADERS += \
     figures/capacitor.h \
     cables/cable.h \
     modes/drawcablemode.h \
-    cables/iobserver.h
+    cables/iobserver.h \
+    data/datacables.h
 
 FORMS += \
         mainguiwindow.ui

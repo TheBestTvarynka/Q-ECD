@@ -1,6 +1,7 @@
 #ifndef CABLE_H
 #define CABLE_H
 
+#include <QGLWidget>
 #include <QVector>
 #include <QPoint>
 
@@ -15,6 +16,7 @@ public:
     Cable(int, int);
     void print(double);
     void update();
+    void insert_back(double, double);
 };
 
 #endif // CABLE_H

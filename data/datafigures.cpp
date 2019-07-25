@@ -1,10 +1,12 @@
 #include "datafigures.h"
+#include <QDebug>
 
 DataFigures::DataFigures()
 {
 //    FigureInterface *tmp = new capacitor;
 //    figures.push_back(tmp);
     selected_figure = nullptr;
+    selected_clamp = -1;
 }
 
 void DataFigures::print(double Scale)
@@ -66,20 +68,29 @@ void DataFigures::RoundCoordinates(FigureInterface *figure)
     figure->SetPosition(newX, newY);
 }
 
+void DataFigures::Register(Cable *new_Cable, int vertex)
+{
+    if (selected_figure == nullptr || new_Cable == nullptr || selected_clamp == -1)
+        return;
+    selected_figure->Register(new_Cable, vertex, selected_clamp);
+}
+
 pair<QPoint, double> DataFigures::SelectClamp(QPoint mouse_pos, double Scale)
 {
     if (figures.size() == 0)
     {
-        return pair<QPoint, double>(QPoint(0, 0), double);
+        return pair<QPoint, double>(QPoint(0, 0), -1);
     }
-    pair<QPoint, double> clamp, best_clamp = figures[0]->SelectClamp(mouse_pos, Scale, selected_figure->GetClams());
+    pair<int, double> clamp, best_clamp = figures[0]->SelectClamp(mouse_pos, Scale, figures[0]->GetClams());
     for (int i = 1; i < figures.size(); i++)
     {
-        clamp = figures[1]->SelectClamp(mouse_pos, Scale, selected_figure->GetClams());
-        if (clamp.second < best_clamp.second)
+        clamp = figures[i]->SelectClamp(mouse_pos, Scale, figures[i]->GetClams());
+        if (clamp.second < best_clamp.second && clamp.second != -1.0)
         {
+            selected_figure = figures[i];
             best_clamp = clamp;
         }
     }
-    return best_clamp;
+    selected_clamp = best_clamp.first;
+    return pair<QPoint, double>(selected_figure->GetClamp(best_clamp.first), best_clamp.second);
 }

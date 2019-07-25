@@ -2,8 +2,8 @@
 
 Resistor::Resistor(int X, int Y) : FigureInterface(X, Y), r(1)
 {
-    clamp_coordiantes[1] = Clamp1;
-    clamp_coordiantes[2] = Clamp2;
+    clamp_coordiantes[0] = Clamp1;
+    clamp_coordiantes[1] = Clamp2;
 }
 
 void Resistor::print(double Scale)

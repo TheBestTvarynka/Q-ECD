@@ -1,4 +1,5 @@
 #include "drawcablemode.h"
+#include "paintboard.h"
 
 DrawCableMode::DrawCableMode(PaintBoard *p, double s, QPoint c, int w, int h) : ModeInterface (s, p, w, h) { Center = c; }
 
@@ -42,6 +43,8 @@ void DrawCableMode::paintGL(QPoint &Delta)
     Center += Delta;
     Delta = QPoint(0, 0);
 
+    Parent->GetDataCables()->print(scale);
+
     glColor3d(1.0, 1.0, 0.0);
 
     glPointSize(20);
@@ -49,12 +52,13 @@ void DrawCableMode::paintGL(QPoint &Delta)
     glVertex2f(float(0), float(0));
     glEnd();
 
+
     glPointSize(int(scale / 10));
     glBegin(GL_POINTS);
 
     int nV = int(Weight / scale) + 1;
     int nH = int(Height / scale) + 1;
-    qDebug() << Center.x() << " " << Center.y();
+//    qDebug() << Center.x() << " " << Center.y();
     double DeltaX = Center.x() - int(Center.x() / scale) * scale, DeltaY = Center.y() - int(Center.y() / scale) * scale;
     for (int i = 0; i < nH; i++)
     {
@@ -66,14 +70,29 @@ void DrawCableMode::paintGL(QPoint &Delta)
     glEnd();
 }
 
-void DrawCableMode::mousePressEvent(QMouseEvent *)
+void DrawCableMode::mousePressEvent(QMouseEvent *ap)
 {
-
+    pair<QPoint, double> start = Parent->GetDataFigures()->SelectClamp(ap->pos() - Center, scale);
+    if (start.second == -1.0)
+        return;
+    Parent->GetDataCables()->AddCable(new Cable(start.first.x(), start.first.y()));
+    Parent->GetDataFigures()->Register(Parent->GetDataCables()->GetLast(), 0);
+    // add second point to cable
+    double DeltaX = abs(double(start.first.x()) * scale - double(ap->pos().x() - Center.x()));
+    double DeltaY = abs(double(start.first.y()) * scale - double(ap->pos().y() - Center.y()));
+    if (DeltaX < DeltaY)
+    {
+        Parent->GetDataCables()->InsertVertex(Parent->GetDataCables()->GetLast(), start.first.x(), (ap->pos().y() - Center.y()) / scale);
+    }
+    else
+    {
+        Parent->GetDataCables()->InsertVertex(Parent->GetDataCables()->GetLast(), (ap->pos().x() - Center.x()) / scale, start.first.y());
+    }
 }
 
 void DrawCableMode::mouseMoveEvent(QMouseEvent *)
 {
-    qDebug() << "Mouse Move: ";
+//    qDebug() << "Mouse Move: ";
 }
 
 void DrawCableMode::mouseReleaseEvent(QMouseEvent *)

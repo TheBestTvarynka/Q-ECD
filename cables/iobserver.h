@@ -4,9 +4,11 @@
 
 class IObserver
 {
+    int observable;
 public:
     IObserver();
     virtual void update() = 0;
+    void SetObservable(int o) { observable = o; }
 };
 
 #endif // IOBSERVER_H
