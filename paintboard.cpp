@@ -1,10 +1,12 @@
 #include "paintboard.h"
+#include <QDebug>
 
 PaintBoard::PaintBoard(QWidget *parent, ModeInterface *start_state): QGLWidget(parent)
 {
     Scale = 20;
     Delta.setX(0);
     Delta.setY(0);
+    click = Qt::MouseButton::NoButton;
 
     connect(&mpTimer, SIGNAL(timeout()), this, SLOT(updateGL()));
     mpTimer.start(10);
@@ -36,9 +38,12 @@ void PaintBoard::mousePressEvent(QMouseEvent *ap)
     if (ap->buttons() == Qt::MidButton)
     {
         start_position = ap->pos();
-        return;
+        click = Qt::MouseButton::MidButton;
     }
-    mode->mousePressEvent(ap);
+    else
+    {
+        mode->mousePressEvent(ap);
+    }
 }
 
 void PaintBoard::mouseMoveEvent(QMouseEvent *ap)
@@ -48,12 +53,22 @@ void PaintBoard::mouseMoveEvent(QMouseEvent *ap)
         Delta = ap->pos() - start_position;
         start_position = ap->pos();
     }
-    mode->mouseMoveEvent(ap);
+    else
+    {
+        mode->mouseMoveEvent(ap);
+    }
 }
 
 void PaintBoard::mouseReleaseEvent(QMouseEvent *ap)
 {
-    mode->mouseReleaseEvent(ap);
+    if (click == Qt::MidButton)
+    {
+        click = Qt::MouseButton::NoButton;
+    }
+    else
+    {
+        mode->mouseReleaseEvent(ap);
+    }
 }
 
 void PaintBoard::wheelEvent(QWheelEvent *event)
