@@ -28,6 +28,7 @@ class PaintBoard : public QGLWidget
     QPoint Center;
     // temp variavle. use when we drag a mouse
     QPoint start_position;
+    Qt::MouseButton click;
 public:
     PaintBoard(QWidget *parent = 0, ModeInterface *start_state = nullptr);
     void initializeGL();
