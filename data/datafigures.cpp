@@ -82,6 +82,7 @@ pair<QPoint, double> DataFigures::SelectClamp(QPoint mouse_pos, double Scale)
         return pair<QPoint, double>(QPoint(0, 0), -1);
     }
     pair<int, double> clamp, best_clamp = figures[0]->SelectClamp(mouse_pos, Scale, figures[0]->GetClams());
+    selected_figure = figures[0];
     for (int i = 1; i < figures.size(); i++)
     {
         clamp = figures[i]->SelectClamp(mouse_pos, Scale, figures[i]->GetClams());

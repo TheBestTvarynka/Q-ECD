@@ -41,8 +41,7 @@ void ObjectMode::paintGL(QPoint &Delta)
     Center += Delta;
     Delta = QPoint(0, 0);
 
-    glColor3d(0.0, 0.0, 1);
-
+    glColor3d(0.0, 0.0, 1.0);
     glPointSize(20);
     glBegin(GL_POINTS);
     glVertex2f(float(0), float(0));
@@ -62,6 +61,9 @@ void ObjectMode::paintGL(QPoint &Delta)
         }
     }
     glEnd();
+
+    Parent->GetDataCables()->print(scale);
+    Parent->GetDataFigures()->print(scale);
 }
 
 void ObjectMode::mousePressEvent(QMouseEvent *ap)

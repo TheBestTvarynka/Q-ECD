@@ -43,15 +43,11 @@ void DrawCableMode::paintGL(QPoint &Delta)
     Center += Delta;
     Delta = QPoint(0, 0);
 
-    Parent->GetDataCables()->print(scale);
-
     glColor3d(1.0, 1.0, 0.0);
-
     glPointSize(20);
     glBegin(GL_POINTS);
     glVertex2f(float(0), float(0));
     glEnd();
-
 
     glPointSize(int(scale / 10));
     glBegin(GL_POINTS);
@@ -68,6 +64,9 @@ void DrawCableMode::paintGL(QPoint &Delta)
         }
     }
     glEnd();
+
+    Parent->GetDataCables()->print(scale);
+    Parent->GetDataFigures()->print(scale);
 }
 
 void DrawCableMode::mousePressEvent(QMouseEvent *ap)
@@ -75,6 +74,7 @@ void DrawCableMode::mousePressEvent(QMouseEvent *ap)
     pair<QPoint, double> start = Parent->GetDataFigures()->SelectClamp(ap->pos() - Center, scale);
     if (start.second == -1.0)
         return;
+    qDebug() << "selecting clamp finished";
     Parent->GetDataCables()->AddCable(new Cable(start.first.x(), start.first.y()));
     Parent->GetDataFigures()->Register(Parent->GetDataCables()->GetLast(), 0);
     // add second point to cable

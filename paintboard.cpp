@@ -31,7 +31,6 @@ void PaintBoard::paintGL()
 {
     mode->paintGL(Delta);
     Center += Delta;
-    figures.print(Scale);
 }
 
 void PaintBoard::mousePressEvent(QMouseEvent *ap)
@@ -74,7 +73,6 @@ void PaintBoard::mouseReleaseEvent(QMouseEvent *ap)
 
 void PaintBoard::wheelEvent(QWheelEvent *event)
 {
-    qDebug() << "Whell Event: " << event->angleDelta();
     if (event->angleDelta().y() > 0)
         mode->ScaleEvent(true, event->pos(), Scale);
     else
