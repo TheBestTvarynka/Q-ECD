@@ -71,10 +71,11 @@ void DrawCableMode::paintGL(QPoint &Delta)
 
 void DrawCableMode::mousePressEvent(QMouseEvent *ap)
 {
+    // select start point
     pair<QPoint, double> start = Parent->GetDataFigures()->SelectClamp(ap->pos() - Center, scale);
     if (start.second == -1.0)
         return;
-    qDebug() << "selecting clamp finished";
+    // create new cable
     Parent->GetDataCables()->AddCable(new Cable(start.first.x(), start.first.y()));
     Parent->GetDataFigures()->Register(Parent->GetDataCables()->GetLast(), 0);
     // add second point to cable
@@ -90,9 +91,32 @@ void DrawCableMode::mousePressEvent(QMouseEvent *ap)
     }
 }
 
-void DrawCableMode::mouseMoveEvent(QMouseEvent *)
+void DrawCableMode::mouseMoveEvent(QMouseEvent *ap)
 {
-//    qDebug() << "Mouse Move: ";
+    pair<double, double> *point = Parent->GetDataCables()->GetLastPoint(Parent->GetDataCables()->GetLast());
+    double delta = sqrt(pow(point->first * scale - ap->pos().x() + Center.x(), 2) + pow(point->second* scale - ap->pos().y() + Center.y(), 2));
+    qDebug() << delta;
+    if (delta > scale)
+    {
+        QPoint r_point = RoundCoordinates(point->first, point->second);
+        point->first = r_point.x();
+        point->second = r_point.y();
+        if (Parent->GetDataCables()->GetDirectionEnd(Parent->GetDataCables()->GetLast()))
+        {
+            Parent->GetDataCables()->GetLast()->insert_back(r_point.x(), (ap->pos().y() - Center.y()) / scale);
+        }
+        else
+        {
+            Parent->GetDataCables()->GetLast()->insert_back((ap->pos().x() - Center.x()) / scale, r_point.y());
+        }
+    }
+    else
+    {
+        if (Parent->GetDataCables()->GetDirectionEnd(Parent->GetDataCables()->GetLast()))
+            point->first = (ap->pos().x() - Center.x()) / scale;
+        else
+            point->second = (ap->pos().y() - Center.y()) / scale;
+    }
 }
 
 void DrawCableMode::mouseReleaseEvent(QMouseEvent *)

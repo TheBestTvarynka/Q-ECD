@@ -7,12 +7,13 @@ Cable::Cable(int x, int y)
 
 void Cable::print(double Scale)
 {
-    glLineWidth(20);
+    glLineWidth(float(Scale / 5));
     glColor3d(0.0, 0.0, 0.0);
-    glBegin(GL_LINE_LOOP);
-    for(int i = 0; i < points.size(); i++)
+    glBegin(GL_LINES);
+    for(int i = 0; i < points.size() - 1; i++)
     {
         glVertex2d(points[i].first * Scale, points[i].second * Scale);
+        glVertex2d(points[i + 1].first * Scale, points[i + 1].second * Scale);
     }
     glEnd();
 }

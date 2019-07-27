@@ -27,6 +27,7 @@ public:
     virtual void mouseMoveEvent(QMouseEvent *) = 0;
     virtual void mouseReleaseEvent(QMouseEvent *) = 0;
 
+    QPoint RoundCoordinates(double, double);
     void ScaleEvent(bool, QPoint, double &);
     QPoint GetCenter() { return Center; }
 };

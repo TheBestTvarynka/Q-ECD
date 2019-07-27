@@ -15,6 +15,9 @@ public:
     void print(double);
     void InsertVertex(Cable *, double, double);
     Cable *GetLast() { return cables.back(); }
+    pair<double, double> *GetLastPoint(Cable *c) { return c->GetLastPoint(); }
+    void SetPoint(pair<double, double> &, pair<double, double>);
+    bool GetDirectionEnd(Cable *);
 };
 
 #endif // DATACABLES_H

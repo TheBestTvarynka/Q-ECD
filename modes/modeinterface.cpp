@@ -11,13 +11,27 @@ ModeInterface::ModeInterface(double s, PaintBoard *p, int w, int h)
     Height = h;
 }
 
+QPoint ModeInterface::RoundCoordinates(double X, double Y)
+{
+    QPoint Result;
+    double rest = X - int(X);
+    if (rest >= 0.5)
+        Result.setX(int(X) + 1);
+    else
+        Result.setX(int(X));
+    rest = Y - int(Y);
+    if (rest >= 0.5)
+        Result.setY(int(Y) + 1);
+    else
+        Result.setY(int(Y));
+    return Result;
+}
+
 void ModeInterface::ScaleEvent(bool zoom, QPoint mouse, double &Scale)
 {
-//    qDebug() << (-54) % (23);
     QPoint new_Center;
 
     int n = int((mouse.x() - Center.x()) / Scale);
-//    qDebug() << "n: " << n;
     double new_Scale = 10.0;
     double k = mouse.x() - Center.x() - n * Scale;
     if (zoom) {
