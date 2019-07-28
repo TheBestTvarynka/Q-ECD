@@ -22,6 +22,11 @@ void DataCables::InsertVertex(Cable *c, double x, double y)
     c->insert_back(x, y);
 }
 
+void DataCables::RemoveLoop(Cable *cable, QPoint pos, double scale)
+{
+    cable->RemoveLoops(pos, scale);
+}
+
 bool DataCables::GetDirectionEnd(Cable *cable)
 {
     int last_point = cable->GetSize() - 1;

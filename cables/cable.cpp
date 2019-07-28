@@ -27,3 +27,18 @@ void Cable::insert_back(double x, double y)
 {
     points.push_back(pair<double, double>(x, y));
 }
+
+void Cable::RemoveLoops(QPoint pos, double scale)
+{
+    double distance;
+    for(int i = 1; i < points.size(); i++)
+    {
+        distance = sqrt(pow(points[i].first * scale - pos.x(), 2) + pow(points[i].second * scale - pos.y(), 2));
+        if (distance < scale)
+        {
+            points.erase(points.begin() + i + 1, points.end());
+
+            return;
+        }
+    }
+}

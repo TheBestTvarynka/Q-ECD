@@ -95,7 +95,6 @@ void DrawCableMode::mouseMoveEvent(QMouseEvent *ap)
 {
     pair<double, double> *point = Parent->GetDataCables()->GetLastPoint(Parent->GetDataCables()->GetLast());
     double delta = sqrt(pow(point->first * scale - ap->pos().x() + Center.x(), 2) + pow(point->second* scale - ap->pos().y() + Center.y(), 2));
-    qDebug() << delta;
     if (delta > scale)
     {
         QPoint r_point = RoundCoordinates(point->first, point->second);
@@ -117,6 +116,7 @@ void DrawCableMode::mouseMoveEvent(QMouseEvent *ap)
         else
             point->second = (ap->pos().y() - Center.y()) / scale;
     }
+    Parent->GetDataCables()->RemoveLoop(Parent->GetDataCables()->GetLast(), ap->pos() - Center, scale);
 }
 
 void DrawCableMode::mouseReleaseEvent(QMouseEvent *)

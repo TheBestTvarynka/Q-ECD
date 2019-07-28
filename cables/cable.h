@@ -4,6 +4,7 @@
 #include <QGLWidget>
 #include <QVector>
 #include <QPoint>
+#include <math.h>
 
 using std::pair;
 #include "cables/iobserver.h"
@@ -17,6 +18,7 @@ public:
     void print(double);
     void update();
     void insert_back(double, double);
+    void RemoveLoops(QPoint, double);
     pair<double, double> *GetLastPoint() { return &points.back(); }
     int GetSize() { return points.size(); }
     pair<double, double> GetPoint(int i) { return points[i]; }
