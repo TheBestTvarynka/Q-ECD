@@ -1,7 +1,11 @@
 #include "drawcablemode.h"
 #include "paintboard.h"
 
-DrawCableMode::DrawCableMode(PaintBoard *p, double s, QPoint c, int w, int h) : ModeInterface (s, p, w, h) { Center = c; }
+DrawCableMode::DrawCableMode(PaintBoard *p, double s, QPoint c, int w, int h) : ModeInterface (s, p, w, h)
+{
+    Center = c;
+    click = Qt::MouseButton::NoButton;
+}
 
 void DrawCableMode::initializeGL()
 {
@@ -73,8 +77,15 @@ void DrawCableMode::mousePressEvent(QMouseEvent *ap)
 {
     // select start point
     pair<QPoint, double> start = Parent->GetDataFigures()->SelectClamp(ap->pos() - Center, scale);
-    if (start.second == -1.0)
+    if (start.second > 0 && start.second <= scale  * 2 && ap->button() == Qt::MouseButton::LeftButton)
+    {
+        click = Qt::MouseButton::LeftButton;
+    }
+    else
+    {
+        click = Qt::MouseButton::NoButton;
         return;
+    }
     // create new cable
     Parent->GetDataCables()->AddCable(new Cable(start.first.x(), start.first.y()));
     Parent->GetDataFigures()->Register(Parent->GetDataCables()->GetLast(), 0);
@@ -93,6 +104,10 @@ void DrawCableMode::mousePressEvent(QMouseEvent *ap)
 
 void DrawCableMode::mouseMoveEvent(QMouseEvent *ap)
 {
+    if (click == Qt::MouseButton::NoButton)
+    {
+        return;
+    }
     pair<double, double> *point = Parent->GetDataCables()->GetLastPoint(Parent->GetDataCables()->GetLast());
     double delta = sqrt(pow(point->first * scale - ap->pos().x() + Center.x(), 2) + pow(point->second* scale - ap->pos().y() + Center.y(), 2));
     if (delta > scale)
@@ -119,7 +134,33 @@ void DrawCableMode::mouseMoveEvent(QMouseEvent *ap)
     Parent->GetDataCables()->RemoveLoop(Parent->GetDataCables()->GetLast(), ap->pos() - Center, scale);
 }
 
-void DrawCableMode::mouseReleaseEvent(QMouseEvent *)
+void DrawCableMode::mouseReleaseEvent(QMouseEvent *ap)
 {
-
+    if (click == Qt::MouseButton::NoButton)
+    {
+        return;
+    }
+    click = Qt::MouseButton::NoButton;
+    pair<QPoint, double> finish = Parent->GetDataFigures()->SelectClamp(ap->pos() - Center, scale);
+    pair<double, double> *point = Parent->GetDataCables()->GetLastPoint(Parent->GetDataCables()->GetLast());
+    if (finish.second > 0 && finish.second <= scale * 2)
+    {
+        qDebug() << "connect end of cable with clamp";
+        if (Parent->GetDataCables()->GetDirectionEnd(Parent->GetDataCables()->GetLast()))
+        {
+            point->first = finish.first.x();
+            Parent->GetDataCables()->GetLast()->insert_back(finish.first.x(), finish.first.y());
+        }
+        else
+        {
+            point->first = finish.first.y();
+            Parent->GetDataCables()->GetLast()->insert_back(finish.first.x(), finish.first.y());
+        }
+    }
+    else
+    {
+        QPoint r_point = RoundCoordinates(point->first, point->second);
+        point->first = r_point.x();
+        point->second = r_point.y();
+    }
 }

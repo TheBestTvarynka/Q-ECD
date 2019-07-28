@@ -7,6 +7,7 @@
 class DrawCableMode : public ModeInterface
 {
     QPoint start_position;
+    Qt::MouseButton click;
 public:
     explicit DrawCableMode(PaintBoard *, double, QPoint, int, int);
     void initializeGL();
