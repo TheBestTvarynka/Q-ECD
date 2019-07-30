@@ -28,6 +28,8 @@ public:
     void SetMainColor(double [3]);
     void SetPosition(double, double);
     void MoveFigure(double, double);
+
+    void Notify();
 };
 
 #endif // FIGUREINTERFACE_H

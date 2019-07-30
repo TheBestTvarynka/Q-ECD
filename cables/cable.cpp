@@ -1,4 +1,5 @@
 #include "cable.h"
+#include <QDebug>
 
 Cable::Cable(int x, int y)
 {
@@ -20,7 +21,7 @@ void Cable::print(double Scale)
 
 void Cable::update()
 {
-
+    qDebug() << points.size();
 }
 
 void Cable::insert_back(double x, double y)

@@ -1,14 +1,18 @@
 #ifndef IOBSERVER_H
 #define IOBSERVER_H
 
+#include <QMap>
+
+class IObservable;
 
 class IObserver
 {
-    int observable;
+    QMap<IObservable *, int> connections;
 public:
     IObserver();
+    IObserver(IObservable *parent, int vertex);
     virtual void update() = 0;
-    void SetObservable(int o) { observable = o; }
+    void AddObservable(IObservable *parent, int vertex);
 };
 
 #endif // IOBSERVER_H

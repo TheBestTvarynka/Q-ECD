@@ -54,3 +54,13 @@ void FigureInterface::MoveFigure(double dX, double dY)
 {
     x += dX; y += dY;
 }
+
+void FigureInterface::Notify()
+{
+    QMapIterator<IObserver* const, IObserver* const> it(connections);
+    while (it.hasNext())
+    {
+        it.next();
+        it.value()->update();
+    }
+}
