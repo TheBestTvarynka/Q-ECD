@@ -16,12 +16,14 @@ class Cable : public IObserver
 public:
     Cable(int, int);
     void print(double);
-    void update();
+    void update(IObservable *, double, double);
     void insert_back(double, double);
     void RemoveLoops(QPoint, double);
     pair<double, double> *GetLastPoint() { return &points.back(); }
     int GetSize() { return points.size(); }
     pair<double, double> GetPoint(int i) { return points[i]; }
+//    void MovePoint(int, double, double);
+    void SetPoint(int i, double X, double Y) { points[i] = pair<double, double>(X, Y); }
 };
 
 #endif // CABLE_H

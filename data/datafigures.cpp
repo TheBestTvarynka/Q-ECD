@@ -93,5 +93,6 @@ pair<QPoint, double> DataFigures::SelectClamp(QPoint mouse_pos, double Scale, Fi
     }
     s_clamp = best_clamp.first;
     qDebug() << "initialaizing";
-    return pair<QPoint, double>(select->GetClamp(best_clamp.first), best_clamp.second);
+    pair<double, double> res_clamp = select->GetClamp(best_clamp.first);
+    return pair<QPoint, double>(QPoint(int(res_clamp.first), int(res_clamp.second)), best_clamp.second);
 }

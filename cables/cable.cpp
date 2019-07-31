@@ -19,9 +19,9 @@ void Cable::print(double Scale)
     glEnd();
 }
 
-void Cable::update()
+void Cable::update(IObservable *parent, double X, double Y)
 {
-    qDebug() << points.size();
+    SetPoint(GetVertex(parent), X, Y);
 }
 
 void Cable::insert_back(double x, double y)

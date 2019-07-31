@@ -84,4 +84,5 @@ void ObjectMode::mouseReleaseEvent(QMouseEvent *ap)
 {
 //    qDebug() << "Mouse Release" << ap->x() << " " << Center.x();
     Parent->GetDataFigures()->RoundCoordinates(Parent->GetDataFigures()->GetSelectedFigure());
+    Parent->GetDataFigures()->GetSelectedFigure()->Notify();
 }

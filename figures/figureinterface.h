@@ -6,7 +6,9 @@
 #include <QMap>
 #include "figures/iobservable.h"
 
-typedef QPoint (*GetClampCoordinates)(int, int);
+using std::pair;
+
+typedef pair<double, double> (*GetClampCoordinates)(double, double);
 
 using std::pair;
 
@@ -24,7 +26,7 @@ public:
     double GetX() { return x; }
     double GetY() { return y; }
     QMap<int, GetClampCoordinates> GetClams() { return clamp_coordiantes; }
-    QPoint GetClamp(int clamp) { return (*clamp_coordiantes[clamp])(int(x), int(y));}
+    pair<double, double> GetClamp(int clamp) { return (*clamp_coordiantes[clamp])(x, y);}
     void SetMainColor(double [3]);
     void SetPosition(double, double);
     void MoveFigure(double, double);

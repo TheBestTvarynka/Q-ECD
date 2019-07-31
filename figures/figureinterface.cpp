@@ -16,14 +16,14 @@ pair<int, double> FigureInterface::SelectClamp(QPoint mouse_pos, double Scale, Q
     {
         return pair<int, double>(-1, -1.0);
     }
-    QPoint clamp = (*clamp_c[0])(int(x), int(y));
+    pair<double, double> clamp = (*clamp_c[0])(int(x), int(y));
     int best_clamp = 0;
-    double min_distance = sqrt(pow((clamp.x()) * Scale - mouse_pos.x(), 2) + pow((clamp.y()) * Scale - mouse_pos.y(), 2));
+    double min_distance = sqrt(pow((clamp.first) * Scale - mouse_pos.x(), 2) + pow((clamp.second) * Scale - mouse_pos.y(), 2));
     double distance = min_distance;
     for(int i = 1; i < clamp_c.size(); i++)
     {
         clamp = (*clamp_c[i])(int(x), int(y));
-        distance = sqrt(pow((clamp.x()) * Scale - mouse_pos.x(), 2) + pow((clamp.y()) * Scale - mouse_pos.y(), 2));
+        distance = sqrt(pow((clamp.first) * Scale - mouse_pos.x(), 2) + pow((clamp.second) * Scale - mouse_pos.y(), 2));
         if (distance < min_distance)
         {
             min_distance = distance;
@@ -58,10 +58,12 @@ void FigureInterface::MoveFigure(double dX, double dY)
 
 void FigureInterface::Notify()
 {
+    pair<double, double> clamp;
     QMapIterator<IObserver*, int> it(connections);
     while (it.hasNext())
     {
         it.next();
-        it.key()->update();
+        clamp = this->GetClamp(it.value());
+        it.key()->update(this, clamp.first, clamp.second);
     }
 }

@@ -9,8 +9,8 @@ class Resistor : public FigureInterface
 public:
     Resistor(int X, int Y);
     void print(double);
-    static QPoint Clamp1(int X, int Y) { return QPoint(X + 4, Y); }
-    static QPoint Clamp2(int X, int Y) { return QPoint(X - 4, Y); }
+    static pair<double, double> Clamp1(double X, double Y) { return pair<double, double>(X + 4, Y); }
+    static pair<double, double> Clamp2(double X, double Y) { return pair<double, double>(X - 4, Y); }
 };
 
 #endif // RESISTOR_H
