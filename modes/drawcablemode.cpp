@@ -76,7 +76,10 @@ void DrawCableMode::paintGL(QPoint &Delta)
 void DrawCableMode::mousePressEvent(QMouseEvent *ap)
 {
     // select start point
-    pair<QPoint, double> start = Parent->GetDataFigures()->SelectClamp(ap->pos() - Center, scale);
+    FigureInterface *select;
+    int clamp = -1;
+    pair<QPoint, double> start = Parent->GetDataFigures()->SelectClamp(ap->pos() - Center, scale, select, clamp);
+    qDebug() << "select_clamp method finished success..." << select->GetX();
     if (start.second > 0 && start.second <= scale  * 2 && ap->button() == Qt::MouseButton::LeftButton)
     {
         click = Qt::MouseButton::LeftButton;
@@ -86,9 +89,9 @@ void DrawCableMode::mousePressEvent(QMouseEvent *ap)
         click = Qt::MouseButton::NoButton;
         return;
     }
-    // create new cable
+    // create new cable and connect tham with figure
     Parent->GetDataCables()->AddCable(new Cable(start.first.x(), start.first.y()));
-    Parent->GetDataFigures()->Register(Parent->GetDataCables()->GetLast(), 0);
+    Parent->GetDataFigures()->Register(select, clamp, Parent->GetDataCables()->GetLast(), 0);
     // add second point to cable
     double DeltaX = abs(double(start.first.x()) * scale - double(ap->pos().x() - Center.x()));
     double DeltaY = abs(double(start.first.y()) * scale - double(ap->pos().y() - Center.y()));
@@ -140,27 +143,27 @@ void DrawCableMode::mouseReleaseEvent(QMouseEvent *ap)
     {
         return;
     }
-    click = Qt::MouseButton::NoButton;
-    pair<QPoint, double> finish = Parent->GetDataFigures()->SelectClamp(ap->pos() - Center, scale);
-    pair<double, double> *point = Parent->GetDataCables()->GetLastPoint(Parent->GetDataCables()->GetLast());
-    if (finish.second > 0 && finish.second <= scale * 2)
-    {
-        qDebug() << "connect end of cable with clamp";
-        if (Parent->GetDataCables()->GetDirectionEnd(Parent->GetDataCables()->GetLast()))
-        {
-            point->first = finish.first.x();
-            Parent->GetDataCables()->GetLast()->insert_back(finish.first.x(), finish.first.y());
-        }
-        else
-        {
-            point->first = finish.first.y();
-            Parent->GetDataCables()->GetLast()->insert_back(finish.first.x(), finish.first.y());
-        }
-    }
-    else
-    {
-        QPoint r_point = RoundCoordinates(point->first, point->second);
-        point->first = r_point.x();
-        point->second = r_point.y();
-    }
+//    click = Qt::MouseButton::NoButton;
+//    pair<QPoint, double> finish = Parent->GetDataFigures()->SelectClamp(ap->pos() - Center, scale);
+//    pair<double, double> *point = Parent->GetDataCables()->GetLastPoint(Parent->GetDataCables()->GetLast());
+//    if (finish.second > 0 && finish.second <= scale * 2)
+//    {
+//        qDebug() << "connect end of cable with clamp";
+//        if (Parent->GetDataCables()->GetDirectionEnd(Parent->GetDataCables()->GetLast()))
+//        {
+//            point->first = finish.first.x();
+//            Parent->GetDataCables()->GetLast()->insert_back(finish.first.x(), finish.first.y());
+//        }
+//        else
+//        {
+//            point->first = finish.first.y();
+//            Parent->GetDataCables()->GetLast()->insert_back(finish.first.x(), finish.first.y());
+//        }
+//    }
+//    else
+//    {
+//        QPoint r_point = RoundCoordinates(point->first, point->second);
+//        point->first = r_point.x();
+//        point->second = r_point.y();
+//    }
 }

@@ -8,10 +8,10 @@
 class IObservable
 {
 protected:
-    QMap<IObserver* const, IObserver* const> connections;
+    QMap<IObserver*, int> connections;
 public:
     IObservable();
-    void Register(IObserver *);
+    void Register(IObserver *, int);
     void Remove(IObserver *);
     virtual void Notify() = 0;
 };

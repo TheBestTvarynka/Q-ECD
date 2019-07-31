@@ -5,9 +5,9 @@ IObservable::IObservable()
     // start connection
 }
 
-void IObservable::Register(IObserver *new_observer)
+void IObservable::Register(IObserver *new_observer, int clamp)
 {
-    connections.insert(new_observer, new_observer);
+    connections.insert(new_observer, clamp);
 }
 
 void IObservable::Remove(IObserver *new_observer)

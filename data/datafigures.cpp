@@ -68,30 +68,30 @@ void DataFigures::RoundCoordinates(FigureInterface *figure)
     figure->SetPosition(newX, newY);
 }
 
-void DataFigures::Register(Cable *new_Cable, int vertex)
+void DataFigures::Register(FigureInterface *select, int clamp, IObserver *cable, int vertex)
 {
-    if (selected_figure == nullptr || new_Cable == nullptr || selected_clamp == -1)
-        return;
-    selected_figure->Register(new_Cable, vertex, selected_clamp);
+    select->Register(cable, clamp);
+    cable->AddObservable(select, vertex);
 }
 
-pair<QPoint, double> DataFigures::SelectClamp(QPoint mouse_pos, double Scale)
+pair<QPoint, double> DataFigures::SelectClamp(QPoint mouse_pos, double Scale, FigureInterface *(&select), int &s_clamp)
 {
     if (figures.size() == 0)
     {
         return pair<QPoint, double>(QPoint(0, 0), -1);
     }
     pair<int, double> clamp, best_clamp = figures[0]->SelectClamp(mouse_pos, Scale, figures[0]->GetClams());
-    selected_figure = figures[0];
+    select = figures[0];
     for (int i = 1; i < figures.size(); i++)
     {
         clamp = figures[i]->SelectClamp(mouse_pos, Scale, figures[i]->GetClams());
         if (clamp.second < best_clamp.second && clamp.first != -1.0)
         {
-            selected_figure = figures[i];
+            select = figures[i];
             best_clamp = clamp;
         }
     }
-    selected_clamp = best_clamp.first;
-    return pair<QPoint, double>(selected_figure->GetClamp(best_clamp.first), best_clamp.second);
+    s_clamp = best_clamp.first;
+    qDebug() << "initialaizing";
+    return pair<QPoint, double>(select->GetClamp(best_clamp.first), best_clamp.second);
 }

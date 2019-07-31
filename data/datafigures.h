@@ -3,6 +3,7 @@
 
 #include <QVector>
 #include <math.h>
+#include "cables/iobserver.h"
 #include "figures/figureinterface.h"
 #include "figures/resistor.h"
 #include "figures/capacitor.h"
@@ -19,9 +20,9 @@ public:
     void select_figure(QPoint, double);
     void MoveSelectedFigure(FigureInterface *, double, double);
     void RoundCoordinates(FigureInterface *);
-    void Register(Cable *, int);
+    void Register(FigureInterface *, int, IObserver *, int);
     FigureInterface *GetSelectedFigure();
-    pair<QPoint, double> SelectClamp(QPoint, double);
+    pair<QPoint, double> SelectClamp(QPoint, double, FigureInterface *&, int &);
 };
 
 #endif // DATAFIGURES_H

@@ -10,7 +10,7 @@ using std::pair;
 #include "cables/iobserver.h"
 
 
-class Cable : IObserver
+class Cable : public IObserver
 {
     QVector<pair<double, double> > points;
 public:
