@@ -23,7 +23,7 @@ public:
     int GetSize() { return points.size(); }
     pair<double, double> GetPoint(int i) { return points[i]; }
 //    void MovePoint(int, double, double);
-    void SetPoint(int i, double X, double Y) { points[i] = pair<double, double>(X, Y); }
+    void SetPoint(int i, double X, double Y);
 };
 
 #endif // CABLE_H

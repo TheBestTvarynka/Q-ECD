@@ -43,3 +43,33 @@ void Cable::RemoveLoops(QPoint pos, double scale)
         }
     }
 }
+
+void Cable::SetPoint(int i, double X, double Y)
+{
+    if (i == 0)
+    {
+        if (points[i].second == points[i + 1].second)
+        {
+            points[i] = pair<double, double>(X, Y);
+            points[i + 1].second = points[i].second;
+        }
+        else
+        {
+            points[i] = pair<double, double>(X, Y);
+            points[i + 1].first = points[i].first;
+        }
+    }
+    else if (i == points.size())
+    {
+        if (points[i].second == points[i - 1].second)
+        {
+            points[i] = pair<double, double>(X, Y);
+            points[i - 1].second = points[i].second;
+        }
+        else
+        {
+            points[i] = pair<double, double>(X, Y);
+            points[i - 1].first = points[i].first;
+        }
+    }
+}
