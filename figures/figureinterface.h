@@ -10,7 +10,7 @@ using std::pair;
 
 typedef pair<double, double> (*GetClampCoordinates)(double, double);
 
-using std::pair;
+class PaintBoard;
 
 class FigureInterface : public IObservable
 {
@@ -21,7 +21,7 @@ protected:
 public:
     FigureInterface() : x(10.0), y(10.0) {}
     FigureInterface(int X, int Y);
-    virtual void print(double) = 0;
+    virtual void print(double, PaintBoard *) = 0;
     pair<int, double> SelectClamp(QPoint, double, QMap<int, GetClampCoordinates>);
     double GetX() { return x; }
     double GetY() { return y; }

@@ -1,5 +1,6 @@
 #include "datafigures.h"
 #include <QDebug>
+#include "paintboard.h"
 
 DataFigures::DataFigures()
 {
@@ -9,10 +10,10 @@ DataFigures::DataFigures()
     selected_clamp = -1;
 }
 
-void DataFigures::print(double Scale)
+void DataFigures::print(double Scale, PaintBoard *Parent)
 {
     for (int i = 0; i < figures.size(); i++) {
-        figures[i]->print(Scale);
+        figures[i]->print(Scale, Parent);
     }
 }
 
@@ -24,7 +25,7 @@ void DataFigures::add(FigureInterface *new_Figure)
 void DataFigures::select_figure(QPoint position, double Scale)
 {
     if (selected_figure != nullptr)
-        selected_figure->SetMainColor(new double[3]{0.0, 1.1, 0.0});
+        selected_figure->SetMainColor(new double[3]{0.0, 1.0, 0.0});
     double distance;
     double min_distance = sqrt(pow(position.x() - Scale * figures[0]->GetX(), 2) + pow(position.y() - Scale * figures[0]->GetY(), 2));
     selected_figure = figures[0];

@@ -59,7 +59,7 @@ void DrawCableMode::paintGL(QPoint &Delta)
 
     int nV = int(Weight / scale) + 1;
     int nH = int(Height / scale) + 1;
-//    qDebug() << Center.x() << " " << Center.y();
+
     double DeltaX = Center.x() - int(Center.x() / scale) * scale, DeltaY = Center.y() - int(Center.y() / scale) * scale;
     for (int i = 0; i < nH; i++)
     {
@@ -71,10 +71,7 @@ void DrawCableMode::paintGL(QPoint &Delta)
     glEnd();
 
     Parent->GetDataCables()->print(scale);
-    Parent->GetDataFigures()->print(scale);
-
-    glColor3d(1.0, 0.0, 1.0);
-    Parent->renderText(50, 50, "text", QFont("Arial", 20, 5, false));
+    Parent->GetDataFigures()->print(scale, Parent);
 }
 
 void DrawCableMode::mousePressEvent(QMouseEvent *ap)

@@ -63,7 +63,7 @@ void ObjectMode::paintGL(QPoint &Delta)
     glEnd();
 
     Parent->GetDataCables()->print(scale);
-    Parent->GetDataFigures()->print(scale);
+    Parent->GetDataFigures()->print(scale, Parent);
 }
 
 void ObjectMode::mousePressEvent(QMouseEvent *ap)

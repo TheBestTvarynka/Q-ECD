@@ -25,7 +25,6 @@ class PaintBoard : public QGLWidget
 
     QPoint Delta;
     double Scale;
-    QPoint Center;
     // temp variavle. use when we drag a mouse
     QPoint start_position;
     Qt::MouseButton click;
@@ -38,6 +37,7 @@ public:
     void mouseMoveEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
     void wheelEvent(QWheelEvent *);
+    void RenderText(double, double, QString);
 
     double GetScale() { return Scale; }
     QPoint GetCenter() { return mode->GetCenter(); }

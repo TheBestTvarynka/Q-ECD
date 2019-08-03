@@ -8,6 +8,8 @@
 #include "figures/resistor.h"
 #include "figures/capacitor.h"
 
+class PaintBoard;
+
 class DataFigures
 {
     QVector<FigureInterface *> figures;
@@ -15,7 +17,7 @@ class DataFigures
     int selected_clamp;
 public:
     DataFigures();
-    void print(double);
+    void print(double, PaintBoard *);
     void add(FigureInterface *);
     void select_figure(QPoint, double);
     void MoveSelectedFigure(FigureInterface *, double, double);

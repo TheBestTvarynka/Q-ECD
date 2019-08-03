@@ -30,11 +30,6 @@ pair<int, double> FigureInterface::SelectClamp(QPoint mouse_pos, double Scale, Q
             best_clamp = i;
         }
     }
-//    if (abs(min_distance) > Scale * 2)
-//    {
-//        qDebug() << "in emergexit";
-//        return pair<int, double>(-1, -1.0);
-//    }
     return pair<int, double>(best_clamp, min_distance);
 }
 

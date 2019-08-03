@@ -30,7 +30,6 @@ void PaintBoard::resizeGL(int w, int h)
 void PaintBoard::paintGL()
 {
     mode->paintGL(Delta);
-    Center += Delta;
 }
 
 void PaintBoard::mousePressEvent(QMouseEvent *ap)
@@ -77,6 +76,11 @@ void PaintBoard::wheelEvent(QWheelEvent *event)
         mode->ScaleEvent(true, event->pos(), Scale);
     else
         mode->ScaleEvent(false, event->pos(), Scale);
+}
+
+void PaintBoard::RenderText(double x, double y, QString text)
+{
+    renderText(mode->GetCenter().x() + int(x * Scale), mode->GetCenter().y() + int(y * Scale), text, QFont("Arial", int(Scale * 0.67), 5, false));
 }
 
 void PaintBoard::SetMode(ModeInterface *new_Mode)
