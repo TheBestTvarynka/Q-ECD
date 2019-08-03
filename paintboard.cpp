@@ -13,8 +13,8 @@ PaintBoard::PaintBoard(QWidget *parent, ModeInterface *start_state): QGLWidget(p
 
     if (start_state == nullptr)
         mode = new DrawCableMode(this, Scale, QPoint(0, 0), width(), height());
-    figures.add(new Resistor(5, 7));
-    figures.add(new capacitor(4, 3));
+    figures.add(new Resistor(5, 7, "R1"));
+    figures.add(new capacitor(4, 3, "C1"));
 }
 
 void PaintBoard::initializeGL()

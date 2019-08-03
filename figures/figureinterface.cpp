@@ -1,13 +1,14 @@
 #include "figureinterface.h"
 #include <QDebug>
 
-FigureInterface::FigureInterface(int X, int Y)
+FigureInterface::FigureInterface(int X, int Y, QString n)
 {
     x = X;
     y = Y;
     main_color[0] = 0.0;
     main_color[1] = 1.0;
     main_color[2] = 0.0;
+    name = n;
 }
 
 pair<int, double> FigureInterface::SelectClamp(QPoint mouse_pos, double Scale, QMap<int, GetClampCoordinates> clamp_c)

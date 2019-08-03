@@ -7,7 +7,7 @@ class Resistor : public FigureInterface
 {
     float r;
 public:
-    Resistor(int X, int Y);
+    Resistor(int X, int Y, QString);
     void print(double, PaintBoard *);
     static pair<double, double> Clamp1(double X, double Y) { return pair<double, double>(X + 4, Y); }
     static pair<double, double> Clamp2(double X, double Y) { return pair<double, double>(X - 4, Y); }

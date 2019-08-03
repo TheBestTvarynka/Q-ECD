@@ -1,10 +1,12 @@
 #include "resistor.h"
 #include "paintboard.h"
 
-Resistor::Resistor(int X, int Y) : FigureInterface(X, Y), r(1)
+Resistor::Resistor(int X, int Y, QString N) : FigureInterface(X, Y, N), r(1)
 {
     clamp_coordiantes[0] = Clamp1;
     clamp_coordiantes[1] = Clamp2;
+    nameX = 0;
+    nameY = -1.2;
 }
 
 void Resistor::print(double Scale, PaintBoard *Parent)
@@ -25,5 +27,5 @@ void Resistor::print(double Scale, PaintBoard *Parent)
     glVertex2d((x + 2) * Scale, y * Scale);
     glVertex2d((x + 4) * Scale, y * Scale);
     glEnd();
-    Parent->RenderText(x, y - 1.2, "R1");
+    Parent->RenderText(x + nameX, y + nameY, name);
 }
