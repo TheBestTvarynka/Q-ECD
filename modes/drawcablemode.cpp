@@ -1,5 +1,6 @@
 #include "drawcablemode.h"
 #include "paintboard.h"
+#include <QFont>
 
 DrawCableMode::DrawCableMode(PaintBoard *p, double s, QPoint c, int w, int h) : ModeInterface (s, p, w, h)
 {
@@ -71,6 +72,9 @@ void DrawCableMode::paintGL(QPoint &Delta)
 
     Parent->GetDataCables()->print(scale);
     Parent->GetDataFigures()->print(scale);
+
+    glColor3d(1.0, 0.0, 1.0);
+    Parent->renderText(50, 50, "text", QFont("Arial", 20, 5, false));
 }
 
 void DrawCableMode::mousePressEvent(QMouseEvent *ap)
