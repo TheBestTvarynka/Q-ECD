@@ -63,7 +63,7 @@ void ObjectMode::paintGL(QPoint &Delta)
     glEnd();
 
     Parent->GetDataCables()->print(scale);
-    Parent->GetDataFigures()->print(scale);
+    Parent->GetDataFigures()->print(scale, Parent);
 }
 
 void ObjectMode::mousePressEvent(QMouseEvent *ap)
@@ -84,4 +84,5 @@ void ObjectMode::mouseReleaseEvent(QMouseEvent *ap)
 {
 //    qDebug() << "Mouse Release" << ap->x() << " " << Center.x();
     Parent->GetDataFigures()->RoundCoordinates(Parent->GetDataFigures()->GetSelectedFigure());
+    Parent->GetDataFigures()->GetSelectedFigure()->Notify();
 }

@@ -10,18 +10,20 @@ using std::pair;
 #include "cables/iobserver.h"
 
 
-class Cable : IObserver
+class Cable : public IObserver
 {
     QVector<pair<double, double> > points;
 public:
     Cable(int, int);
     void print(double);
-    void update();
+    void update(IObservable *, double, double);
     void insert_back(double, double);
     void RemoveLoops(QPoint, double);
     pair<double, double> *GetLastPoint() { return &points.back(); }
     int GetSize() { return points.size(); }
     pair<double, double> GetPoint(int i) { return points[i]; }
+//    void MovePoint(int, double, double);
+    void SetPoint(int i, double X, double Y);
 };
 
 #endif // CABLE_H

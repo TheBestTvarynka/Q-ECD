@@ -1,7 +1,6 @@
 #include "modeinterface.h"
 #include "paintboard.h"
 #include <QDebug>
-#include "paintboard.h"
 
 ModeInterface::ModeInterface(double s, PaintBoard *p, int w, int h)
 {

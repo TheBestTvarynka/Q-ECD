@@ -5,12 +5,13 @@ IObservable::IObservable()
     // start connection
 }
 
-void IObservable::Register(Cable *cable, int vertex, int clamp)
+void IObservable::Register(IObserver *new_observer, int clamp)
 {
-    connections.push_back(Connector(cable, vertex, clamp));
+    connections.insert(new_observer, clamp);
 }
 
-void IObservable::Remove()
+void IObservable::Remove(IObserver *new_observer)
 {
-    // remove
+//    QMapIterator<IObserver* const, IObserver* const> it(connections);
+    connections.remove(new_observer);
 }

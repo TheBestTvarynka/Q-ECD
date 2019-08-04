@@ -2,36 +2,18 @@
 #define IOBSERVABLE_H
 
 #include <QVector>
-
-#include "cables/cable.h"
-
-struct Connector
-{
-    Cable *cable;
-    int vertex;
-    int clamp;
-    Connector(Cable *cb, int v, int cl)
-    {
-        cable = cb;
-        vertex = v;
-        clamp = cl;
-    }
-    Connector()
-    {
-        cable = nullptr;
-        vertex = clamp = -1;
-    }
-};
+#include <QMap>
+#include "cables/iobserver.h"
 
 class IObservable
 {
 protected:
-    QVector<Connector> connections;
+    QMap<IObserver*, int> connections;
 public:
     IObservable();
-    void Register(Cable *, int, int);
-    void Remove();
-    void Notify();
+    void Register(IObserver *, int);
+    void Remove(IObserver *);
+    virtual void Notify() = 0;
 };
 
 #endif // IOBSERVABLE_H

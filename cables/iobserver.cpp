@@ -1,6 +1,17 @@
 #include "iobserver.h"
+#include "figures/iobservable.h"
 
 IObserver::IObserver()
 {
-    observable = 0;
+
 }
+
+IObserver::IObserver(IObservable *parent, int vertex)
+{
+    AddObservable(parent, vertex);
+}
+
+void IObserver::AddObservable(IObservable *parent, int vertex)
+ {
+    connections.insert(parent, vertex);
+ }

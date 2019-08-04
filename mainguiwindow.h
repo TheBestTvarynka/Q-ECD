@@ -19,7 +19,8 @@ public:
 private:
     Ui::MainGUIWindow *ui;
 private slots:
-    void ChangeMode();
+    void DCMode();
+    void OMode();
 };
 
 #endif // MAINGUIWINDOW_H
