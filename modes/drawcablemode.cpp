@@ -155,13 +155,13 @@ void DrawCableMode::mouseReleaseEvent(QMouseEvent *ap)
         if (Parent->GetDataCables()->GetDirectionEnd(Parent->GetDataCables()->GetLast()))
         {
             point->first = finish.first.x();
-            if (finish.first.y() != point->second)
+            if (!qFuzzyCompare(finish.first.y(), point->second))
                 Parent->GetDataCables()->GetLast()->insert_back(finish.first.x(), finish.first.y());
         }
         else
         {
             point->first = finish.first.y();
-            if (finish.first.x() != point->first)
+            if (!qFuzzyCompare(finish.first.x(), point->first))
                 Parent->GetDataCables()->GetLast()->insert_back(finish.first.x(), finish.first.y());
         }
         Parent->GetDataFigures()->Register(select, clamp, Parent->GetDataCables()->GetLast(), Parent->GetDataCables()->GetLast()->GetSize() - 1);

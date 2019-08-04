@@ -86,7 +86,7 @@ pair<QPoint, double> DataFigures::SelectClamp(QPoint mouse_pos, double Scale, Fi
     for (int i = 1; i < figures.size(); i++)
     {
         clamp = figures[i]->SelectClamp(mouse_pos, Scale, figures[i]->GetClams());
-        if (clamp.second < best_clamp.second && clamp.first != -1.0)
+        if (clamp.second < best_clamp.second && !qFuzzyCompare(clamp.first, -1.0))
         {
             select = figures[i];
             best_clamp = clamp;
