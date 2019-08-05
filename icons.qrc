@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/figures">
+        <file>icons/figures/capasitor.svg</file>
+        <file>icons/figures/resistor.svg</file>
+    </qresource>
+</RCC>
