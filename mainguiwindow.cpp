@@ -46,18 +46,32 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     right_bar->addWidget(right_down);
 
     QListWidget *list_new = new QListWidget;
-    list_new->addItem("resistor");
-    list_new->addItem("qkation");
-    list_new->addItem("dimka");
+    list_new->setStyleSheet("QListWidget{"
+                                "border: none;"
+                                "background: white;"
+                                "color: black;"
+                                "selection-background-color: darkgray;}"
+                            "QListWidget { show-decoration-selected: 1; }"
+                            "QListWidget::item:alternate { background: red; }"
+                            "QListWidget::item:selected { color: black; border: none; }"
+                            "QListWidget::item:selected:!active { background: rgb(150, 150, 150); }"
+                            "QListWidget::item:selected:active { background: #b2c8eb; }"
+                            "QListWidget::item:hover { background: rgb(210, 210, 210); }");
+    QListWidgetItem *resistor = new QListWidgetItem(QIcon(":/figures/icons/figures/resistor.svg"), "Resistor", list_new);
+    QListWidgetItem *capasitor = new QListWidgetItem(QIcon(":/figures/icons/figures/capasitor.svg"), "Capasitor", list_new);
+    list_new->insertItem(0, resistor);
+    list_new->insertItem(0, capasitor);
     QVBoxLayout *obj_mode = new QVBoxLayout;
     obj_mode->addWidget(list_new);
-
+    obj_mode->setMargin(0);
     QWidget *left_bar = new QWidget;
+    left_bar->setStyleSheet("QWidget {"
+                             "background-color: rgb(200, 200, 200);"
+                             "border: 0px;"
+                             "}");
     left_bar->setLayout(obj_mode);
 
     QSplitter *main_area = new QSplitter(Qt::Horizontal);
-//    main_area->addWidget(right_up);
-//    main_area->addWidget(right_down);
     main_area->addWidget(left_bar);
     ui->widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     main_area->addWidget(ui->widget);
@@ -67,9 +81,11 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     QComboBox *mode = new QComboBox;
     mode->addItem("object");
     mode->addItem("draw cable");
+    mode->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
     QSpacerItem *space = new QSpacerItem(40, 60, QSizePolicy::Expanding, QSizePolicy::Preferred);
     QHBoxLayout *menu = new QHBoxLayout;
+    menu->addWidget(mode);
     menu->addWidget(ui->pushButton);
     menu->addWidget(ui->pushButton_2);
     menu->addItem(space);
@@ -78,14 +94,13 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
 
     QSplitter *up_bar = new QSplitter(Qt::Horizontal);
     up_bar->addWidget(logo);
-    up_bar->addWidget(mode);
     up_bar->addWidget(actions);
 
     QSplitter *all = new QSplitter(Qt::Vertical);
     all->setStyleSheet("QSplitter::handle {"
                          "background: rgba(101, 104, 113, 235);"
                          "border: 0px solid #777;"
-                         "height: 1px;"
+                         "height: 2px;"
                          "}");
     all->addWidget(up_bar);
     all->addWidget(main_area);
@@ -93,6 +108,7 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     QLayout *our = ui->centralWidget->layout();
 //    ui->centralWidget->setLayout(propereties);
     our = new QHBoxLayout;
+    our->setMargin(0);
     our->addWidget(all);
     ui->centralWidget->setLayout(our);
 }
