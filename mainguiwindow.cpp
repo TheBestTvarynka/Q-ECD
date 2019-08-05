@@ -82,6 +82,11 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     up_bar->addWidget(actions);
 
     QSplitter *all = new QSplitter(Qt::Vertical);
+    all->setStyleSheet("QSplitter::handle {"
+                         "background: rgba(101, 104, 113, 235);"
+                         "border: 0px solid #777;"
+                         "height: 1px;"
+                         "}");
     all->addWidget(up_bar);
     all->addWidget(main_area);
 
