@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/figures">
+        <file>icons/figures/capasitor.svg</file>
+        <file>icons/figures/resistor.svg</file>
+    </qresource>
+    <qresource prefix="/objectmode">
+        <file>icons/objectmode/rotate_left.svg</file>
+        <file>icons/objectmode/rotate_right.svg</file>
+        <file>icons/objectmode/delete.svg</file>
+        <file>icons/objectmode/pastle.svg</file>
+        <file>icons/objectmode/copy.svg</file>
+    </qresource>
+</RCC>
