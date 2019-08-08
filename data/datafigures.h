@@ -27,6 +27,7 @@ public:
     void Register(FigureInterface *, int, IObserver *, int);
     FigureInterface *GetSelectedFigure();
     pair<QPoint, double> SelectClamp(QPoint, double, FigureInterface *&, int &);
+    int size() { return figures.size(); }
 };
 
 #endif // DATAFIGURES_H
