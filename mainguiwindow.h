@@ -11,7 +11,6 @@ class MainGUIWindow;
 class MainGUIWindow : public QMainWindow
 {
     Q_OBJECT
-
 public:
     explicit MainGUIWindow(QWidget *parent = nullptr);
     ~MainGUIWindow();

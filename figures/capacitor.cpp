@@ -1,7 +1,7 @@
 #include "capacitor.h"
 #include "paintboard.h"
 
-capacitor::capacitor(int X, int Y, QString N) : FigureInterface(X, Y, N), c(1)
+Capacitor::Capacitor(int X, int Y, QString N) : FigureInterface(X, Y, N), c(1)
 {
     clamp_coordiantes[0] = Clamp1;
     clamp_coordiantes[1] = Clamp2;
@@ -9,7 +9,7 @@ capacitor::capacitor(int X, int Y, QString N) : FigureInterface(X, Y, N), c(1)
     nameY = -1.6;
 }
 
-void capacitor::print(double Scale, PaintBoard *Parent)
+void Capacitor::print(double Scale, PaintBoard *Parent)
 {
     glLineWidth(float(Scale / 5));
     glColor3d(main_color[0], main_color[1], main_color[2]);

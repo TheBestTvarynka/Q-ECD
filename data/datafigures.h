@@ -16,6 +16,8 @@ class DataFigures
     FigureInterface *selected_figure;
     int selected_clamp;
 public:
+    static FigureInterface* Resistor(int x, int y);
+    static FigureInterface* Capasitor(int x, int y);
     DataFigures();
     void print(double, PaintBoard *);
     void add(FigureInterface *);

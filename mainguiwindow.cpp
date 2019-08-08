@@ -225,6 +225,7 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     our->setMargin(0);
     our->addWidget(all);
     ui->centralWidget->setLayout(our);
+    connect(list_new, SIGNAL(currentRowChanged(int)), ui->widget, SLOT(CreateFigure(int)));
 }
 
 MainGUIWindow::~MainGUIWindow()

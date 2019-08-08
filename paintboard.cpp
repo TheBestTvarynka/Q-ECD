@@ -14,7 +14,7 @@ PaintBoard::PaintBoard(QWidget *parent, ModeInterface *start_state): QGLWidget(p
     if (start_state == nullptr)
         mode = new ObjectMode(this, Scale, QPoint(0, 0), width(), height());
     figures.add(new Resistor(5, 7, "R1"));
-    figures.add(new capacitor(4, 3, "C1"));
+    figures.add(new Capacitor(4, 3, "C1"));
 }
 
 void PaintBoard::initializeGL()
@@ -83,8 +83,15 @@ void PaintBoard::RenderText(double x, double y, QString text)
     renderText(mode->GetCenter().x() + int(x * Scale), mode->GetCenter().y() + int(y * Scale), text, QFont("Arial", int(Scale * 0.67), 5, false));
 }
 
-void PaintBoard::SetMode(ModeInterface *new_Mode)
+void PaintBoard::SetMode(ModeInterface *newMode)
 {
     delete mode;
-    mode = new_Mode;
+    mode = newMode;
 }
+
+void PaintBoard::CreateFigure(int f)
+{
+    qDebug() << f;
+    figures.add(creator.GetNewFigure(f, int((width() / 2 - mode->GetCenter().x()) / Scale), int((height() / 2 - mode->GetCenter().y()) / Scale), "name"));
+}
+

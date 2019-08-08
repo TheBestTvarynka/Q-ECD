@@ -12,6 +12,7 @@
 #include <QMouseEvent>
 #include <QPoint>
 #include <QWheelEvent>
+#include "figures/figurecreator.h"
 
 using std::pair;
 
@@ -22,6 +23,7 @@ class PaintBoard : public QGLWidget
     ModeInterface *mode;
     DataFigures figures;
     DataCables cables;
+    FigureCreator creator;
 
     QPoint Delta;
     double Scale;
@@ -45,6 +47,9 @@ public:
     DataFigures *GetDataFigures() { return &figures; }
     DataCables *GetDataCables() { return &cables; }
     void SetMode(ModeInterface *);
+private slots:
+//    void CreateFigure(FigureInterface *);
+    void CreateFigure(int);
 };
 
 #endif // PAINTBOARD_H
