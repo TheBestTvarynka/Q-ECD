@@ -91,7 +91,6 @@ void PaintBoard::SetMode(ModeInterface *newMode)
 
 void PaintBoard::CreateFigure(int f)
 {
-    qDebug() << f;
     figures.add(creator.GetNewFigure(f, int((width() / 2 - mode->GetCenter().x()) / Scale), int((height() / 2 - mode->GetCenter().y()) / Scale), "name"));
 }
 

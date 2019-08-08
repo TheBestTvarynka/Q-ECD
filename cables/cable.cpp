@@ -46,8 +46,8 @@ void Cable::RemoveLoops(QPoint pos, double scale)
 
 void Cable::SetPoint(int i, double X, double Y)
 {
-    qDebug() << i << points.size();
-    qDebug() << points;
+//    qDebug() << i << points.size();
+//    qDebug() << points;
     if (i == 0)
     {
         if (qFuzzyCompare(points[i].second, points[i + 1].second))
