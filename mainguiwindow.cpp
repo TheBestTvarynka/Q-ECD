@@ -5,18 +5,22 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
 {
 
     ui->setupUi(this);
-    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(DCMode()));
-    connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(OMode()));
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     actions = new QWidget(this);
     actions->setLayout(new QHBoxLayout);
     allFigures = new QWidget(this);
-    allFigures->setLayout(new QHBoxLayout);
+    allFigures->setLayout(new QVBoxLayout);
     propereties = new QWidget(this);
-    propereties->setLayout(new QHBoxLayout);
+    propereties->setLayout(new QVBoxLayout);
     listNew = new QWidget(this);
     listNew->setLayout(new QHBoxLayout);
+    modes = new QWidget(this);
+    modes->setStyleSheet("QWidget {"
+                            "color: black;"
+                            "background: white;"
+                            "border: 4px solid #3d66e0;"
+                            "border-radius: 10px;"
+                            "}");
 
     QLabel *logo = new QLabel("Q-ECD");
     logo->setStyleSheet("QLabel {"
@@ -26,8 +30,39 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
                         "border-radius: 5px;"
                         "}");
 
+    QPushButton *setObjectMode = new QPushButton("Object Mode");
+    setObjectMode->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    setObjectMode->setStyleSheet("QPushButton {"
+                                 "background-color: white;"
+                                 "border: 2px solid #67d43f;"
+                                 "border-radius: 5px;"
+                                 "color: black; }"
+                                 "QPushButton::hover {"
+                                 "background-color: #f24bef;"
+                                 "color: #585957; }");
+
+    QPushButton *setDrawCableMode = new QPushButton("Draw Cable Mode");
+    setDrawCableMode->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    setDrawCableMode->setStyleSheet("QPushButton {"
+                                 "background-color: white;"
+                                 "border: 2px solid #67d43f;"
+                                 "border-radius: 5px;"
+                                 "color: black; }"
+                                 "QPushButton::hover {"
+                                 "background-color: #f24bef;"
+                                 "color: #585957; }");
+
+    connect(setDrawCableMode, SIGNAL(clicked()), this, SLOT(SetDrawCableMode()));
+    connect(setObjectMode, SIGNAL(clicked()), this, SLOT(SetObjectMode()));
+
+    QHBoxLayout *swapModes = new QHBoxLayout;
+    swapModes->addWidget(setObjectMode);
+    swapModes->addWidget(setDrawCableMode);
+    modes->setLayout(swapModes);
+
     QSplitter *up_bar = new QSplitter(Qt::Horizontal);
     up_bar->addWidget(logo);
+    up_bar->addWidget(modes);
     up_bar->addWidget(actions);
 
     QSplitter *right_bar = new QSplitter(Qt::Vertical);
@@ -48,16 +83,13 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     all->addWidget(up_bar);
     all->addWidget(main_area);
 
-    qDebug() << "call set object mode";
     SetObjectMode();
-    qDebug() << "finish setobj";
 
     QLayout *our = ui->centralWidget->layout();
     our = new QHBoxLayout;
     our->setMargin(0);
     our->addWidget(all);
     ui->centralWidget->setLayout(our);
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 MainGUIWindow::~MainGUIWindow()
@@ -65,32 +97,98 @@ MainGUIWindow::~MainGUIWindow()
     delete ui;
 }
 
+void MainGUIWindow::ClearLayout(QLayout *layout)
+{
+    if (!layout)
+        return;
+    while (auto item = layout->takeAt(0))
+    {
+        delete item->widget();
+        ClearLayout(item->layout());
+    }
+}
+
 void MainGUIWindow::SetDrawCableMode()
 {
-
-}
-
-void MainGUIWindow::DCMode()
-{
-    qDebug() << "change mode: drawcable";
     ui->widget->SetMode(new DrawCableMode(ui->widget, ui->widget->GetScale(), ui->widget->GetCenter(), ui->widget->width(), ui->widget->height()));
-}
-
-void MainGUIWindow::OMode()
-{
-    qDebug() << "change mode: object";
-    ui->widget->SetMode(new ObjectMode(ui->widget, ui->widget->GetScale(), ui->widget->GetCenter(), ui->widget->width(), ui->widget->height()));
-}
-void MainGUIWindow::SetObjectMode()
-{
     QLayout *layout;
 
     layout = actions->layout();
-    delete layout;
+    ClearLayout(layout);
 
-    layout = new QHBoxLayout;
+    QPushButton *newCable = new QPushButton("");
+    newCable->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+    newCable->setStyleSheet("QPushButton {"
+                        "background-color: white;"
+                        "border: 2px solid #67d43f;"
+                        "border-radius: 5px;"
+                        "color: white;"
+                        "padding: 15px 32px; }"
+                        "QPushButton::hover {"
+                        "background-color: #f24bef;"
+                        "color: #585957; }");
+    QIcon newIcon(QPixmap((":/figures/icons/figures/resistor.svg")));
+    newCable->setIcon(newIcon);
+    newCable->setIconSize(QSize(27, 27));
+    newCable->setFixedSize(40, 40);
 
-    // set actions buttons
+    QPushButton *movePoint = new QPushButton("");
+    movePoint->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+    movePoint->setStyleSheet("QPushButton {"
+                        "background-color: white;"
+                        "border: 2px solid #67d43f;"
+                        "border-radius: 5px;"
+                        "color: white;"
+                        "padding: 15px 32px; }"
+                        "QPushButton::hover {"
+                        "background-color: #f24bef;"
+                        "color: #585957; }");
+    QIcon movePIcon(QPixmap((":/figures/icons/figures/resistor.svg")));
+    movePoint->setIcon(movePIcon);
+    movePoint->setIconSize(QSize(27, 27));
+    movePoint->setFixedSize(40, 40);
+
+    QPushButton *moveEdge = new QPushButton("");
+    moveEdge->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+    moveEdge->setStyleSheet("QPushButton {"
+                        "background-color: white;"
+                        "border: 2px solid #67d43f;"
+                        "border-radius: 5px;"
+                        "color: white;"
+                        "padding: 15px 32px; }"
+                        "QPushButton::hover {"
+                        "background-color: #f24bef;"
+                        "color: #585957; }");
+    QIcon moveEIcon(QPixmap((":/figures/icons/figures/resistor.svg")));
+    moveEdge->setIcon(moveEIcon);
+    moveEdge->setIconSize(QSize(27, 27));
+    moveEdge->setFixedSize(40, 40);
+
+    QSpacerItem *space = new QSpacerItem(40, 60, QSizePolicy::Expanding, QSizePolicy::Preferred);
+    layout->addWidget(newCable);
+    layout->addWidget(movePoint);
+    layout->addWidget(moveEdge);
+    layout->addItem(space);
+
+    actions->setStyleSheet("QWidget {"
+                            "color: black;"
+                            "background: white;"
+                            "border: 4px solid #f03a73;"
+                            "border-radius: 10px;"
+                            "}");
+
+    listNew->setVisible(false);
+    allFigures->setEnabled(false);
+    propereties->setEnabled(false);
+}
+void MainGUIWindow::SetObjectMode()
+{
+    ui->widget->SetMode(new ObjectMode(ui->widget, ui->widget->GetScale(), ui->widget->GetCenter(), ui->widget->width(), ui->widget->height()));
+    QLayout *layout;
+
+    layout = actions->layout();
+    ClearLayout(layout);
+
     QPushButton *copy = new QPushButton("");
     copy->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     copy->setStyleSheet("QPushButton {"
@@ -172,10 +270,6 @@ void MainGUIWindow::SetObjectMode()
     rotateR->setFixedSize(40, 40);
 
     QSpacerItem *space = new QSpacerItem(40, 60, QSizePolicy::Expanding, QSizePolicy::Preferred);
-    // add actions button to up bar
-//    menu->addWidget(mode);
-    layout->addWidget(ui->pushButton);
-    layout->addWidget(ui->pushButton_2);
     layout->addWidget(copy);
     layout->addWidget(pastle);
     layout->addWidget(deLete);
@@ -189,11 +283,9 @@ void MainGUIWindow::SetObjectMode()
                             "border: 4px solid #f03a73;"
                             "border-radius: 10px;"
                             "}");
-    actions->setLayout(layout);
 
     layout = listNew->layout();
-    delete layout;
-    layout = new QVBoxLayout;
+    ClearLayout(layout);
 
     QListWidget *list_new = new QListWidget;
     connect(list_new, SIGNAL(currentRowChanged(int)), ui->widget, SLOT(CreateFigure(int)));
@@ -220,11 +312,9 @@ void MainGUIWindow::SetObjectMode()
                              "background-color: transparent;"
                              "border: 0px;"
                              "}");
-    listNew->setLayout(layout);
 
     layout = propereties->layout();
-    delete layout;
-    layout = new QVBoxLayout;
+    ClearLayout(layout);
 
     QLineEdit *info = new QLineEdit("bleh bleh bleh");
     QLineEdit *name = new QLineEdit("name bleh bleh");
@@ -241,11 +331,9 @@ void MainGUIWindow::SetObjectMode()
                               "border: 4px solid #f03a73;"
                               "border-radius: 10px;"
                               "}");
-    propereties->setLayout(layout);
 
     layout = allFigures->layout();
-    delete layout;
-    layout = new QVBoxLayout;
+    ClearLayout(layout);
 
     QLabel *res = new QLabel("resistor");
     QLabel *cap = new QLabel("capasitor");
@@ -260,5 +348,8 @@ void MainGUIWindow::SetObjectMode()
                             "border: 4px solid #f5202a;"
                             "border-radius: 10px;"
                             "}");
-    allFigures->setLayout(layout);
+
+    listNew->setVisible(true);
+    allFigures->setEnabled(true);
+    propereties->setEnabled(true);
 }

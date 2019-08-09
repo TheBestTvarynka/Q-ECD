@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QDebug>
+#include <QPushButton>
 #include <QWidget>
 #include <QLineEdit>
 #include <QLayout>
@@ -18,6 +19,7 @@ class MainGUIWindow;
 class MainGUIWindow : public QMainWindow
 {
     Q_OBJECT
+    QWidget *modes;
     QWidget *actions;
     QWidget *allFigures;
     QWidget *propereties;
@@ -28,11 +30,10 @@ public:
 
 private:
     Ui::MainGUIWindow *ui;
+    void ClearLayout(QLayout *);
 private slots:
     void SetDrawCableMode();
     void SetObjectMode();
-    void DCMode();
-    void OMode();
 };
 
 #endif // MAINGUIWINDOW_H
