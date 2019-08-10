@@ -251,7 +251,7 @@ void MainGUIWindow::SetObjectMode()
     rotateL->setIcon(rotateLIcon);
     rotateL->setIconSize(QSize(27, 27));
     rotateL->setFixedSize(40, 40);
-    connect(rotateL, SIGNAL(clicked()), ui->widget, SLOT(RotateSelectedFigure()));
+    connect(rotateL, SIGNAL(clicked()), ui->widget, SLOT(RotateSelectedFigureLeft()));
 
     QPushButton *rotateR = new QPushButton("");
     rotateR->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
@@ -268,7 +268,7 @@ void MainGUIWindow::SetObjectMode()
     rotateR->setIcon(rotateRIcon);
     rotateR->setIconSize(QSize(27, 27));
     rotateR->setFixedSize(40, 40);
-    connect(rotateL, SIGNAL(clicked()), ui->widget, SLOT(RotateSelectedFigure()));
+    connect(rotateR, SIGNAL(clicked()), ui->widget, SLOT(RotateSelectedFigureRight()));
 
     QSpacerItem *space = new QSpacerItem(40, 60, QSizePolicy::Expanding, QSizePolicy::Preferred);
     layout->addWidget(copy);

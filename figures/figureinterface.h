@@ -23,7 +23,7 @@ protected:
     double main_color[3];
     QMap<int, GetClampCoordinates> clamp_coordiantes;
 public:
-    FigureInterface() : x(10.0), y(10.0), name("R1") {}
+    FigureInterface() : x(10.0), y(10.0), rotation(0), name("R1") {}
     FigureInterface(int X, int Y, QString n);
     virtual void print(double, PaintBoard *) = 0;
     void Notify();
@@ -35,7 +35,7 @@ public:
     pair<double, double> GetClamp(int clamp) { return (*clamp_coordiantes[clamp])(x, y);}
     void SetMainColor(double [3]);
     void SetPosition(double, double);
-    void Rotate(double angle) { rotation += angle; }
+    void Rotate(double);
 };
 
 #endif // FIGUREINTERFACE_H

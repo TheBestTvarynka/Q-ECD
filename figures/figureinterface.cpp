@@ -3,7 +3,7 @@
 
 FigureInterface::FigureInterface(int X, int Y, QString n)
 {
-    rotation = 90;
+    rotation = 0;
     x = X;
     y = Y;
     main_color[0] = 0.0;
@@ -45,6 +45,12 @@ void FigureInterface::SetMainColor(double color[3])
 void FigureInterface::SetPosition(double X, double Y)
 {
     x = X; y = Y;
+}
+
+void FigureInterface::Rotate(double angle)
+{
+    rotation += angle;
+    rotation = rotation % 360;
 }
 
 void FigureInterface::MoveFigure(double dX, double dY)
