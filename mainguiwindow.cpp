@@ -3,7 +3,6 @@
 
 MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainGUIWindow)
 {
-
     ui->setupUi(this);
 
     actions = new QWidget(this);
@@ -252,6 +251,7 @@ void MainGUIWindow::SetObjectMode()
     rotateL->setIcon(rotateLIcon);
     rotateL->setIconSize(QSize(27, 27));
     rotateL->setFixedSize(40, 40);
+    connect(rotateL, SIGNAL(clicked()), ui->widget, SLOT(RotateSelectedFigure()));
 
     QPushButton *rotateR = new QPushButton("");
     rotateR->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
@@ -268,6 +268,7 @@ void MainGUIWindow::SetObjectMode()
     rotateR->setIcon(rotateRIcon);
     rotateR->setIconSize(QSize(27, 27));
     rotateR->setFixedSize(40, 40);
+    connect(rotateL, SIGNAL(clicked()), ui->widget, SLOT(RotateSelectedFigure()));
 
     QSpacerItem *space = new QSpacerItem(40, 60, QSizePolicy::Expanding, QSizePolicy::Preferred);
     layout->addWidget(copy);

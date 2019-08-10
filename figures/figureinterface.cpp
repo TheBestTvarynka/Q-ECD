@@ -3,6 +3,7 @@
 
 FigureInterface::FigureInterface(int X, int Y, QString n)
 {
+    rotation = 90;
     x = X;
     y = Y;
     main_color[0] = 0.0;

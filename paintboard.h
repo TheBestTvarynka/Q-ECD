@@ -50,6 +50,7 @@ public:
 private slots:
 //    void CreateFigure(FigureInterface *);
     void CreateFigure(int);
+    void RotateSelectedFigure(double angle = 10);
 };
 
 #endif // PAINTBOARD_H

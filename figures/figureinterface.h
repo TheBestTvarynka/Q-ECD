@@ -17,6 +17,7 @@ class FigureInterface : public IObservable
 {
 protected:
     double x, y;
+    int rotation;
     QString name;
     double nameX, nameY;
     double main_color[3];
@@ -34,6 +35,7 @@ public:
     pair<double, double> GetClamp(int clamp) { return (*clamp_coordiantes[clamp])(x, y);}
     void SetMainColor(double [3]);
     void SetPosition(double, double);
+    void Rotate(double angle) { rotation += angle; }
 };
 
 #endif // FIGUREINTERFACE_H

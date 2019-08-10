@@ -94,3 +94,11 @@ void PaintBoard::CreateFigure(int f)
     figures.add(creator.GetNewFigure(f, int((width() / 2 - mode->GetCenter().x()) / Scale), int((height() / 2 - mode->GetCenter().y()) / Scale), "F" + QString::number(figures.size())));
 }
 
+void PaintBoard::RotateSelectedFigure(double angle)
+{
+    FigureInterface *selected = figures.GetSelectedFigure();
+    if (selected == nullptr)
+        return;
+    selected->Rotate(angle);
+}
+
