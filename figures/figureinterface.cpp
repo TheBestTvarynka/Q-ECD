@@ -53,6 +53,12 @@ void FigureInterface::Rotate(double angle)
     rotation = rotation % 360;
 }
 
+pair<double, double> FigureInterface::RotatePoint(pair<double, double> point, double angel)
+{
+    angel *= M_PI / 180;
+    return pair<double, double>(cos(angel) * (point.first - x) - sin(angel) * (point.second - y) + x, sin(angel) * (point.first - x) + cos(angel) * (point.second - y) + y);
+}
+
 void FigureInterface::MoveFigure(double dX, double dY)
 {
     x += dX; y += dY;

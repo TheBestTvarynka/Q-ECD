@@ -78,9 +78,9 @@ void PaintBoard::wheelEvent(QWheelEvent *event)
         mode->ScaleEvent(false, event->pos(), Scale);
 }
 
-void PaintBoard::RenderText(double x, double y, QString text)
+void PaintBoard::RenderText(pair<double, double> point, QString text)
 {
-    renderText(mode->GetCenter().x() + int(x * Scale), mode->GetCenter().y() + int(y * Scale), text, QFont("Arial", int(Scale * 0.67), 5, false));
+    renderText(mode->GetCenter().x() + int(point.first * Scale), mode->GetCenter().y() + int(point.second * Scale), text, QFont("Arial", int(Scale * 0.67), 5, false));
 }
 
 void PaintBoard::SetMode(ModeInterface *newMode)
@@ -99,7 +99,8 @@ void PaintBoard::RotateSelectedFigureRight()
     FigureInterface *selected = figures.GetSelectedFigure();
     if (selected == nullptr)
         return;
-    selected->Rotate(-90);
+    selected->Rotate(90);
+    selected->Notify();
 }
 
 void PaintBoard::RotateSelectedFigureLeft()
@@ -107,14 +108,6 @@ void PaintBoard::RotateSelectedFigureLeft()
     FigureInterface *selected = figures.GetSelectedFigure();
     if (selected == nullptr)
         return;
-    selected->Rotate(90);
+    selected->Rotate(-90);
+    selected->Notify();
 }
-
-//void PaintBoard::RotateSelectedFigure(double angle)
-//{
-//    FigureInterface *selected = figures.GetSelectedFigure();
-//    if (selected == nullptr)
-//        return;
-//    selected->Rotate(angle);
-//}
-

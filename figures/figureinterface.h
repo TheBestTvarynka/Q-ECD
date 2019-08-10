@@ -32,10 +32,11 @@ public:
     double GetX() { return x; }
     double GetY() { return y; }
     QMap<int, GetClampCoordinates> GetClams() { return clamp_coordiantes; }
-    pair<double, double> GetClamp(int clamp) { return (*clamp_coordiantes[clamp])(x, y);}
+    pair<double, double> GetClamp(int clamp) { return RotatePoint((*clamp_coordiantes[clamp])(x, y), rotation); }
     void SetMainColor(double [3]);
     void SetPosition(double, double);
     void Rotate(double);
+    pair<double, double> RotatePoint(pair<double, double>, double);
 };
 
 #endif // FIGUREINTERFACE_H

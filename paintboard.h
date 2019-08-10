@@ -39,7 +39,7 @@ public:
     void mouseMoveEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
     void wheelEvent(QWheelEvent *);
-    void RenderText(double, double, QString);
+    void RenderText(pair<double, double>, QString);
 
     double GetScale() { return Scale; }
     QPoint GetCenter() { return mode->GetCenter(); }

@@ -176,7 +176,7 @@ void MainGUIWindow::SetDrawCableMode()
                             "border-radius: 10px;"
                             "}");
 
-    listNew->setVisible(false);
+    listNew->setEnabled(false);
     allFigures->setEnabled(false);
     propereties->setEnabled(false);
 }
@@ -350,7 +350,7 @@ void MainGUIWindow::SetObjectMode()
                             "border-radius: 10px;"
                             "}");
 
-    listNew->setVisible(true);
+    listNew->setEnabled(true);
     allFigures->setEnabled(true);
     propereties->setEnabled(true);
 }
