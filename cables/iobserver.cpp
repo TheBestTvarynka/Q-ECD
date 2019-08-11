@@ -14,4 +14,9 @@ IObserver::IObserver(IObservable *parent, int vertex)
 void IObserver::AddObservable(IObservable *parent, int vertex)
  {
     connections.insert(parent, vertex);
- }
+}
+
+void IObserver::RmoveObservable(IObservable *parent)
+{
+    connections.remove(parent);
+}

@@ -13,6 +13,7 @@ public:
     IObserver(IObservable *parent, int vertex);
     virtual void update(IObservable *, double, double) = 0;
     void AddObservable(IObservable *parent, int vertex);
+    void RmoveObservable(IObservable *);
     int GetVertex(IObservable *p) { return connections[p]; }
 };
 

@@ -78,9 +78,20 @@ void PaintBoard::wheelEvent(QWheelEvent *event)
         mode->ScaleEvent(false, event->pos(), Scale);
 }
 
-void PaintBoard::RenderText(pair<double, double> point, QString text)
+void PaintBoard::RenderText(pair<double, double> point, double rotation, QString text)
 {
+    glPushMatrix();
+    glTranslated(point.first * Scale, point.second * Scale, 0.0);
+    glRotated(rotation, 0.0, 0.0, 1.1);
     renderText(mode->GetCenter().x() + int(point.first * Scale), mode->GetCenter().y() + int(point.second * Scale), text, QFont("Arial", int(Scale * 0.67), 5, false));
+    glColor3d(0.0, 0.0, 0.0);
+//    glPointSize(40);
+//    glBegin(GL_POINTS);
+//    glVertex2f(float(0), float(0));
+//    glEnd();
+
+    renderText(0, 0, text, QFont("Arial", int(Scale * 0.67), 5, false));
+    glPopMatrix();
 }
 
 void PaintBoard::SetMode(ModeInterface *newMode)
@@ -92,6 +103,11 @@ void PaintBoard::SetMode(ModeInterface *newMode)
 void PaintBoard::CreateFigure(int f)
 {
     figures.add(creator.GetNewFigure(f, int((width() / 2 - mode->GetCenter().x()) / Scale), int((height() / 2 - mode->GetCenter().y()) / Scale), "F" + QString::number(figures.size())));
+}
+
+void PaintBoard::RemoveSelectedFigure()
+{
+    figures.erase(figures.GetSelectedFigure());
 }
 
 void PaintBoard::RotateSelectedFigureRight()

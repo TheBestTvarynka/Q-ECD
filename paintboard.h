@@ -39,7 +39,7 @@ public:
     void mouseMoveEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
     void wheelEvent(QWheelEvent *);
-    void RenderText(pair<double, double>, QString);
+    void RenderText(pair<double, double>, double, QString);
 
     double GetScale() { return Scale; }
     QPoint GetCenter() { return mode->GetCenter(); }
@@ -48,8 +48,8 @@ public:
     DataCables *GetDataCables() { return &cables; }
     void SetMode(ModeInterface *);
 private slots:
-//    void CreateFigure(FigureInterface *);
     void CreateFigure(int);
+    void RemoveSelectedFigure();
     void RotateSelectedFigureRight();
     void RotateSelectedFigureLeft();
 };

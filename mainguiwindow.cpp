@@ -235,6 +235,7 @@ void MainGUIWindow::SetObjectMode()
     deLete->setIcon(deleteIcon);
     deLete->setIconSize(QSize(27, 27));
     deLete->setFixedSize(40, 40);
+    connect(deLete, SIGNAL(clicked()), ui->widget, SLOT(RemoveSelectedFigure()));
 
     QPushButton *rotateL = new QPushButton("");
     rotateL->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);

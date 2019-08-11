@@ -13,6 +13,7 @@ public:
     IObservable();
     void Register(IObserver *, int);
     void Remove(IObserver *);
+    void RemoveAll();
     virtual void Notify() = 0;
 };
 

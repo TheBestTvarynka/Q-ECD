@@ -22,6 +22,21 @@ void DataFigures::add(FigureInterface *new_Figure)
     figures.push_back(new_Figure);
 }
 
+void DataFigures::erase(FigureInterface *select)
+{
+    if (select == nullptr)
+        return;
+    select->RemoveAll();
+    for (int i = 0; i < figures.size(); i++)
+    {
+        if (figures[i] == select)
+        {
+            figures.erase(figures.begin() + i);
+            break;
+        }
+    }
+}
+
 void DataFigures::select_figure(QPoint position, double Scale)
 {
     if (selected_figure != nullptr)

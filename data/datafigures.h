@@ -16,11 +16,10 @@ class DataFigures
     FigureInterface *selected_figure;
     int selected_clamp;
 public:
-    static FigureInterface* Resistor(int x, int y);
-    static FigureInterface* Capasitor(int x, int y);
     DataFigures();
     void print(double, PaintBoard *);
     void add(FigureInterface *);
+    void erase(FigureInterface *);
     void select_figure(QPoint, double);
     void MoveSelectedFigure(FigureInterface *, double, double);
     void RoundCoordinates(FigureInterface *);

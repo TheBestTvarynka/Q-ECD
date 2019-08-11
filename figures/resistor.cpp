@@ -35,5 +35,5 @@ void Resistor::print(double Scale, PaintBoard *Parent)
 
     glPopMatrix();
 
-    Parent->RenderText(RotatePoint(pair<double, double>(x + nameX, y + nameY), rotation), name);
+    Parent->RenderText(RotatePoint(pair<double, double>(x + nameX, y + nameY), rotation), rotation, name);
 }
