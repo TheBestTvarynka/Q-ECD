@@ -12,6 +12,11 @@ FigureInterface::FigureInterface(int X, int Y, QString n)
     name = n;
 }
 
+FigureInterface::FigureInterface(const FigureInterface *origin)
+{
+    *this = *origin;
+}
+
 pair<int, double> FigureInterface::SelectClamp(QPoint mouse_pos, double Scale, QMap<int, GetClampCoordinates> clamp_c)
 {
     if (clamp_c.size() == 0)
