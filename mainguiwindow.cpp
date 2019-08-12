@@ -308,6 +308,7 @@ void MainGUIWindow::SetObjectMode()
     QListWidgetItem *capasitor = new QListWidgetItem(QIcon(":/figures/icons/figures/capasitor.svg"), "Capasitor", list_new);
     list_new->insertItem(0, resistor);
     list_new->insertItem(0, capasitor);
+//    list_new->setViewMode(QListView::IconMode);
     layout->addWidget(list_new);
     layout->setMargin(0);
     listNew->setStyleSheet("QWidget {"

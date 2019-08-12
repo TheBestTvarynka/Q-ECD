@@ -25,6 +25,7 @@ protected:
 public:
     FigureInterface() : x(10.0), y(10.0), rotation(0), name("R1") {}
     FigureInterface(int X, int Y, QString n);
+
     virtual void print(double, PaintBoard *) = 0;
     void Notify();
     pair<int, double> SelectClamp(QPoint, double, QMap<int, GetClampCoordinates>);
