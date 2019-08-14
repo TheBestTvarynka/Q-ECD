@@ -103,6 +103,7 @@ void PaintBoard::SetMode(ModeInterface *newMode)
 void PaintBoard::SetSelectedFigure(FigureInterface *f)
 {
     figures.SetSelectedFigure(f);
+    emit LoadFigurePropereties(f->GetName(), f->GetValue());
 }
 
 void PaintBoard::CreateFigure(int f)

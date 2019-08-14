@@ -20,13 +20,15 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     QLayout *layout = new QVBoxLayout;
 
     QLayout *name_parameter = new QHBoxLayout;
-    QLineEdit *name_line = new QLineEdit("fuck");
+    QLineEdit *name_line = new QLineEdit("");
+    name = name_line;
     QLabel *name_label = new QLabel("name");
     name_parameter->addWidget(name_label);
     name_parameter->addWidget(name_line);
 
     QLayout *value_parameter = new QHBoxLayout;
-    QLineEdit *value_line = new QLineEdit("bitch");
+    QLineEdit *value_line = new QLineEdit("");
+    value = value_line;
     QLabel *value_label = new QLabel("value");
     value_parameter->addWidget(value_label);
     value_parameter->addWidget(value_line);
@@ -148,6 +150,8 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     our->setMargin(0);
     our->addWidget(all);
     ui->centralWidget->setLayout(our);
+
+    connect(ui->widget, SIGNAL(LoadFigurePropereties(QString, QString)), this, SLOT(LoadPropereties(QString, QString)));
 }
 
 MainGUIWindow::~MainGUIWindow()
@@ -356,4 +360,10 @@ void MainGUIWindow::SetObjectMode()
     listNew->setEnabled(true);
     allFigures->setEnabled(true);
     propereties->setEnabled(true);
+}
+
+void MainGUIWindow::LoadPropereties(QString n, QString v)
+{
+    name->setText(n);
+    value->setText(v);
 }

@@ -26,6 +26,9 @@ class MainGUIWindow : public QMainWindow
     QWidget *allFigures;
     QWidget *propereties;
     QWidget *listNew;
+
+    QLineEdit *name;
+    QLineEdit *value;
 public:
     explicit MainGUIWindow(QWidget *parent = nullptr);
     ~MainGUIWindow();
@@ -36,6 +39,7 @@ private:
 private slots:
     void SetDrawCableMode();
     void SetObjectMode();
+    void LoadPropereties(QString, QString);
 };
 
 #endif // MAINGUIWINDOW_H

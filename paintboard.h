@@ -55,6 +55,7 @@ private slots:
     void RotateSelectedFigureLeft();
 signals:
     void AddToTree(FigureInterface *);
+    void LoadFigurePropereties(QString, QString);
 };
 
 #endif // PAINTBOARD_H
