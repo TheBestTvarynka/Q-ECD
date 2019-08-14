@@ -17,15 +17,36 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     allFigures->setLayout(l);
 
     propereties = new QWidget(this);
-    propereties->setLayout(new QVBoxLayout);
-
-    listNew = new QWidget(this);
     QLayout *layout = new QVBoxLayout;
 
-    qDebug() << "erferferf";
+    QLayout *name_parameter = new QHBoxLayout;
+    QLineEdit *name_line = new QLineEdit("fuck");
+    QLabel *name_label = new QLabel("name");
+    name_parameter->addWidget(name_label);
+    name_parameter->addWidget(name_line);
+
+    QLayout *value_parameter = new QHBoxLayout;
+    QLineEdit *value_line = new QLineEdit("bitch");
+    QLabel *value_label = new QLabel("value");
+    value_parameter->addWidget(value_label);
+    value_parameter->addWidget(value_line);
+    QSpacerItem *space_up = new QSpacerItem(40, 60, QSizePolicy::Preferred, QSizePolicy::Expanding);
+    layout->addItem(name_parameter);
+    layout->addItem(value_parameter);
+    layout->addItem(space_up);
+
+    propereties->setStyleSheet("QWidget {"
+                              "color: black;"
+                              "background: white;"
+                              "border: 4px solid #f03a73;"
+                              "border-radius: 10px;"
+                              "}");
+    propereties->setLayout(layout);
+
+    listNew = new QWidget(this);
+    layout = new QVBoxLayout;
     QListWidget *list_new = new QListWidget;
     connect(list_new, SIGNAL(currentRowChanged(int)), ui->widget, SLOT(CreateFigure(int)));
-    qDebug() << "erferferf";
     list_new->setStyleSheet("QListWidget{"
                             "border: 4px solid #67d43f;"
                             "border-radius: 10px;"
@@ -39,13 +60,10 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
                             "QListWidget::item:selected:!active { background: rgb(150, 150, 150); }"
                             "QListWidget::item:selected:active { background: #b2c8eb; }"
                             "QListWidget::item:hover { background: #f095ee; }");
-    qDebug() << "erferferf";
     QListWidgetItem *resistor = new QListWidgetItem(QIcon(":/figures/icons/figures/resistor.svg"), "Resistor", list_new);
     QListWidgetItem *capasitor = new QListWidgetItem(QIcon(":/figures/icons/figures/capasitor.svg"), "Capasitor", list_new);
-    qDebug() << "erferferf";
     list_new->insertItem(0, resistor);
     list_new->insertItem(0, capasitor);
-    qDebug() << "erferferf";
     layout->addWidget(list_new);
     layout->setMargin(0);
     listNew->setStyleSheet("QWidget {"
@@ -53,7 +71,6 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
                              "border: 0px;"
                              "}");
     listNew->setLayout(layout);
-    qDebug() << "erferferf";
 
     modes = new QWidget(this);
     modes->setStyleSheet("QWidget {"
@@ -328,24 +345,6 @@ void MainGUIWindow::SetObjectMode()
                             "border-radius: 10px;"
                             "}");
     actions->setLayout(layout);
-
-    layout = propereties->layout();
-    QLineEdit *info = new QLineEdit("bleh bleh bleh");
-    QLineEdit *name = new QLineEdit("name bleh bleh");
-    QLineEdit *var = new QLineEdit("var bleh bleh");
-    QSpacerItem *space_up = new QSpacerItem(40, 60, QSizePolicy::Preferred, QSizePolicy::Expanding);
-    layout->addWidget(info);
-    layout->addWidget(name);
-    layout->addWidget(var);
-    layout->addItem(space_up);
-
-    propereties->setStyleSheet("QWidget {"
-                              "color: black;"
-                              "background: white;"
-                              "border: 4px solid #f03a73;"
-                              "border-radius: 10px;"
-                              "}");
-    propereties->setLayout(layout);
 
     allFigures->setStyleSheet("QWidget {"
                             "color: black;"
