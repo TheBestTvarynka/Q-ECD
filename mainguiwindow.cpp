@@ -18,8 +18,43 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
 
     propereties = new QWidget(this);
     propereties->setLayout(new QVBoxLayout);
+
     listNew = new QWidget(this);
-    listNew->setLayout(new QHBoxLayout);
+    QLayout *layout = new QVBoxLayout;
+
+    qDebug() << "erferferf";
+    QListWidget *list_new = new QListWidget;
+    connect(list_new, SIGNAL(currentRowChanged(int)), ui->widget, SLOT(CreateFigure(int)));
+    qDebug() << "erferferf";
+    list_new->setStyleSheet("QListWidget{"
+                            "border: 4px solid #67d43f;"
+                            "border-radius: 10px;"
+                            "background: white;"
+                            "color: black;"
+                            "selection-background-color: darkgray;"
+                            "font-size: 20px; }"
+                            "QListWidget { show-decoration-selected: 1; }"
+                            "QListWidget::item:alternate { background: red; }"
+                            "QListWidget::item:selected { color: black; border: none; }"
+                            "QListWidget::item:selected:!active { background: rgb(150, 150, 150); }"
+                            "QListWidget::item:selected:active { background: #b2c8eb; }"
+                            "QListWidget::item:hover { background: #f095ee; }");
+    qDebug() << "erferferf";
+    QListWidgetItem *resistor = new QListWidgetItem(QIcon(":/figures/icons/figures/resistor.svg"), "Resistor", list_new);
+    QListWidgetItem *capasitor = new QListWidgetItem(QIcon(":/figures/icons/figures/capasitor.svg"), "Capasitor", list_new);
+    qDebug() << "erferferf";
+    list_new->insertItem(0, resistor);
+    list_new->insertItem(0, capasitor);
+    qDebug() << "erferferf";
+    layout->addWidget(list_new);
+    layout->setMargin(0);
+    listNew->setStyleSheet("QWidget {"
+                             "background-color: transparent;"
+                             "border: 0px;"
+                             "}");
+    listNew->setLayout(layout);
+    qDebug() << "erferferf";
+
     modes = new QWidget(this);
     modes->setStyleSheet("QWidget {"
                             "color: black;"
@@ -292,40 +327,9 @@ void MainGUIWindow::SetObjectMode()
                             "border: 4px solid #f03a73;"
                             "border-radius: 10px;"
                             "}");
-
-    layout = listNew->layout();
-    ClearLayout(layout);
-
-    QListWidget *list_new = new QListWidget;
-    connect(list_new, SIGNAL(currentRowChanged(int)), ui->widget, SLOT(CreateFigure(int)));
-    list_new->setStyleSheet("QListWidget{"
-                            "border: 4px solid #67d43f;"
-                            "border-radius: 10px;"
-                            "background: white;"
-                            "color: black;"
-                            "selection-background-color: darkgray;"
-                            "font-size: 20px; }"
-                            "QListWidget { show-decoration-selected: 1; }"
-                            "QListWidget::item:alternate { background: red; }"
-                            "QListWidget::item:selected { color: black; border: none; }"
-                            "QListWidget::item:selected:!active { background: rgb(150, 150, 150); }"
-                            "QListWidget::item:selected:active { background: #b2c8eb; }"
-                            "QListWidget::item:hover { background: #f095ee; }");
-    QListWidgetItem *resistor = new QListWidgetItem(QIcon(":/figures/icons/figures/resistor.svg"), "Resistor", list_new);
-    QListWidgetItem *capasitor = new QListWidgetItem(QIcon(":/figures/icons/figures/capasitor.svg"), "Capasitor", list_new);
-    list_new->insertItem(0, resistor);
-    list_new->insertItem(0, capasitor);
-//    list_new->setViewMode(QListView::IconMode);
-    layout->addWidget(list_new);
-    layout->setMargin(0);
-    listNew->setStyleSheet("QWidget {"
-                             "background-color: transparent;"
-                             "border: 0px;"
-                             "}");
+    actions->setLayout(layout);
 
     layout = propereties->layout();
-    ClearLayout(layout);
-
     QLineEdit *info = new QLineEdit("bleh bleh bleh");
     QLineEdit *name = new QLineEdit("name bleh bleh");
     QLineEdit *var = new QLineEdit("var bleh bleh");
@@ -341,6 +345,7 @@ void MainGUIWindow::SetObjectMode()
                               "border: 4px solid #f03a73;"
                               "border-radius: 10px;"
                               "}");
+    propereties->setLayout(layout);
 
     allFigures->setStyleSheet("QWidget {"
                             "color: black;"
