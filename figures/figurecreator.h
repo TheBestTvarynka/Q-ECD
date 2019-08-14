@@ -4,16 +4,16 @@
 #include "figures/resistor.h"
 #include "figures/capacitor.h"
 
-typedef FigureInterface* (*NewFigure)(int, int, QString);
+typedef FigureInterface* (*NewFigure)(int, int, QString, QString);
 
 class FigureCreator
 {
     QMap<int, NewFigure> templates;
 public:
     FigureCreator();
-    static FigureInterface* resistor(int x, int y, QString name);
-    static FigureInterface* capacitor(int x, int y, QString name);
-    FigureInterface* GetNewFigure(int i, int x, int y, QString name) { return templates[i](x, y, name); }
+    static FigureInterface* resistor(int x, int y, QString name, QString value);
+    static FigureInterface* capacitor(int x, int y, QString name, QString value);
+    FigureInterface* GetNewFigure(int i, int x, int y, QString name, QString value) { return templates[i](x, y, name, value); }
 };
 
 #endif // FIGURECREATOR_H

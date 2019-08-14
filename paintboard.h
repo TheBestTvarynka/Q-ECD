@@ -52,6 +52,8 @@ private slots:
     void RemoveSelectedFigure();
     void RotateSelectedFigureRight();
     void RotateSelectedFigureLeft();
+signals:
+    void AddToTree(FigureInterface *);
 };
 
 #endif // PAINTBOARD_H

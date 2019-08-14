@@ -7,8 +7,14 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
 
     actions = new QWidget(this);
     actions->setLayout(new QHBoxLayout);
+
     allFigures = new QWidget(this);
-    allFigures->setLayout(new QVBoxLayout);
+    QTree *tree = new QTree(allFigures);
+    connect(ui->widget, SIGNAL(AddToTree(FigureInterface *)), tree, SLOT(CteateFigureItem(FigureInterface *)));
+    QVBoxLayout *l = new QVBoxLayout;
+    l->addWidget(tree);
+    allFigures->setLayout(l);
+
     propereties = new QWidget(this);
     propereties->setLayout(new QVBoxLayout);
     listNew = new QWidget(this);
@@ -335,20 +341,10 @@ void MainGUIWindow::SetObjectMode()
                               "border-radius: 10px;"
                               "}");
 
-    layout = allFigures->layout();
-    ClearLayout(layout);
-
-    QLabel *res = new QLabel("resistor");
-    QLabel *cap = new QLabel("capasitor");
-    QSpacerItem *space_up2 = new QSpacerItem(40, 60, QSizePolicy::Preferred, QSizePolicy::Expanding);
-    layout->addWidget(res);
-    layout->addWidget(cap);
-    layout->addItem(space_up2);
-
     allFigures->setStyleSheet("QWidget {"
                             "color: black;"
                             "background: white;"
-                            "border: 4px solid #f5202a;"
+                            "border: 0px solid #f5202a;"
                             "border-radius: 10px;"
                             "}");
 

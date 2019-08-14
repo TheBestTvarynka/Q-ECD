@@ -20,3 +20,8 @@ void IObserver::RmoveObservable(IObservable *parent)
 {
     connections.remove(parent);
 }
+
+IObserver::~IObserver()
+{
+
+}

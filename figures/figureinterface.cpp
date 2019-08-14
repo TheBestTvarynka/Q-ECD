@@ -1,7 +1,7 @@
 #include "figureinterface.h"
 #include <QDebug>
 
-FigureInterface::FigureInterface(int X, int Y, QString n)
+FigureInterface::FigureInterface(int X, int Y, QString n, QString v)
 {
     rotation = 0;
     x = X;
@@ -10,6 +10,7 @@ FigureInterface::FigureInterface(int X, int Y, QString n)
     main_color[1] = 1.0;
     main_color[2] = 0.0;
     name = n;
+    value = v;
 }
 
 FigureInterface::FigureInterface(const FigureInterface *origin)

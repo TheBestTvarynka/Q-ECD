@@ -12,6 +12,8 @@
 #include <QListWidget>
 #include <QComboBox>
 
+#include "view/qtree.h"
+
 namespace Ui {
 class MainGUIWindow;
 }

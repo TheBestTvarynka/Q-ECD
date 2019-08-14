@@ -1,7 +1,7 @@
 #include "capacitor.h"
 #include "paintboard.h"
 
-Capacitor::Capacitor(int X, int Y, QString N) : FigureInterface(X, Y, N), c(1)
+Capacitor::Capacitor(int X, int Y, QString N, QString V) : FigureInterface(X, Y, N, V), c(1)
 {
     clamp_coordiantes[0] = Clamp1;
     clamp_coordiantes[1] = Clamp2;

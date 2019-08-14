@@ -40,7 +40,8 @@ SOURCES += \
     cables/iobserver.cpp \
     data/datacables.cpp \
     figures/figurecreator.cpp \
-    view/qtreeitem.cpp
+    view/qtreeitem.cpp \
+    view/qtree.cpp
 
 HEADERS += \
         mainguiwindow.h \
@@ -57,7 +58,8 @@ HEADERS += \
     cables/iobserver.h \
     data/datacables.h \
     figures/figurecreator.h \
-    view/qtreeitem.h
+    view/qtreeitem.h \
+    view/qtree.h
 
 FORMS += \
         mainguiwindow.ui

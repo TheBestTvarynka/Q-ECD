@@ -13,8 +13,8 @@ PaintBoard::PaintBoard(QWidget *parent, ModeInterface *start_state): QGLWidget(p
 
     if (start_state == nullptr)
         mode = new ObjectMode(this, Scale, QPoint(0, 0), width(), height());
-    figures.add(new Resistor(5, 7, "R1"));
-    figures.add(new Capacitor(4, 3, "C1"));
+//    figures.add(new Resistor(5, 7, "R1"));
+//    figures.add(new Capacitor(4, 3, "C1"));
 }
 
 void PaintBoard::initializeGL()
@@ -102,7 +102,9 @@ void PaintBoard::SetMode(ModeInterface *newMode)
 
 void PaintBoard::CreateFigure(int f)
 {
-    figures.add(creator.GetNewFigure(f, int((width() / 2 - mode->GetCenter().x()) / Scale), int((height() / 2 - mode->GetCenter().y()) / Scale), "F" + QString::number(figures.size())));
+    FigureInterface *new_figure = creator.GetNewFigure(f, int((width() / 2 - mode->GetCenter().x()) / Scale), int((height() / 2 - mode->GetCenter().y()) / Scale), "F" + QString::number(figures.size()), "vl");
+    figures.add(new_figure);
+    emit AddToTree(new_figure);
 }
 
 void PaintBoard::RemoveSelectedFigure()

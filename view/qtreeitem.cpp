@@ -9,3 +9,8 @@ QTreeWidgetItem *QTreeItem::clone() const
     QTreeItem *clon = new QTreeItem(new_f, this->parent());
     return  clon;
 }
+
+void QTreeItem::update(IObservable *, double, double)
+{
+
+}
