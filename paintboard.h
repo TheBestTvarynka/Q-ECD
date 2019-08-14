@@ -48,6 +48,7 @@ public:
     DataCables *GetDataCables() { return &cables; }
     void SetMode(ModeInterface *);
 private slots:
+    void SetSelectedFigure(FigureInterface *);
     void CreateFigure(int);
     void RemoveSelectedFigure();
     void RotateSelectedFigureRight();

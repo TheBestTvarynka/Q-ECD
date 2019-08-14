@@ -11,6 +11,7 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     allFigures = new QWidget(this);
     QTree *tree = new QTree(allFigures);
     connect(ui->widget, SIGNAL(AddToTree(FigureInterface *)), tree, SLOT(CteateFigureItem(FigureInterface *)));
+    connect(tree, SIGNAL(SetCurrentFigure(FigureInterface *)), ui->widget, SLOT(SetSelectedFigure(FigureInterface *)));
     QVBoxLayout *l = new QVBoxLayout;
     l->addWidget(tree);
     allFigures->setLayout(l);

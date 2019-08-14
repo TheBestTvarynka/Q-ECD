@@ -100,6 +100,11 @@ void PaintBoard::SetMode(ModeInterface *newMode)
     mode = newMode;
 }
 
+void PaintBoard::SetSelectedFigure(FigureInterface *f)
+{
+    figures.SetSelectedFigure(f);
+}
+
 void PaintBoard::CreateFigure(int f)
 {
     FigureInterface *new_figure = creator.GetNewFigure(f, int((width() / 2 - mode->GetCenter().x()) / Scale), int((height() / 2 - mode->GetCenter().y()) / Scale), "F" + QString::number(figures.size()), "vl");

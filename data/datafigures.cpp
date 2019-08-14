@@ -90,6 +90,14 @@ void DataFigures::Register(FigureInterface *select, int clamp, IObserver *cable,
     cable->AddObservable(select, vertex);
 }
 
+void DataFigures::SetSelectedFigure(FigureInterface *f)
+{
+    if (selected_figure != nullptr)
+        selected_figure->SetMainColor(new double[3]{0.0, 1.0, 0.0});
+    selected_figure = f;
+    selected_figure->SetMainColor(new double[3]{1.0, 0.0, 0.0});
+}
+
 pair<QPoint, double> DataFigures::SelectClamp(QPoint mouse_pos, double Scale, FigureInterface *(&select), int &s_clamp)
 {
     if (figures.size() == 0)

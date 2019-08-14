@@ -13,6 +13,7 @@ public:
     QTreeItem(FigureInterface *new_figure,  QTreeWidget *parent = nullptr) : QTreeWidgetItem(parent), figure(new_figure) {}
     virtual QTreeWidgetItem *clone() const;
     void update(IObservable *, double, double);
+    FigureInterface *GetFigure() { return figure; }
 };
 
 #endif // QTREEITEM_H

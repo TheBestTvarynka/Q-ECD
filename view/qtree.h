@@ -12,6 +12,9 @@ public:
     QTree(QWidget *parent = nullptr);
 public slots:
     void CteateFigureItem(FigureInterface *);
+    void CurrentItemChanged(QTreeWidgetItem *, QTreeWidgetItem *);
+signals:
+    void SetCurrentFigure(FigureInterface *);
 };
 
 #endif // QTREE_H

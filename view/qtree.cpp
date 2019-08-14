@@ -1,4 +1,5 @@
 #include "qtree.h"
+#include <QDebug>
 
 QTree::QTree(QWidget *parent) : QTreeWidget(parent)
 {
@@ -8,6 +9,8 @@ QTree::QTree(QWidget *parent) : QTreeWidget(parent)
     this->setHeaderItem(header);
     this->setColumnCount(2);
     this->setSortingEnabled(true);
+
+    connect(this, SIGNAL(currentItemChanged(QTreeWidgetItem *, QTreeWidgetItem *)), this, SLOT(CurrentItemChanged(QTreeWidgetItem *, QTreeWidgetItem *)));
 }
 
 void QTree::CteateFigureItem(FigureInterface *new_figure)
@@ -16,4 +19,12 @@ void QTree::CteateFigureItem(FigureInterface *new_figure)
     new_item->setText(0, new_figure->GetName());
     new_item->setText(1, new_figure->GetValue());
     new_item->AddObservable(new_figure);
+    emit SetCurrentFigure(new_figure);
+}
+
+void QTree::CurrentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+{
+    qDebug() << current->text(0);
+//    ((QTreeItem*)current)->GetFigure();
+    emit SetCurrentFigure(((QTreeItem*)current)->GetFigure());
 }
