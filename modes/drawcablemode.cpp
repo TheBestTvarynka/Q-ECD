@@ -168,8 +168,9 @@ void DrawCableMode::mouseReleaseEvent(QMouseEvent *ap)
     }
     else
     {
-        QPoint r_point = RoundCoordinates(point->first, point->second);
-        point->first = r_point.x();
-        point->second = r_point.y();
+//        QPoint r_point = RoundCoordinates(point->first, point->second);
+//        point->first = r_point.x();
+//        point->second = r_point.y();
+        Parent->GetDataCables()->RemoveCable(Parent->GetDataCables()->GetLast());
     }
 }
