@@ -56,6 +56,7 @@ private slots:
 signals:
     void AddToTree(FigureInterface *);
     void LoadFigurePropereties(QString, QString);
+    void ClearPropereties();
 };
 
 #endif // PAINTBOARD_H

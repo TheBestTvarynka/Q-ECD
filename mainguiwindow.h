@@ -40,6 +40,7 @@ private slots:
     void SetDrawCableMode();
     void SetObjectMode();
     void LoadPropereties(QString, QString);
+    void ClearPropereties();
 };
 
 #endif // MAINGUIWINDOW_H

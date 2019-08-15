@@ -152,6 +152,7 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     ui->centralWidget->setLayout(our);
 
     connect(ui->widget, SIGNAL(LoadFigurePropereties(QString, QString)), this, SLOT(LoadPropereties(QString, QString)));
+    connect(ui->widget, SIGNAL(ClearPropereties()), this, SLOT(ClearPropereties()));
 }
 
 MainGUIWindow::~MainGUIWindow()
@@ -366,4 +367,10 @@ void MainGUIWindow::LoadPropereties(QString n, QString v)
 {
     name->setText(n);
     value->setText(v);
+}
+
+void MainGUIWindow::ClearPropereties()
+{
+    name->clear();
+    value->clear();
 }
