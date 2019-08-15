@@ -47,10 +47,12 @@ public:
     DataFigures *GetDataFigures() { return &figures; }
     DataCables *GetDataCables() { return &cables; }
     void SetMode(ModeInterface *);
-private slots:
+public slots:
     void SetSelectedFigure(FigureInterface *);
     void CreateFigure(int);
     void RemoveSelectedFigure();
+    void SetNameSelectedFigure(const QString &);
+    void SetValueSelectedFigure(const QString &);
     void RotateSelectedFigureRight();
     void RotateSelectedFigureLeft();
 signals:

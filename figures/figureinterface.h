@@ -43,6 +43,8 @@ public:
     void SetMainColor(double [3]);
     void SetPosition(double, double);
     void SetTreeItem(QTreeItem *item) { treeItem = item; }
+    void SetName(QString Name);
+    void SetValue(QString Value);
     void Rotate(double);
     void DeleteTreeItem();
     pair<double, double> RotatePoint(pair<double, double>, double);

@@ -153,6 +153,8 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
 
     connect(ui->widget, SIGNAL(LoadFigurePropereties(QString, QString)), this, SLOT(LoadPropereties(QString, QString)));
     connect(ui->widget, SIGNAL(ClearPropereties()), this, SLOT(ClearPropereties()));
+    connect(name, SIGNAL(textChanged(const QString &)), ui->widget, SLOT(SetNameSelectedFigure(const QString &)));
+    connect(value, SIGNAL(textChanged(const QString &)), ui->widget, SLOT(SetValueSelectedFigure(const QString &)));
 }
 
 MainGUIWindow::~MainGUIWindow()

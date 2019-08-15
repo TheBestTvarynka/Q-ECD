@@ -120,6 +120,22 @@ void PaintBoard::RemoveSelectedFigure()
     emit ClearPropereties();
 }
 
+void PaintBoard::SetNameSelectedFigure(const QString &name)
+{
+    FigureInterface *selected = figures.GetSelectedFigure();
+    if (selected == nullptr)
+        return;
+    selected->SetName(name);
+}
+
+void PaintBoard::SetValueSelectedFigure(const QString &value)
+{
+    FigureInterface *selected = figures.GetSelectedFigure();
+    if (selected == nullptr)
+        return;
+    selected->SetValue(value);
+}
+
 void PaintBoard::RotateSelectedFigureRight()
 {
     FigureInterface *selected = figures.GetSelectedFigure();

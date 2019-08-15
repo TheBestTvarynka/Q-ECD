@@ -54,6 +54,18 @@ void FigureInterface::SetPosition(double X, double Y)
     x = X; y = Y;
 }
 
+void FigureInterface::SetName(QString Name)
+{
+    name = Name;
+    treeItem->setText(0, Name);
+}
+
+void FigureInterface::SetValue(QString Value)
+{
+    value = Value;
+    treeItem->setText(1, Value);
+}
+
 void FigureInterface::Rotate(double angle)
 {
     rotation += angle;
