@@ -115,7 +115,8 @@ void PaintBoard::CreateFigure(int f)
 
 void PaintBoard::RemoveSelectedFigure()
 {
-    figures.erase(figures.GetSelectedFigure());
+    QList<IObserver *> cabs = figures.erase(figures.GetSelectedFigure());
+    cables.RemoveCables(cabs);
 }
 
 void PaintBoard::RotateSelectedFigureRight()

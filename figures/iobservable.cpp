@@ -20,7 +20,22 @@ void IObservable::RemoveAll()
 {
     foreach (IObserver *i, connections.keys())
     {
-        i->RmoveObservable(this);
+        i->RemoveObservable(this);
         connections.remove(i);
     }
+}
+
+QList<IObserver *> IObservable::GetIObservers()
+{
+    QList<IObserver *> obs;
+    foreach (IObserver *i, connections.keys())
+    {
+        obs.append(i);
+    }
+    return obs;
+}
+
+IObservable::~IObservable()
+{
+
 }

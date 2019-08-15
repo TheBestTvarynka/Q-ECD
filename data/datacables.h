@@ -12,6 +12,8 @@ class DataCables
 public:
     DataCables();
     void AddCable(Cable *);
+    void RemoveCable(Cable *);
+    void RemoveCables(QList<IObserver *>);
     void print(double);
     void InsertVertex(Cable *, double, double);
     void RemoveLoop(Cable *, QPoint, double);

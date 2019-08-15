@@ -22,10 +22,11 @@ void DataFigures::add(FigureInterface *new_Figure)
     figures.push_back(new_Figure);
 }
 
-void DataFigures::erase(FigureInterface *select)
+QList<IObserver *> DataFigures::erase(FigureInterface *select)
 {
     if (select == nullptr)
-        return;
+        return QList<IObserver *>();
+    QList<IObserver *> connected_cables = select->GetIObservers();
     select->RemoveAll();
     for (int i = 0; i < figures.size(); i++)
     {
@@ -35,6 +36,7 @@ void DataFigures::erase(FigureInterface *select)
             break;
         }
     }
+    return connected_cables;
 }
 
 void DataFigures::select_figure(QPoint position, double Scale)

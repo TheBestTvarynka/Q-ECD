@@ -19,7 +19,7 @@ public:
     DataFigures();
     void print(double, PaintBoard *);
     void add(FigureInterface *);
-    void erase(FigureInterface *);
+    QList<IObserver *> erase(FigureInterface *);
     void select_figure(QPoint, double);
     void MoveSelectedFigure(FigureInterface *, double, double);
     void RoundCoordinates(FigureInterface *);
