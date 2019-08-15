@@ -11,19 +11,21 @@ void DataCables::AddCable(Cable *new_Cable)
     cables.push_back(new_Cable);
 }
 
-void DataCables::RemoveCable(Cable *select)
+bool DataCables::RemoveCable(Cable *select)
 {
     if (select == nullptr)
-        return;
+        return false;
     select->RemoveAllObservable();
     for (int i = 0; i < cables.size(); i++)
     {
         if (cables[i] == select)
         {
+            delete select;
             cables.erase(cables.begin() + i);
-            break;
+            return true;
         }
     }
+    return false;
 }
 
 void DataCables::RemoveCables(QList<IObserver *> c)

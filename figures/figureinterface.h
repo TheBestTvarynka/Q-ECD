@@ -12,6 +12,7 @@ using std::pair;
 typedef pair<double, double> (*GetClampCoordinates)(double, double);
 
 class PaintBoard;
+class QTreeItem;
 
 class FigureInterface : public IObservable
 {
@@ -22,6 +23,7 @@ protected:
     QString value;
     double nameX, nameY;
     double main_color[3];
+    QTreeItem *treeItem;
     QMap<int, GetClampCoordinates> clamp_coordiantes;
 public:
     FigureInterface() : x(10.0), y(10.0), rotation(0), name("R1") {}
@@ -40,7 +42,9 @@ public:
     pair<double, double> GetClamp(int clamp) { return RotatePoint((*clamp_coordiantes[clamp])(x, y), rotation); }
     void SetMainColor(double [3]);
     void SetPosition(double, double);
+    void SetTreeItem(QTreeItem *item) { treeItem = item; }
     void Rotate(double);
+    void DeleteTreeItem();
     pair<double, double> RotatePoint(pair<double, double>, double);
 };
 

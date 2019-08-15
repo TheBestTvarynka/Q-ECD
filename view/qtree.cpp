@@ -18,7 +18,7 @@ void QTree::CteateFigureItem(FigureInterface *new_figure)
     QTreeItem *new_item = new QTreeItem(new_figure, this);
     new_item->setText(0, new_figure->GetName());
     new_item->setText(1, new_figure->GetValue());
-    new_item->AddObservable(new_figure);
+    new_figure->SetTreeItem(new_item);
     emit SetCurrentFigure(new_figure);
 }
 

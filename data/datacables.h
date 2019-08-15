@@ -12,7 +12,7 @@ class DataCables
 public:
     DataCables();
     void AddCable(Cable *);
-    void RemoveCable(Cable *);
+    bool RemoveCable(Cable *);
     void RemoveCables(QList<IObserver *>);
     void print(double);
     void InsertVertex(Cable *, double, double);

@@ -32,6 +32,8 @@ QList<IObserver *> DataFigures::erase(FigureInterface *select)
     {
         if (figures[i] == select)
         {
+            select->DeleteTreeItem();
+            delete select;
             figures.erase(figures.begin() + i);
             break;
         }

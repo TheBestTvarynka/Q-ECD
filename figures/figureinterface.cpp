@@ -1,4 +1,5 @@
 #include "figureinterface.h"
+#include "view/qtreeitem.h"
 #include <QDebug>
 
 FigureInterface::FigureInterface(int X, int Y, QString n, QString v)
@@ -57,6 +58,11 @@ void FigureInterface::Rotate(double angle)
 {
     rotation += angle;
     rotation = rotation % 360;
+}
+
+void FigureInterface::DeleteTreeItem()
+{
+    delete treeItem;
 }
 
 pair<double, double> FigureInterface::RotatePoint(pair<double, double> point, double angel)
