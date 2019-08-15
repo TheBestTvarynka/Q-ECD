@@ -58,3 +58,8 @@ void ModeInterface::ScaleEvent(bool zoom, QPoint mouse, double &Scale)
     Center = new_Center;
     resizeGL(Weight, Height);
 }
+
+ModeInterface::~ModeInterface()
+{
+
+}

@@ -30,6 +30,8 @@ public:
     QPoint RoundCoordinates(double, double);
     void ScaleEvent(bool, QPoint, double &);
     QPoint GetCenter() { return Center; }
+
+    virtual ~ModeInterface();
 };
 
 #endif // MODEINTERFACE_H
