@@ -6,13 +6,15 @@
 #include "modes/modeinterface.h"
 #include "modes/objectmode.h"
 #include "modes/drawcablemode.h"
+#include "figures/figurecreator.h"
 
 #include <QGLWidget>
 #include <QTimer>
 #include <QMouseEvent>
 #include <QPoint>
 #include <QWheelEvent>
-#include "figures/figurecreator.h"
+#include <QClipboard>
+#include <QApplication>
 
 using std::pair;
 
@@ -55,6 +57,8 @@ public slots:
     void SetValueSelectedFigure(const QString &);
     void RotateSelectedFigureRight();
     void RotateSelectedFigureLeft();
+    void CopySelectedFigure();
+    void PasteFromBuffer();
 signals:
     void AddToTree(FigureInterface *);
     void LoadFigurePropereties(QString, QString);

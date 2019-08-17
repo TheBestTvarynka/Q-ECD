@@ -108,7 +108,7 @@ void PaintBoard::SetSelectedFigure(FigureInterface *f)
 
 void PaintBoard::CreateFigure(int f)
 {
-    FigureInterface *new_figure = creator.GetNewFigure(f, int((width() / 2 - mode->GetCenter().x()) / Scale), int((height() / 2 - mode->GetCenter().y()) / Scale), "F" + QString::number(figures.size()), "vl");
+    FigureInterface *new_figure = creator.GetNewFigure(f, int((width() / 2 - mode->GetCenter().x()) / Scale), int((height() / 2 - mode->GetCenter().y()) / Scale), 0, "F" + QString::number(figures.size()), "vl");
     figures.add(new_figure);
     emit AddToTree(new_figure);
 }
@@ -152,4 +152,28 @@ void PaintBoard::RotateSelectedFigureLeft()
         return;
     selected->Rotate(-90);
     selected->Notify();
+}
+
+void PaintBoard::CopySelectedFigure()
+{
+    FigureInterface *selected = figures.GetSelectedFigure();
+    if (selected == nullptr)
+        return;
+    QString x; x.setNum(selected->GetX());
+    QString y; y.setNum(selected->GetY());
+    QString r; r.setNum(selected->GetRotation());
+    QString n = selected->GetName();
+    QString v = selected->GetValue();
+    QString t; t.setNum(selected->GetType());
+    QString buffer = x + ";" + y + ";" + r + ";" + n + ";" + v + ";" + t;
+    qDebug() << buffer;
+    QClipboard *buf = QApplication::clipboard();
+    buf->setText(buffer);
+}
+
+void PaintBoard::PasteFromBuffer()
+{
+    QClipboard *buffer = QApplication::clipboard();
+    QString str = buffer->text();
+    qDebug() << str;
 }

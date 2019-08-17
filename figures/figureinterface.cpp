@@ -2,9 +2,9 @@
 #include "view/qtreeitem.h"
 #include <QDebug>
 
-FigureInterface::FigureInterface(int X, int Y, QString n, QString v)
+FigureInterface::FigureInterface(int X, int Y, int R, QString n, QString v, int t)
 {
-    rotation = 0;
+    rotation = R;
     x = X;
     y = Y;
     main_color[0] = 0.0;
@@ -12,6 +12,7 @@ FigureInterface::FigureInterface(int X, int Y, QString n, QString v)
     main_color[2] = 0.0;
     name = n;
     value = v;
+    type = t;
 }
 
 FigureInterface::FigureInterface(const FigureInterface *origin)

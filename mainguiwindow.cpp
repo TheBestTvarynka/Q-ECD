@@ -269,6 +269,7 @@ void MainGUIWindow::SetObjectMode()
     copy->setIcon(copyIcon);
     copy->setIconSize(QSize(27, 27));
     copy->setFixedSize(40, 40);
+    connect(copy, SIGNAL(clicked()), ui->widget, SLOT(CopySelectedFigure()));
 
     QPushButton *pastle = new QPushButton("");
     pastle->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
@@ -285,6 +286,7 @@ void MainGUIWindow::SetObjectMode()
     pastle->setIcon(pastleIcon);
     pastle->setIconSize(QSize(27, 27));
     pastle->setFixedSize(40, 40);
+    connect(pastle, SIGNAL(clicked()), ui->widget, SLOT(PasteFromBuffer()));
 
     QPushButton *deLete = new QPushButton("");
     deLete->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);

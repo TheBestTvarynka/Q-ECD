@@ -1,7 +1,7 @@
 #include "resistor.h"
 #include "paintboard.h"
 
-Resistor::Resistor(int X, int Y, QString N, QString V) : FigureInterface(X, Y, N, V), r(1)
+Resistor::Resistor(int X, int Y, int R, QString N, QString V, int T) : FigureInterface(X, Y, R, N, V, T), r(1)
 {
     clamp_coordiantes[0] = Clamp1;
     clamp_coordiantes[1] = Clamp2;
