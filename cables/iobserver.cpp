@@ -14,4 +14,25 @@ IObserver::IObserver(IObservable *parent, int vertex)
 void IObserver::AddObservable(IObservable *parent, int vertex)
  {
     connections.insert(parent, vertex);
- }
+}
+
+void IObserver::RemoveObservable(IObservable *parent)
+{
+    connections.remove(parent);
+}
+
+void IObserver::RemoveAllObservable()
+{
+    QMapIterator<IObservable*, int> it(connections);
+    while (it.hasNext())
+    {
+        it.next();
+        it.key()->Remove(this);
+    }
+    connections.clear();
+}
+
+IObserver::~IObserver()
+{
+
+}

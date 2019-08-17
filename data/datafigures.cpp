@@ -22,6 +22,25 @@ void DataFigures::add(FigureInterface *new_Figure)
     figures.push_back(new_Figure);
 }
 
+QList<IObserver *> DataFigures::erase(FigureInterface *select)
+{
+    if (select == nullptr)
+        return QList<IObserver *>();
+    QList<IObserver *> connected_cables = select->GetIObservers();
+    select->RemoveAll();
+    for (int i = 0; i < figures.size(); i++)
+    {
+        if (figures[i] == select)
+        {
+            select->DeleteTreeItem();
+            delete select;
+            figures.erase(figures.begin() + i);
+            break;
+        }
+    }
+    return connected_cables;
+}
+
 void DataFigures::select_figure(QPoint position, double Scale)
 {
     if (selected_figure != nullptr)
@@ -75,6 +94,14 @@ void DataFigures::Register(FigureInterface *select, int clamp, IObserver *cable,
     cable->AddObservable(select, vertex);
 }
 
+void DataFigures::SetSelectedFigure(FigureInterface *f)
+{
+    if (selected_figure != nullptr)
+        selected_figure->SetMainColor(new double[3]{0.0, 1.0, 0.0});
+    selected_figure = f;
+    selected_figure->SetMainColor(new double[3]{1.0, 0.0, 0.0});
+}
+
 pair<QPoint, double> DataFigures::SelectClamp(QPoint mouse_pos, double Scale, FigureInterface *(&select), int &s_clamp)
 {
     if (figures.size() == 0)
@@ -86,7 +113,7 @@ pair<QPoint, double> DataFigures::SelectClamp(QPoint mouse_pos, double Scale, Fi
     for (int i = 1; i < figures.size(); i++)
     {
         clamp = figures[i]->SelectClamp(mouse_pos, Scale, figures[i]->GetClams());
-        if (clamp.second < best_clamp.second && clamp.first != -1.0)
+        if (clamp.second < best_clamp.second && !qFuzzyCompare(clamp.first, -1.0))
         {
             select = figures[i];
             best_clamp = clamp;

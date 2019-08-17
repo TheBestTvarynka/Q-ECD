@@ -1,7 +1,7 @@
 #include "capacitor.h"
 #include "paintboard.h"
 
-capacitor::capacitor(int X, int Y, QString N) : FigureInterface(X, Y, N), c(1)
+Capacitor::Capacitor(int X, int Y, int R, QString N, QString V, int T) : FigureInterface(X, Y, R, N, V, T), c(1)
 {
     clamp_coordiantes[0] = Clamp1;
     clamp_coordiantes[1] = Clamp2;
@@ -9,19 +9,28 @@ capacitor::capacitor(int X, int Y, QString N) : FigureInterface(X, Y, N), c(1)
     nameY = -1.6;
 }
 
-void capacitor::print(double Scale, PaintBoard *Parent)
+void Capacitor::print(double Scale, PaintBoard *Parent)
 {
     glLineWidth(float(Scale / 5));
     glColor3d(main_color[0], main_color[1], main_color[2]);
+
+    glPushMatrix();
+    glTranslated(x * Scale, y * Scale, 0.0);
+    glRotatef(rotation, 0.0, 0.0, 1.0);
+
     glBegin(GL_LINES);
-    glVertex2d((x - 4) * Scale, y * Scale);
-    glVertex2d((x - 0.5) * Scale, y * Scale);
-    glVertex2d((x + 4) * Scale, y * Scale);
-    glVertex2d((x + 0.5) * Scale, y * Scale);
-    glVertex2d((x - 0.5) * Scale, (y + 1.5) * Scale);
-    glVertex2d((x - 0.5) * Scale, (y - 1.5) * Scale);
-    glVertex2d((x + 0.5) * Scale, (y + 1.5) * Scale);
-    glVertex2d((x + 0.5) * Scale, (y - 1.5) * Scale);
+    glVertex2d((-4) * Scale, 0);
+    glVertex2d((-0.5) * Scale, 0);
+    glVertex2d((4) * Scale, 0);
+    glVertex2d((0.5) * Scale, 0);
+    glVertex2d((-0.5) * Scale, (1.5) * Scale);
+    glVertex2d((-0.5) * Scale, (-1.5) * Scale);
+    glVertex2d((0.5) * Scale, (1.5) * Scale);
+    glVertex2d((0.5) * Scale, (-1.5) * Scale);
     glEnd();
-    Parent->RenderText(x + nameX, y + nameY, name);
+
+    glPopMatrix();
+
+//    Parent->RenderText(x + nameX, y + nameY, name);
+    Parent->RenderText(RotatePoint(pair<double, double>(x + nameX, y + nameY), rotation), rotation, name);
 }

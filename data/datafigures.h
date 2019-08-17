@@ -19,12 +19,15 @@ public:
     DataFigures();
     void print(double, PaintBoard *);
     void add(FigureInterface *);
+    QList<IObserver *> erase(FigureInterface *);
     void select_figure(QPoint, double);
     void MoveSelectedFigure(FigureInterface *, double, double);
     void RoundCoordinates(FigureInterface *);
     void Register(FigureInterface *, int, IObserver *, int);
     FigureInterface *GetSelectedFigure();
     pair<QPoint, double> SelectClamp(QPoint, double, FigureInterface *&, int &);
+    int size() { return figures.size(); }
+    void SetSelectedFigure(FigureInterface *);
 };
 
 #endif // DATAFIGURES_H

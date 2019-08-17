@@ -155,21 +155,22 @@ void DrawCableMode::mouseReleaseEvent(QMouseEvent *ap)
         if (Parent->GetDataCables()->GetDirectionEnd(Parent->GetDataCables()->GetLast()))
         {
             point->first = finish.first.x();
-            if (finish.first.y() != point->second)
+            if (!qFuzzyCompare(finish.first.y(), point->second))
                 Parent->GetDataCables()->GetLast()->insert_back(finish.first.x(), finish.first.y());
         }
         else
         {
             point->first = finish.first.y();
-            if (finish.first.x() != point->first)
+            if (!qFuzzyCompare(finish.first.x(), point->first))
                 Parent->GetDataCables()->GetLast()->insert_back(finish.first.x(), finish.first.y());
         }
         Parent->GetDataFigures()->Register(select, clamp, Parent->GetDataCables()->GetLast(), Parent->GetDataCables()->GetLast()->GetSize() - 1);
     }
     else
     {
-        QPoint r_point = RoundCoordinates(point->first, point->second);
-        point->first = r_point.x();
-        point->second = r_point.y();
+//        QPoint r_point = RoundCoordinates(point->first, point->second);
+//        point->first = r_point.x();
+//        point->second = r_point.y();
+        Parent->GetDataCables()->RemoveCable(Parent->GetDataCables()->GetLast());
     }
 }

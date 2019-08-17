@@ -12,8 +12,11 @@ public:
     IObserver();
     IObserver(IObservable *parent, int vertex);
     virtual void update(IObservable *, double, double) = 0;
-    void AddObservable(IObservable *parent, int vertex);
+    void AddObservable(IObservable *parent, int vertex = 0);
+    void RemoveObservable(IObservable *);
+    void RemoveAllObservable();
     int GetVertex(IObservable *p) { return connections[p]; }
+    virtual ~IObserver() = 0;
 };
 
 #endif // IOBSERVER_H

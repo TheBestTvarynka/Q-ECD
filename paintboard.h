@@ -6,12 +6,15 @@
 #include "modes/modeinterface.h"
 #include "modes/objectmode.h"
 #include "modes/drawcablemode.h"
+#include "figures/figurecreator.h"
 
 #include <QGLWidget>
 #include <QTimer>
 #include <QMouseEvent>
 #include <QPoint>
 #include <QWheelEvent>
+#include <QClipboard>
+#include <QApplication>
 
 using std::pair;
 
@@ -22,6 +25,7 @@ class PaintBoard : public QGLWidget
     ModeInterface *mode;
     DataFigures figures;
     DataCables cables;
+    FigureCreator creator;
 
     QPoint Delta;
     double Scale;
@@ -37,7 +41,7 @@ public:
     void mouseMoveEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
     void wheelEvent(QWheelEvent *);
-    void RenderText(double, double, QString);
+    void RenderText(pair<double, double>, double, QString);
 
     double GetScale() { return Scale; }
     QPoint GetCenter() { return mode->GetCenter(); }
@@ -45,6 +49,21 @@ public:
     DataFigures *GetDataFigures() { return &figures; }
     DataCables *GetDataCables() { return &cables; }
     void SetMode(ModeInterface *);
+    void CreateCustomFigure(int, int, int, int, QString, QString);
+public slots:
+    void SetSelectedFigure(FigureInterface *);
+    void CreateFigure(int);
+    void RemoveSelectedFigure();
+    void SetNameSelectedFigure(const QString &);
+    void SetValueSelectedFigure(const QString &);
+    void RotateSelectedFigureRight();
+    void RotateSelectedFigureLeft();
+    void CopySelectedFigure();
+    void PasteFromBuffer();
+signals:
+    void AddToTree(FigureInterface *);
+    void LoadFigurePropereties(QString, QString);
+    void ClearPropereties();
 };
 
 #endif // PAINTBOARD_H

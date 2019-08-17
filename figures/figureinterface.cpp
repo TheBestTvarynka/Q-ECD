@@ -1,14 +1,23 @@
 #include "figureinterface.h"
+#include "view/qtreeitem.h"
 #include <QDebug>
 
-FigureInterface::FigureInterface(int X, int Y, QString n)
+FigureInterface::FigureInterface(int X, int Y, int R, QString n, QString v, int t)
 {
+    rotation = R;
     x = X;
     y = Y;
     main_color[0] = 0.0;
     main_color[1] = 1.0;
     main_color[2] = 0.0;
     name = n;
+    value = v;
+    type = t;
+}
+
+FigureInterface::FigureInterface(const FigureInterface *origin)
+{
+    *this = *origin;
 }
 
 pair<int, double> FigureInterface::SelectClamp(QPoint mouse_pos, double Scale, QMap<int, GetClampCoordinates> clamp_c)
@@ -44,6 +53,35 @@ void FigureInterface::SetMainColor(double color[3])
 void FigureInterface::SetPosition(double X, double Y)
 {
     x = X; y = Y;
+}
+
+void FigureInterface::SetName(QString Name)
+{
+    name = Name;
+    treeItem->setText(0, Name);
+}
+
+void FigureInterface::SetValue(QString Value)
+{
+    value = Value;
+    treeItem->setText(1, Value);
+}
+
+void FigureInterface::Rotate(double angle)
+{
+    rotation += angle;
+    rotation = rotation % 360;
+}
+
+void FigureInterface::DeleteTreeItem()
+{
+    delete treeItem;
+}
+
+pair<double, double> FigureInterface::RotatePoint(pair<double, double> point, double angel)
+{
+    angel *= M_PI / 180;
+    return pair<double, double>(cos(angel) * (point.first - x) - sin(angel) * (point.second - y) + x, sin(angel) * (point.first - x) + cos(angel) * (point.second - y) + y);
 }
 
 void FigureInterface::MoveFigure(double dX, double dY)

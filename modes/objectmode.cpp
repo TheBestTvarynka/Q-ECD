@@ -71,6 +71,8 @@ void ObjectMode::mousePressEvent(QMouseEvent *ap)
 //    qDebug() << "Mouse Down " << ap->x();
     Parent->GetDataFigures()->select_figure(ap->pos() - Center, scale);
     start_position = ap->pos();
+    FigureInterface *sf = Parent->GetDataFigures()->GetSelectedFigure();
+    emit Parent->LoadFigurePropereties(sf->GetName(), sf->GetValue());
 }
 
 void ObjectMode::mouseMoveEvent(QMouseEvent *ap)
@@ -80,7 +82,7 @@ void ObjectMode::mouseMoveEvent(QMouseEvent *ap)
     start_position = ap->pos();
 }
 
-void ObjectMode::mouseReleaseEvent(QMouseEvent *ap)
+void ObjectMode::mouseReleaseEvent(QMouseEvent *)
 {
 //    qDebug() << "Mouse Release" << ap->x() << " " << Center.x();
     Parent->GetDataFigures()->RoundCoordinates(Parent->GetDataFigures()->GetSelectedFigure());

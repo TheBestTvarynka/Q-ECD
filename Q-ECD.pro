@@ -38,7 +38,10 @@ SOURCES += \
     cables/cable.cpp \
     modes/drawcablemode.cpp \
     cables/iobserver.cpp \
-    data/datacables.cpp
+    data/datacables.cpp \
+    figures/figurecreator.cpp \
+    view/qtreeitem.cpp \
+    view/qtree.cpp
 
 HEADERS += \
         mainguiwindow.h \
@@ -53,7 +56,10 @@ HEADERS += \
     cables/cable.h \
     modes/drawcablemode.h \
     cables/iobserver.h \
-    data/datacables.h
+    data/datacables.h \
+    figures/figurecreator.h \
+    view/qtreeitem.h \
+    view/qtree.h
 
 FORMS += \
         mainguiwindow.ui
@@ -62,3 +68,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    icons.qrc
