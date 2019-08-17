@@ -49,6 +49,7 @@ public:
     DataFigures *GetDataFigures() { return &figures; }
     DataCables *GetDataCables() { return &cables; }
     void SetMode(ModeInterface *);
+    void CreateCustomFigure(int, int, int, int, QString, QString);
 public slots:
     void SetSelectedFigure(FigureInterface *);
     void CreateFigure(int);

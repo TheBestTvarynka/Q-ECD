@@ -100,6 +100,13 @@ void PaintBoard::SetMode(ModeInterface *newMode)
     mode = newMode;
 }
 
+void PaintBoard::CreateCustomFigure(int type, int x, int y, int rotation, QString name, QString value)
+{
+    FigureInterface *new_figure = creator.GetNewFigure(type, x, y, rotation, name, value);
+    figures.add(new_figure);
+    emit AddToTree(new_figure);
+}
+
 void PaintBoard::SetSelectedFigure(FigureInterface *f)
 {
     figures.SetSelectedFigure(f);
@@ -175,5 +182,13 @@ void PaintBoard::PasteFromBuffer()
 {
     QClipboard *buffer = QApplication::clipboard();
     QString str = buffer->text();
-    qDebug() << str;
+    if (str.isNull())
+        return;
+    int x =  str.section(';', 0, 0).toInt();
+    int y = str.section(';', 1, 1).toInt();
+    int rotation = str.section(';', 2, 2).toInt();
+    QString name = str.section(';', 3, 3);
+    QString value = str.section(';', 4, 4);
+    int type =  str.section(';', 5, 5).toInt();
+    CreateCustomFigure(type, x, y, rotation, name, value);
 }
