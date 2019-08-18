@@ -10,4 +10,10 @@
         <file>icons/objectmode/pastle.svg</file>
         <file>icons/objectmode/copy.svg</file>
     </qresource>
+    <qresource prefix="/drawcablemode">
+        <file>icons/drawcablemode/move_edge.svg</file>
+        <file>icons/drawcablemode/add_cable.svg</file>
+        <file>icons/drawcablemode/move_point.svg</file>
+        <file>icons/drawcablemode/remove_cables.svg</file>
+    </qresource>
 </RCC>

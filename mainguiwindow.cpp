@@ -192,7 +192,7 @@ void MainGUIWindow::SetDrawCableMode()
                         "QPushButton::hover {"
                         "background-color: #f24bef;"
                         "color: #585957; }");
-    QIcon newIcon(QPixmap((":/figures/icons/figures/resistor.svg")));
+    QIcon newIcon(QPixmap((":/drawcablemode/icons/drawcablemode/add_cable.svg")));
     newCable->setIcon(newIcon);
     newCable->setIconSize(QSize(27, 27));
     newCable->setFixedSize(40, 40);
@@ -208,7 +208,7 @@ void MainGUIWindow::SetDrawCableMode()
                         "QPushButton::hover {"
                         "background-color: #f24bef;"
                         "color: #585957; }");
-    QIcon movePIcon(QPixmap((":/figures/icons/figures/resistor.svg")));
+    QIcon movePIcon(QPixmap((":/drawcablemode/icons/drawcablemode/move_point.svg")));
     movePoint->setIcon(movePIcon);
     movePoint->setIconSize(QSize(27, 27));
     movePoint->setFixedSize(40, 40);
@@ -224,7 +224,7 @@ void MainGUIWindow::SetDrawCableMode()
                         "QPushButton::hover {"
                         "background-color: #f24bef;"
                         "color: #585957; }");
-    QIcon moveEIcon(QPixmap((":/figures/icons/figures/resistor.svg")));
+    QIcon moveEIcon(QPixmap((":/drawcablemode/icons/drawcablemode/move_edge.svg")));
     moveEdge->setIcon(moveEIcon);
     moveEdge->setIconSize(QSize(27, 27));
     moveEdge->setFixedSize(40, 40);
@@ -240,7 +240,7 @@ void MainGUIWindow::SetDrawCableMode()
                         "QPushButton::hover {"
                         "background-color: #f24bef;"
                         "color: #585957; }");
-    QIcon removeCIcon(QPixmap((":/figures/icons/figures/resistor.svg")));
+    QIcon removeCIcon(QPixmap((":/drawcablemode/icons/drawcablemode/remove_cables.svg")));
     removeCables->setIcon(removeCIcon);
     removeCables->setIconSize(QSize(27, 27));
     removeCables->setFixedSize(40, 40);
