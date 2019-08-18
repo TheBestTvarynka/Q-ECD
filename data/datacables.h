@@ -14,7 +14,9 @@ public:
     void AddCable(Cable *);
     bool RemoveCable(Cable *);
     void RemoveCables(QList<IObserver *>);
+    void RemoveCables(QList<Cable *>);
     void print(double);
+    void SetCablesColor(QList<Cable *>, double [3]);
     void InsertVertex(Cable *, double, double);
     void RemoveLoop(Cable *, QPoint, double);
     Cable *GetLast() { return cables.back(); }

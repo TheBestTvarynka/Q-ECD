@@ -13,6 +13,7 @@ using std::pair;
 class Cable : public IObserver
 {
     QVector<pair<double, double> > points;
+    double main_color[3];
 public:
     Cable(int, int);
     void print(double);
@@ -24,6 +25,7 @@ public:
     pair<double, double> GetPoint(int i) { return points[i]; }
 //    void MovePoint(int, double, double);
     void SetPoint(int i, double X, double Y);
+    void SetMainColor(double [3]);
 };
 
 #endif // CABLE_H

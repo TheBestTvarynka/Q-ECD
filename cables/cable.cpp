@@ -4,12 +4,16 @@
 Cable::Cable(int x, int y)
 {
     points.push_back(pair<double, double>(x, y));
+    main_color[0] = 0.0;
+    main_color[1] = 0.0;
+    main_color[2] = 0.0;
 }
 
 void Cable::print(double Scale)
 {
     glLineWidth(float(Scale / 5));
-    glColor3d(0.0, 0.0, 0.0);
+    glColor3d(main_color[0], main_color[1], main_color[2]);
+
     glBegin(GL_LINES);
     for(int i = 0; i < points.size() - 1; i++)
     {
@@ -74,4 +78,11 @@ void Cable::SetPoint(int i, double X, double Y)
             points[i - 1].first = points[i].first;
         }
     }
+}
+
+void Cable::SetMainColor(double color[3])
+{
+    main_color[0] = color[0];
+    main_color[1] = color[1];
+    main_color[2] = color[2];
 }

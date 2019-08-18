@@ -36,10 +36,26 @@ void DataCables::RemoveCables(QList<IObserver *> c)
     }
 }
 
+void DataCables::RemoveCables(QList<Cable *>c)
+{
+    foreach (Cable *i, c)
+    {
+        RemoveCable(i);
+    }
+}
+
 void DataCables::print(double Scale)
 {
     for(int i = 0; i < cables.size(); i++)
         cables[i]->print(Scale);
+}
+
+void DataCables::SetCablesColor(QList<Cable *>c, double color[3])
+{
+    foreach (Cable *i, c)
+    {
+        i->SetMainColor(color);
+    }
 }
 
 void DataCables::InsertVertex(Cable *c, double x, double y)
