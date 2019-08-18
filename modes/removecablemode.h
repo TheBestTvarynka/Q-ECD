@@ -1,13 +1,18 @@
 #ifndef REMOVECABLEMODE_H
 #define REMOVECABLEMODE_H
 
-#include <QDebug>
 #include "modeinterface.h"
+
+#include <QDebug>
+
+using std::pair;
 
 class RemoveCableMode : public ModeInterface
 {
     QPoint start_position;
     Qt::MouseButton click;
+
+    pair<QPoint, QPoint> line;
 public:
     explicit RemoveCableMode(PaintBoard *, double, QPoint, int, int);
     void initializeGL();

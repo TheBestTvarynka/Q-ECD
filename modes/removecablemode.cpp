@@ -6,6 +6,8 @@ RemoveCableMode::RemoveCableMode(PaintBoard *p, double s, QPoint c, int w, int h
 {
     Center = c;
     click = Qt::MouseButton::NoButton;
+    line.first = QPoint(0, 0);
+    line.second = line.first;
 }
 
 void RemoveCableMode::initializeGL()
@@ -48,7 +50,7 @@ void RemoveCableMode::paintGL(QPoint &Delta)
     Center += Delta;
     Delta = QPoint(0, 0);
 
-    glColor3d(0.45, 0.2, 0.9);
+    glColor3d(0.3, 0.5, 0.1);
     glPointSize(20);
     glBegin(GL_POINTS);
     glVertex2f(float(0), float(0));
@@ -72,20 +74,35 @@ void RemoveCableMode::paintGL(QPoint &Delta)
 
     Parent->GetDataCables()->print(scale);
     Parent->GetDataFigures()->print(scale, Parent);
+
+    glEnable(GL_LINE_STIPPLE);
+    glColor3d(0.8, 0.1, 0.2);
+//    glLineStipple(1, 0x00F0);
+    glLineStipple(0, 0xAAAA);
+    glLineWidth(3);
+    glBegin(GL_LINES);
+    glVertex2i(line.first.x(), line.first.y());
+    glVertex2i(line.second.x(), line.second.y());
+    glEnd();
+
+    glDisable(GL_LINE_STIPPLE);
 }
 
-void RemoveCableMode::mousePressEvent(QMouseEvent *)
+void RemoveCableMode::mousePressEvent(QMouseEvent *ap)
 {
-
+    line.first = ap->pos();
+    line.first -= Center;
+    line.second = line.first;
 }
 
-void RemoveCableMode::mouseMoveEvent(QMouseEvent *)
+void RemoveCableMode::mouseMoveEvent(QMouseEvent *ap)
 {
-
+    line.second = ap->pos() - Center;
 }
 
 void RemoveCableMode::mouseReleaseEvent(QMouseEvent *)
 {
-
+//    line.first = line.second = QPoint(0, 0);
+    line.first = line.second;
 }
 
