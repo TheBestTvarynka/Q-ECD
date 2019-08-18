@@ -41,7 +41,8 @@ SOURCES += \
     data/datacables.cpp \
     figures/figurecreator.cpp \
     view/qtreeitem.cpp \
-    view/qtree.cpp
+    view/qtree.cpp \
+    modes/removecablemode.cpp
 
 HEADERS += \
         mainguiwindow.h \
@@ -59,7 +60,8 @@ HEADERS += \
     data/datacables.h \
     figures/figurecreator.h \
     view/qtreeitem.h \
-    view/qtree.h
+    view/qtree.h \
+    modes/removecablemode.h
 
 FORMS += \
         mainguiwindow.ui

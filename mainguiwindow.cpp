@@ -229,10 +229,28 @@ void MainGUIWindow::SetDrawCableMode()
     moveEdge->setIconSize(QSize(27, 27));
     moveEdge->setFixedSize(40, 40);
 
+    QPushButton *removeCables = new QPushButton("");
+    removeCables->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+    removeCables->setStyleSheet("QPushButton {"
+                        "background-color: white;"
+                        "border: 2px solid #67d43f;"
+                        "border-radius: 5px;"
+                        "color: white;"
+                        "padding: 15px 32px; }"
+                        "QPushButton::hover {"
+                        "background-color: #f24bef;"
+                        "color: #585957; }");
+    QIcon removeCIcon(QPixmap((":/figures/icons/figures/resistor.svg")));
+    removeCables->setIcon(removeCIcon);
+    removeCables->setIconSize(QSize(27, 27));
+    removeCables->setFixedSize(40, 40);
+    connect(removeCables, SIGNAL(clicked()), ui->widget, SLOT(SetRemoveCableMode()));
+
     QSpacerItem *space = new QSpacerItem(40, 60, QSizePolicy::Expanding, QSizePolicy::Preferred);
     layout->addWidget(newCable);
     layout->addWidget(movePoint);
     layout->addWidget(moveEdge);
+    layout->addWidget(removeCables);
     layout->addItem(space);
 
     actions->setStyleSheet("QWidget {"

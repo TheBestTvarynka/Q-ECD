@@ -6,6 +6,7 @@
 #include "modes/modeinterface.h"
 #include "modes/objectmode.h"
 #include "modes/drawcablemode.h"
+#include "modes/removecablemode.h"
 #include "figures/figurecreator.h"
 
 #include <QGLWidget>
@@ -60,6 +61,7 @@ public slots:
     void RotateSelectedFigureLeft();
     void CopySelectedFigure();
     void PasteFromBuffer();
+    void SetRemoveCableMode();
 signals:
     void AddToTree(FigureInterface *);
     void LoadFigurePropereties(QString, QString);

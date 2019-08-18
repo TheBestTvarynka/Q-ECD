@@ -192,3 +192,10 @@ void PaintBoard::PasteFromBuffer()
     int type =  str.section(';', 5, 5).toInt();
     CreateCustomFigure(type, x, y, rotation, name, value);
 }
+
+void PaintBoard::SetRemoveCableMode()
+{
+    ModeInterface *Mode = new RemoveCableMode(this, GetScale(), GetCenter(), width(), height());
+    delete mode;
+    mode = Mode;
+}
