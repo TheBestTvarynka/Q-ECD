@@ -8,7 +8,6 @@
 
 class PaintBoard;
 
-//class ModeInterface : public QGLWidget
 class ModeInterface
 {
 public:
@@ -24,6 +23,8 @@ public:
     virtual void mousePressEvent(QMouseEvent *) = 0;
     virtual void mouseMoveEvent(QMouseEvent *) = 0;
     virtual void mouseReleaseEvent(QMouseEvent *) = 0;
+    virtual void keyPressEvent(QKeyEvent *event);
+    virtual void keyReleaseEvent(QKeyEvent *);
 
     QPoint RoundCoordinates(double, double);
     void ScaleEvent(bool, QPoint, double &);

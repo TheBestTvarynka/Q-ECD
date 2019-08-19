@@ -10,6 +10,16 @@ ModeInterface::ModeInterface(double s, PaintBoard *p, int w, int h)
     Height = h;
 }
 
+void ModeInterface::keyPressEvent(QKeyEvent *event)
+{
+
+}
+
+void ModeInterface::keyReleaseEvent(QKeyEvent *)
+{
+
+}
+
 QPoint ModeInterface::RoundCoordinates(double X, double Y)
 {
     QPoint Result;

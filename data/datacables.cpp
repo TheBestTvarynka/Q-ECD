@@ -68,6 +68,19 @@ void DataCables::RemoveLoop(Cable *cable, QPoint pos, double scale)
     cable->RemoveLoops(pos, scale);
 }
 
+void DataCables::RemoveFromSelected(QList<Cable *> left)
+{
+    foreach (Cable *i, left)
+    {
+        selected.removeOne(i);
+    }
+}
+
+void DataCables::AddToSelected(QList<Cable *> additional)
+{
+    selected.append(additional);
+}
+
 QList<Cable *> DataCables::GetForDeleting(pair<QPoint, QPoint> sections, double scale)
 {
     QList<Cable *> removing;
@@ -84,7 +97,8 @@ QList<Cable *> DataCables::GetForDeleting(QPoint brush, double scale)
     QList<Cable *> removing;
     foreach (Cable *i, cables)
     {
-        if (!i->IsMarked() && i->CheckIntersection(brush, scale))
+//        if (!i->IsMarked() && i->CheckIntersection(brush, scale))
+        if (i->CheckIntersection(brush, scale))
             removing.append(i);
     }
     return removing;

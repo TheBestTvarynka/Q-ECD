@@ -17,6 +17,7 @@ class RemoveCableMode : public ModeInterface
     QPoint brush;
     double radius;
     QList<Cable *> selected_cables;
+    bool shiftPressed;
 public:
     explicit RemoveCableMode(PaintBoard *, double, QPoint, int, int);
     void initializeGL();
@@ -25,6 +26,8 @@ public:
     void mousePressEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
+    void keyPressEvent(QKeyEvent *);
+    void keyReleaseEvent(QKeyEvent *);
 };
 
 #endif // REMOVECABLEMODE_H

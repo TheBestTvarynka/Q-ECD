@@ -39,9 +39,7 @@ void RemoveCableMode::resizeGL(int w, int h)
 void RemoveCableMode::paintGL(QPoint &Delta)
 {
     QColor background(220, 220, 220, 255);
-//    qglClearColor(background);
     glClearColor(220, 220, 220, 255);
-//    qglClearColor(Qt::gray);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable (GL_TEXTURE_2D);
     glEnable (GL_BLEND);
@@ -78,22 +76,12 @@ void RemoveCableMode::paintGL(QPoint &Delta)
     Parent->GetDataCables()->print(scale);
     Parent->GetDataFigures()->print(scale, Parent);
 
-//    glEnable(GL_LINE_STIPPLE);
-//    glColor3d(0.8, 0.1, 0.2);
-////    glLineStipple(1, 0x00F0);
-//    glLineStipple(0, 0xAAAA);
-//    glBegin(GL_LINES);
-//    glVertex2i(line.first.x(), line.first.y());
-//    glVertex2i(line.second.x(), line.second.y());
-//    glEnd();
-
-//    glDisable(GL_LINE_STIPPLE);
     double theta, x, y;
     glLineWidth(3);
     glBegin(GL_LINE_LOOP);
-    for (int i = 0; i < 15; i++)
+    for (int i = 0; i < 30; i++)
     {
-        theta = 2.0 * 3.1415926 * double(i) / double(15);
+        theta = 2.0 * 3.1415926 * double(i) / double(30);
         x = radius * cos(theta);
         y = radius * sin(theta);
         glVertex2d(x + brush.x(), y + brush.y());
@@ -105,28 +93,43 @@ void RemoveCableMode::mousePressEvent(QMouseEvent *ap)
 {
     brush = ap->pos();
     radius = 2 * scale;
-//    line.first = ap->pos();
-//    line.first -= Center;
-//    line.second = line.first;
 }
 
 void RemoveCableMode::mouseMoveEvent(QMouseEvent *ap)
 {
-//    line.second = ap->pos() - Center;
     brush = ap->pos() - Center;
-//    Parent->GetDataCables()->SetCablesColor(selected_cables, new double[3]{0.0, 0.0, 0.0});
-//    selected_cables = Parent->GetDataCables()->GetForDeleting(line, scale);
     QList<Cable *> new_selected = Parent->GetDataCables()->GetForDeleting(brush, scale);
-    Parent->GetDataCables()->SetCablesColor(new_selected, new double[3]{0.8, 0.9, 0.9});
-    selected_cables += new_selected;
+    if (!shiftPressed)
+    {
+        Parent->GetDataCables()->SetCablesColor(new_selected, new double[3]{0.8, 0.9, 0.9});
+//        selected_cables += new_selected;
+        Parent->GetDataCables()->AddToSelected(new_selected);
+    }
+    else
+    {
+        qDebug() << "remove" << new_selected.size();
+        Parent->GetDataCables()->SetCablesColor(new_selected, new double[3]{0.0, 0.0, 0.0});
+        Parent->GetDataCables()->RemoveFromSelected(new_selected);
+    }
 }
 
 void RemoveCableMode::mouseReleaseEvent(QMouseEvent *)
 {
-//    line.first = line.second = QPoint(0, 0);
-//    line.first = line.second;
-//    Parent->GetDataCables()->RemoveCables(selected_cables);
-//    selected_cables.clear();
-    Parent->GetDataCables()->SetSelected(selected_cables);
+//    Parent->GetDataCables()->SetSelected(selected_cables);
     radius = 0;
+}
+
+void RemoveCableMode::keyPressEvent(QKeyEvent *event)
+{
+    shiftPressed = true;
+    if (event->key() == 16777248)
+    {
+        qDebug() << event->key();
+        shiftPressed = true;
+    }
+}
+
+void RemoveCableMode::keyReleaseEvent(QKeyEvent *)
+{
+    shiftPressed = false;
 }

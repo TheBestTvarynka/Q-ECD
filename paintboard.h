@@ -42,6 +42,8 @@ public:
     void mouseMoveEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
     void wheelEvent(QWheelEvent *);
+    void keyPressEvent(QKeyEvent *);
+    void keyReleaseEvent(QKeyEvent *event);
     void RenderText(pair<double, double>, double, QString);
 
     double GetScale() { return Scale; }

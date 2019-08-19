@@ -31,8 +31,9 @@ class MainGUIWindow : public QMainWindow
     QLineEdit *value;
 public:
     explicit MainGUIWindow(QWidget *parent = nullptr);
+    void keyPressEvent(QKeyEvent *);
+    void keyReleaseEvent(QKeyEvent *);
     ~MainGUIWindow();
-
 private:
     Ui::MainGUIWindow *ui;
     void ClearLayout(QLayout *);

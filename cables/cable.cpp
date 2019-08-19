@@ -96,7 +96,7 @@ bool Cable::CheckIntersection(QPoint brush, double scale)
                 qSwap(l, r);
             if (brush.x() >= l && brush.x() <= r && abs(brush.y() - a.second * scale) <= scale * 2)
             {
-                qDebug() << "h" << l << r << brush;
+//                qDebug() << "h" << l << r << brush;
                 return true;
             }
         }
@@ -108,7 +108,7 @@ bool Cable::CheckIntersection(QPoint brush, double scale)
                 qSwap(l, r);
             if (brush.y() >= l && brush.y() <= r && abs(brush.x() - a.first * scale) <= scale * 2)
             {
-                qDebug() << "v" << l << r << brush;
+//                qDebug() << "v" << l << r << brush;
                 return true;
             }
         }

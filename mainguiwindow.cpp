@@ -157,6 +157,16 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     connect(value, SIGNAL(textChanged(const QString &)), ui->widget, SLOT(SetValueSelectedFigure(const QString &)));
 }
 
+void MainGUIWindow::keyPressEvent(QKeyEvent *event)
+{
+    ui->widget->keyPressEvent(event);
+}
+
+void MainGUIWindow::keyReleaseEvent(QKeyEvent *event)
+{
+    ui->widget->keyReleaseEvent(event);
+}
+
 MainGUIWindow::~MainGUIWindow()
 {
     delete ui;

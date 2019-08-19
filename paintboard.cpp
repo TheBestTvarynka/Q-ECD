@@ -78,6 +78,16 @@ void PaintBoard::wheelEvent(QWheelEvent *event)
         mode->ScaleEvent(false, event->pos(), Scale);
 }
 
+void PaintBoard::keyPressEvent(QKeyEvent *event)
+{
+    mode->keyPressEvent(event);
+}
+
+void PaintBoard::keyReleaseEvent(QKeyEvent *event)
+{
+    mode->keyReleaseEvent(event);
+}
+
 void PaintBoard::RenderText(pair<double, double> point, double rotation, QString text)
 {
     glPushMatrix();
