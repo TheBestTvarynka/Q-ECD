@@ -55,6 +55,7 @@ public slots:
     void SetSelectedFigure(FigureInterface *);
     void CreateFigure(int);
     void RemoveSelectedFigure();
+    void RemoveSelectedCables();
     void SetNameSelectedFigure(const QString &);
     void SetValueSelectedFigure(const QString &);
     void RotateSelectedFigureRight();

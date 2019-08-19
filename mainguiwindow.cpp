@@ -261,6 +261,7 @@ void MainGUIWindow::SetDrawCableMode()
     removeCables->setIcon(removeCIcon);
     removeCables->setIconSize(QSize(27, 27));
     removeCables->setFixedSize(40, 40);
+    connect(removeCables, SIGNAL(clicked()), ui->widget, SLOT(RemoveSelectedCables()));
 
     QSpacerItem *space = new QSpacerItem(40, 60, QSizePolicy::Expanding, QSizePolicy::Preferred);
     layout->addWidget(newCable);

@@ -3,7 +3,7 @@
 
 DataCables::DataCables()
 {
-
+    selected.clear();
 }
 
 void DataCables::AddCable(Cable *new_Cable)

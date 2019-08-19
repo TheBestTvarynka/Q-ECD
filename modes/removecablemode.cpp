@@ -127,6 +127,6 @@ void RemoveCableMode::mouseReleaseEvent(QMouseEvent *)
 //    line.first = line.second;
 //    Parent->GetDataCables()->RemoveCables(selected_cables);
 //    selected_cables.clear();
+    Parent->GetDataCables()->SetSelected(selected_cables);
     radius = 0;
 }
-

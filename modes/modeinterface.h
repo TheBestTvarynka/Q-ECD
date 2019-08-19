@@ -11,8 +11,6 @@ class PaintBoard;
 //class ModeInterface : public QGLWidget
 class ModeInterface
 {
-//protected:
-//    Q_OBJECT
 public:
     PaintBoard *Parent;
     int Weight, Height;

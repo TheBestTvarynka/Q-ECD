@@ -127,6 +127,12 @@ void PaintBoard::RemoveSelectedFigure()
     emit ClearPropereties();
 }
 
+void PaintBoard::RemoveSelectedCables()
+{
+    cables.RemoveCables(cables.GetSelectedCables());
+    cables.ClearSelected();
+}
+
 void PaintBoard::SetNameSelectedFigure(const QString &name)
 {
     FigureInterface *selected = figures.GetSelectedFigure();
