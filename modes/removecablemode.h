@@ -2,6 +2,7 @@
 #define REMOVECABLEMODE_H
 
 #include "modeinterface.h"
+#include "cables/cable.h"
 
 #include <QDebug>
 
@@ -13,6 +14,9 @@ class RemoveCableMode : public ModeInterface
     Qt::MouseButton click;
 
     pair<QPoint, QPoint> line;
+    QPoint brush;
+    double radius;
+    QList<Cable *> selected_cables;
 public:
     explicit RemoveCableMode(PaintBoard *, double, QPoint, int, int);
     void initializeGL();

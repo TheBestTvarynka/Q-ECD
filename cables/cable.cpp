@@ -48,6 +48,81 @@ void Cable::RemoveLoops(QPoint pos, double scale)
     }
 }
 
+bool Cable::CheckIntersection(pair<QPoint, QPoint> section, double scale)
+{
+    pair<double, double> a, b;
+    double p, l, r;
+    for (int i = 0; i < points.size() - 1; i++)
+    {
+        a = points[i];
+        b = points[i + 1];
+        if (CheckState(a, b))
+        {
+            p = (a.second * scale - section.first.y()) * (section.second.x() - section.first.x()) / (section.second.y() - section.first.y()) + section.first.x();
+            l = section.first.x();
+            r = section.second.x();
+            if (section.first.x() > section.second.x())
+                qSwap(l, r);
+            if (p > l && p < r)
+                return  true;
+        }
+        else
+        {
+            p = (a.first * scale - section.first.x()) * (section.second.y() - section.first.y()) / (section.second.x() - section.first.x()) + section.first.y();
+            l = section.first.y();
+            r = section.second.y();
+            if (section.first.y() > section.second.y())
+                qSwap(l, r);
+            if (p > l && p < r)
+                return  true;
+        }
+    }
+    return false;
+}
+
+bool Cable::CheckIntersection(QPoint brush, double scale)
+{
+    pair<double, double> a, b;
+    double l, r;
+    for (int i = 0; i < points.size() - 1; i++)
+    {
+        a = points[i];
+        b = points[i + 1];
+        if (CheckState(a, b))
+        {
+            l = a.first * scale;
+            r = b.first * scale;
+            if (l > r)
+                qSwap(l, r);
+            if (brush.x() >= l && brush.x() <= r && abs(brush.y() - a.second * scale) <= scale * 2)
+            {
+                qDebug() << "h" << l << r << brush;
+                return true;
+            }
+        }
+        else
+        {
+            l = a.second * scale;
+            r = b.second * scale;
+            if (l > r)
+                qSwap(l, r);
+            if (brush.y() >= l && brush.y() <= r && abs(brush.x() - a.first * scale) <= scale * 2)
+            {
+                qDebug() << "v" << l << r << brush;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool Cable::CheckState(pair<double, double> a, pair<double, double> b)
+{
+    if (qFuzzyCompare(a.second, b.second))
+        return true;
+    return false;
+}
+
 void Cable::SetPoint(int i, double X, double Y)
 {
 //    qDebug() << i << points.size();

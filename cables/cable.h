@@ -20,6 +20,9 @@ public:
     void update(IObservable *, double, double);
     void insert_back(double, double);
     void RemoveLoops(QPoint, double);
+    bool CheckIntersection(pair<QPoint, QPoint>, double);
+    bool CheckIntersection(QPoint, double);
+    bool CheckState(pair<double, double>, pair<double, double>);
     pair<double, double> *GetLastPoint() { return &points.back(); }
     int GetSize() { return points.size(); }
     pair<double, double> GetPoint(int i) { return points[i]; }

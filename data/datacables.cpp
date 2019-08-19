@@ -68,10 +68,32 @@ void DataCables::RemoveLoop(Cable *cable, QPoint pos, double scale)
     cable->RemoveLoops(pos, scale);
 }
 
+QList<Cable *> DataCables::GetForDeleting(pair<QPoint, QPoint> sections, double scale)
+{
+    QList<Cable *> removing;
+    foreach (Cable *i, cables)
+    {
+        if (i->CheckIntersection(sections, scale))
+            removing.append(i);
+    }
+    return removing;
+}
+
+QList<Cable *> DataCables::GetForDeleting(QPoint brush, double scale)
+{
+    QList<Cable *> removing;
+    foreach (Cable *i, cables)
+    {
+        if (i->CheckIntersection(brush, scale))
+            removing.append(i);
+    }
+    return removing;
+}
+
 bool DataCables::GetDirectionEnd(Cable *cable)
 {
     int last_point = cable->GetSize() - 1;
-    if (cable->GetPoint(last_point).first == cable->GetPoint(last_point - 1).first)
+    if (qFuzzyCompare(cable->GetPoint(last_point).first, cable->GetPoint(last_point - 1).first))
         return false;
     else
         return true;

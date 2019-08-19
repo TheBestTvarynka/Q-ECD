@@ -21,6 +21,8 @@ public:
     void RemoveLoop(Cable *, QPoint, double);
     Cable *GetLast() { return cables.back(); }
     pair<double, double> *GetLastPoint(Cable *c) { return c->GetLastPoint(); }
+    QList<Cable *> GetForDeleting(pair<QPoint, QPoint>,  double);
+    QList<Cable *> GetForDeleting(QPoint,  double);
     void SetPoint(pair<double, double> &, pair<double, double>);
     bool GetDirectionEnd(Cable *);
 };
