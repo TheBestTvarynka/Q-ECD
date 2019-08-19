@@ -123,6 +123,13 @@ bool Cable::CheckState(pair<double, double> a, pair<double, double> b)
     return false;
 }
 
+bool Cable::IsMarked()
+{
+    if (main_color[0] != 0.0 || main_color[1] != 0.0 || main_color[2] != 0.0)
+        return true;
+    return false;
+}
+
 void Cable::SetPoint(int i, double X, double Y)
 {
 //    qDebug() << i << points.size();

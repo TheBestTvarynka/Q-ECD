@@ -114,20 +114,19 @@ void RemoveCableMode::mouseMoveEvent(QMouseEvent *ap)
 {
 //    line.second = ap->pos() - Center;
     brush = ap->pos() - Center;
-    Parent->GetDataCables()->SetCablesColor(selected_cables, new double[3]{0.0, 0.0, 0.0});
+//    Parent->GetDataCables()->SetCablesColor(selected_cables, new double[3]{0.0, 0.0, 0.0});
 //    selected_cables = Parent->GetDataCables()->GetForDeleting(line, scale);
-    selected_cables = Parent->GetDataCables()->GetForDeleting(brush, scale);
-    Parent->GetDataCables()->SetCablesColor(selected_cables, new double[3]{0.8, 0.9, 0.9});
+    QList<Cable *> new_selected = Parent->GetDataCables()->GetForDeleting(brush, scale);
+    Parent->GetDataCables()->SetCablesColor(new_selected, new double[3]{0.8, 0.9, 0.9});
+    selected_cables += new_selected;
 }
 
 void RemoveCableMode::mouseReleaseEvent(QMouseEvent *)
 {
 //    line.first = line.second = QPoint(0, 0);
 //    line.first = line.second;
-    // delete finded cables
-    Parent->GetDataCables()->RemoveCables(selected_cables);
-    selected_cables.clear();
-
+//    Parent->GetDataCables()->RemoveCables(selected_cables);
+//    selected_cables.clear();
     radius = 0;
 }
 

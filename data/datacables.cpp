@@ -84,7 +84,7 @@ QList<Cable *> DataCables::GetForDeleting(QPoint brush, double scale)
     QList<Cable *> removing;
     foreach (Cable *i, cables)
     {
-        if (i->CheckIntersection(brush, scale))
+        if (!i->IsMarked() && i->CheckIntersection(brush, scale))
             removing.append(i);
     }
     return removing;

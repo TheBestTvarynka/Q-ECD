@@ -23,6 +23,7 @@ public:
     bool CheckIntersection(pair<QPoint, QPoint>, double);
     bool CheckIntersection(QPoint, double);
     bool CheckState(pair<double, double>, pair<double, double>);
+    bool IsMarked();
     pair<double, double> *GetLastPoint() { return &points.back(); }
     int GetSize() { return points.size(); }
     pair<double, double> GetPoint(int i) { return points[i]; }
