@@ -15,5 +15,6 @@
         <file>icons/drawcablemode/add_cable.svg</file>
         <file>icons/drawcablemode/move_point.svg</file>
         <file>icons/drawcablemode/remove_cables.svg</file>
+        <file>icons/drawcablemode/select_cables.svg</file>
     </qresource>
 </RCC>
