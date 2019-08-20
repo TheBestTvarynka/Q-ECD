@@ -39,9 +39,9 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
 
     propereties->setStyleSheet("QWidget {"
                               "color: black;"
-                              "background: white;"
-                              "border: 4px solid #f03a73;"
-                              "border-radius: 10px;"
+                              "background: #6ac7bc;"
+                              "border: 2px solid #1d7f88;"
+                              "border-radius: 5px;"
                               "}");
     propereties->setLayout(layout);
 
@@ -50,9 +50,9 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     QListWidget *list_new = new QListWidget;
     connect(list_new, SIGNAL(currentRowChanged(int)), ui->widget, SLOT(CreateFigure(int)));
     list_new->setStyleSheet("QListWidget{"
-                            "border: 4px solid #67d43f;"
-                            "border-radius: 10px;"
-                            "background: white;"
+                            "border: 2px solid #1d7f88;"
+                            "border-radius: 5px;"
+                            "background: #d0f3f7;"
                             "color: black;"
                             "selection-background-color: darkgray;"
                             "font-size: 20px; }"
@@ -77,16 +77,16 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     modes = new QWidget(this);
     modes->setStyleSheet("QWidget {"
                             "color: black;"
-                            "background: white;"
-                            "border: 4px solid #3d66e0;"
-                            "border-radius: 10px;"
+                            "background: #6ac7bc;"
+                            "border: 0px solid #1d7f88;"
+                            "border-radius: 5px;"
                             "}");
 
     QLabel *logo = new QLabel("Q-ECD");
     logo->setStyleSheet("QLabel {"
                         "color: black;"
-                        "background: white;"
-                        "border: 4px solid #e8e235;"
+                        "background: #6ac7bc;"
+                        "border: 0px solid #1d7f88;"
                         "border-radius: 5px;"
                         "}");
 
@@ -94,7 +94,7 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     setObjectMode->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     setObjectMode->setStyleSheet("QPushButton {"
                                  "background-color: white;"
-                                 "border: 2px solid #67d43f;"
+                                 "border:2px solid #1d7f88;"
                                  "border-radius: 5px;"
                                  "color: black; }"
                                  "QPushButton::hover {"
@@ -105,7 +105,7 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     setDrawCableMode->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     setDrawCableMode->setStyleSheet("QPushButton {"
                                  "background-color: white;"
-                                 "border: 2px solid #67d43f;"
+                                 "border: 2px solid #1d7f88;"
                                  "border-radius: 5px;"
                                  "color: black; }"
                                  "QPushButton::hover {"
@@ -138,7 +138,7 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     all->setStyleSheet("QSplitter::handle {"
                              "background: transparent;"
                              "border: 0px solid #777;"
-                             "height: 5px;"
+                             "height: 2px;"
                              "}");
     all->addWidget(up_bar);
     all->addWidget(main_area);
@@ -150,6 +150,10 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     our->setMargin(0);
     our->addWidget(all);
     ui->centralWidget->setLayout(our);
+    ui->centralWidget->setStyleSheet("QWidget {"
+                                     "background: white;"
+                                     "border: none;"
+                                     "}");
 
     connect(ui->widget, SIGNAL(LoadFigurePropereties(QString, QString)), this, SLOT(LoadPropereties(QString, QString)));
     connect(ui->widget, SIGNAL(ClearPropereties()), this, SLOT(ClearPropereties()));
@@ -283,9 +287,9 @@ void MainGUIWindow::SetDrawCableMode()
 
     actions->setStyleSheet("QWidget {"
                             "color: black;"
-                            "background: white;"
-                            "border: 4px solid #f03a73;"
-                            "border-radius: 10px;"
+                            "background: #6ac7bc;"
+                            "border: 0px solid #1d7f88;"
+                            "border-radius: 5px;"
                             "}");
 
     listNew->setEnabled(false);
@@ -395,17 +399,17 @@ void MainGUIWindow::SetObjectMode()
 
     actions->setStyleSheet("QWidget {"
                             "color: black;"
-                            "background: white;"
-                            "border: 4px solid #f03a73;"
-                            "border-radius: 10px;"
+                            "background: #6ac7bc;"
+                            "border: 0px solid #1d7f88;"
+                            "border-radius: 5px;"
                             "}");
     actions->setLayout(layout);
 
     allFigures->setStyleSheet("QWidget {"
                             "color: black;"
-                            "background: white;"
-                            "border: 0px solid #f5202a;"
-                            "border-radius: 10px;"
+                            "background: #6ac7bc;"
+                            "border: 2px solid #1d7f88;"
+                            "border-radius: 5px;"
                             "}");
 
     listNew->setEnabled(true);
