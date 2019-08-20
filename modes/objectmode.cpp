@@ -69,6 +69,7 @@ void ObjectMode::paintGL(QPoint &Delta)
 void ObjectMode::mousePressEvent(QMouseEvent *ap)
 {
 //    qDebug() << "Mouse Down " << ap->x();
+    Parent->setCursor(Qt::SizeAllCursor);
     Parent->GetDataFigures()->select_figure(ap->pos() - Center, scale);
     start_position = ap->pos();
     FigureInterface *sf = Parent->GetDataFigures()->GetSelectedFigure();
@@ -85,6 +86,7 @@ void ObjectMode::mouseMoveEvent(QMouseEvent *ap)
 void ObjectMode::mouseReleaseEvent(QMouseEvent *)
 {
 //    qDebug() << "Mouse Release" << ap->x() << " " << Center.x();
+    Parent->setCursor(Qt::ArrowCursor);
     Parent->GetDataFigures()->RoundCoordinates(Parent->GetDataFigures()->GetSelectedFigure());
     Parent->GetDataFigures()->GetSelectedFigure()->Notify();
 }

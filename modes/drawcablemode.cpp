@@ -84,6 +84,7 @@ void DrawCableMode::mousePressEvent(QMouseEvent *ap)
     if (start.second > 0 && start.second <= scale  * 2 && ap->button() == Qt::MouseButton::LeftButton)
     {
         click = Qt::MouseButton::LeftButton;
+        Parent->setCursor(Qt::CrossCursor);
     }
     else
     {
@@ -140,6 +141,7 @@ void DrawCableMode::mouseMoveEvent(QMouseEvent *ap)
 
 void DrawCableMode::mouseReleaseEvent(QMouseEvent *ap)
 {
+    Parent->setCursor(Qt::ArrowCursor);
     if (click == Qt::MouseButton::NoButton)
     {
         return;

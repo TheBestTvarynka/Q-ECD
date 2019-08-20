@@ -91,6 +91,8 @@ void RemoveCableMode::paintGL(QPoint &Delta)
 
 void RemoveCableMode::mousePressEvent(QMouseEvent *ap)
 {
+    Parent->setCursor(Qt::BlankCursor);
+//    Parent->setCursor(Qt::CrossCursor);
     brush = ap->pos();
     radius = 2 * scale;
 }
@@ -116,15 +118,16 @@ void RemoveCableMode::mouseMoveEvent(QMouseEvent *ap)
 void RemoveCableMode::mouseReleaseEvent(QMouseEvent *)
 {
 //    Parent->GetDataCables()->SetSelected(selected_cables);
+    Parent->setCursor(Qt::ArrowCursor);
     radius = 0;
 }
 
 void RemoveCableMode::keyPressEvent(QKeyEvent *event)
 {
-    shiftPressed = true;
+//    shiftPressed = true;
     if (event->key() == 16777248)
     {
-        qDebug() << event->key();
+        qDebug() << "event->key()";
         shiftPressed = true;
     }
 }
