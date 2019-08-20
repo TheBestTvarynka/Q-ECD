@@ -115,7 +115,7 @@ void DrawCableMode::mouseMoveEvent(QMouseEvent *ap)
     }
     pair<double, double> *point = Parent->GetDataCables()->GetLastPoint(Parent->GetDataCables()->GetLast());
     double delta = sqrt(pow(point->first * scale - ap->pos().x() + Center.x(), 2) + pow(point->second* scale - ap->pos().y() + Center.y(), 2));
-    if (delta > scale)
+    if (delta > scale * 2)
     {
         QPoint r_point = RoundCoordinates(point->first, point->second);
         point->first = r_point.x();
@@ -147,6 +147,7 @@ void DrawCableMode::mouseReleaseEvent(QMouseEvent *ap)
         return;
     }
     click = Qt::MouseButton::NoButton;
+
     FigureInterface *select;
     int clamp = -1;
     pair<QPoint, double> finish = Parent->GetDataFigures()->SelectClamp(ap->pos() - Center, scale, select, clamp);
@@ -156,13 +157,15 @@ void DrawCableMode::mouseReleaseEvent(QMouseEvent *ap)
         qDebug() << "connect end of cable with clamp";
         if (Parent->GetDataCables()->GetDirectionEnd(Parent->GetDataCables()->GetLast()))
         {
+            qDebug() << "horizontal";
             point->first = finish.first.x();
             if (!qFuzzyCompare(finish.first.y(), point->second))
                 Parent->GetDataCables()->GetLast()->insert_back(finish.first.x(), finish.first.y());
         }
         else
         {
-            point->first = finish.first.y();
+            qDebug() << "vertical";
+            point->second = finish.first.y();
             if (!qFuzzyCompare(finish.first.x(), point->first))
                 Parent->GetDataCables()->GetLast()->insert_back(finish.first.x(), finish.first.y());
         }
@@ -170,9 +173,6 @@ void DrawCableMode::mouseReleaseEvent(QMouseEvent *ap)
     }
     else
     {
-//        QPoint r_point = RoundCoordinates(point->first, point->second);
-//        point->first = r_point.x();
-//        point->second = r_point.y();
         Parent->GetDataCables()->RemoveCable(Parent->GetDataCables()->GetLast());
     }
 }
