@@ -45,6 +45,11 @@ void DataFigures::select_figure(QPoint position, double Scale)
 {
     if (selected_figure != nullptr)
         selected_figure->SetMainColor(new double[3]{0.0, 1.0, 0.0});
+    if (figures.size() == 0)
+    {
+        selected_figure = nullptr;
+        return;
+    }
     double distance;
     double min_distance = sqrt(pow(position.x() - Scale * figures[0]->GetX(), 2) + pow(position.y() - Scale * figures[0]->GetY(), 2));
     selected_figure = figures[0];

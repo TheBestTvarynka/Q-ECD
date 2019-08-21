@@ -7,6 +7,7 @@
 class ObjectMode : public ModeInterface
 {
     QPoint start_position;
+    Qt::MouseButton click;
 public:
     explicit ObjectMode(PaintBoard *, double, QPoint, int, int);
     void initializeGL();

@@ -1,7 +1,11 @@
 #include "objectmode.h"
 #include "paintboard.h"
 
-ObjectMode::ObjectMode(PaintBoard *p, double s, QPoint c, int w, int h) : ModeInterface (s, p, w, h) { Center = c;}
+ObjectMode::ObjectMode(PaintBoard *p, double s, QPoint c, int w, int h) : ModeInterface (s, p, w, h)
+{
+    Center = c;
+    click = Qt::NoButton;
+}
 
 void ObjectMode::initializeGL()
 {
@@ -68,25 +72,33 @@ void ObjectMode::paintGL(QPoint &Delta)
 
 void ObjectMode::mousePressEvent(QMouseEvent *ap)
 {
-//    qDebug() << "Mouse Down " << ap->x();
     Parent->setCursor(Qt::SizeAllCursor);
     Parent->GetDataFigures()->select_figure(ap->pos() - Center, scale);
     start_position = ap->pos();
     FigureInterface *sf = Parent->GetDataFigures()->GetSelectedFigure();
-    emit Parent->LoadFigurePropereties(sf->GetName(), sf->GetValue());
+    if (sf != nullptr && ap->button() == Qt::LeftButton)
+    {
+        emit Parent->LoadFigurePropereties(sf->GetName(), sf->GetValue());
+        click = ap->button();
+    }
 }
 
 void ObjectMode::mouseMoveEvent(QMouseEvent *ap)
 {
-//    qDebug() << "Mouse Move" << ap->x();
-    Parent->GetDataFigures()->MoveSelectedFigure(Parent->GetDataFigures()->GetSelectedFigure(), (ap->x() - start_position.x()) / scale, (ap->y() - start_position.y()) / scale);
-    start_position = ap->pos();
+    if (click == Qt::LeftButton)
+    {
+        Parent->GetDataFigures()->MoveSelectedFigure(Parent->GetDataFigures()->GetSelectedFigure(), (ap->x() - start_position.x()) / scale, (ap->y() - start_position.y()) / scale);
+        start_position = ap->pos();
+    }
 }
 
 void ObjectMode::mouseReleaseEvent(QMouseEvent *)
 {
-//    qDebug() << "Mouse Release" << ap->x() << " " << Center.x();
     Parent->setCursor(Qt::ArrowCursor);
-    Parent->GetDataFigures()->RoundCoordinates(Parent->GetDataFigures()->GetSelectedFigure());
-    Parent->GetDataFigures()->GetSelectedFigure()->Notify();
+    if (click == Qt::LeftButton)
+    {
+        click = Qt::NoButton;
+        Parent->GetDataFigures()->RoundCoordinates(Parent->GetDataFigures()->GetSelectedFigure());
+        Parent->GetDataFigures()->GetSelectedFigure()->Notify();
+    }
 }
