@@ -42,7 +42,8 @@ SOURCES += \
     figures/figurecreator.cpp \
     view/qtreeitem.cpp \
     view/qtree.cpp \
-    modes/removecablemode.cpp
+    modes/removecablemode.cpp \
+    view/style/qstylesheetstring.cpp
 
 HEADERS += \
         mainguiwindow.h \
@@ -61,7 +62,8 @@ HEADERS += \
     figures/figurecreator.h \
     view/qtreeitem.h \
     view/qtree.h \
-    modes/removecablemode.h
+    modes/removecablemode.h \
+    view/style/qstylesheetstring.h
 
 FORMS += \
         mainguiwindow.ui

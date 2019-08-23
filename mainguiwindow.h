@@ -13,6 +13,7 @@
 #include <QComboBox>
 
 #include "view/qtree.h"
+#include "view/style/qstylesheetstring.h"
 
 namespace Ui {
 class MainGUIWindow;

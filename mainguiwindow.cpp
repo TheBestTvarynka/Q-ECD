@@ -37,7 +37,7 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     layout->addItem(value_parameter);
     layout->addItem(space_up);
 
-    propereties->setStyleSheet("QWidget {"
+    propereties->setStyleSheet(".QWidget {"
                               "color: black;"
                               "background: #6ac7bc;"
                               "border: 2px solid #1d7f88;"
@@ -92,14 +92,8 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
 
     QPushButton *setObjectMode = new QPushButton("Object Mode");
     setObjectMode->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    setObjectMode->setStyleSheet("QPushButton {"
-                                 "background-color: white;"
-                                 "border:2px solid #1d7f88;"
-                                 "border-radius: 5px;"
-                                 "color: black; }"
-                                 "QPushButton::hover {"
-                                 "background-color: #f24bef;"
-                                 "color: #585957; }");
+    QStyleSheetString style;
+    setObjectMode->setStyleSheet(style.GetStyleSheet());
 
     QPushButton *setDrawCableMode = new QPushButton("Draw Cable Mode");
     setDrawCableMode->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
@@ -323,15 +317,14 @@ void MainGUIWindow::SetObjectMode()
 
     QPushButton *pastle = new QPushButton("");
     pastle->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
-    pastle->setStyleSheet("QPushButton {"
-                        "background-color: white;"
-                        "border: 2px solid #67d43f;"
-                        "border-radius: 5px;"
-                        "color: white;"
-                        "padding: 15px 32px; }"
-                        "QPushButton::hover {"
-                        "background-color: #f24bef;"
-                        "color: #585957; }");
+//    pastle->setStyleSheet("QPushButton {"
+    pastle->setStyleSheet("QPushButton { border: 2px solid #67d43f; }");
+    pastle->setStyleSheet("QPushButton { border-radius: 5px; }");
+    pastle->setStyleSheet("QPushButton { color: white; }");
+    pastle->setStyleSheet("QPushButton { padding: 15px 32px; }");
+    pastle->setStyleSheet("QPushButton { background-color: white; }");
+    pastle->setStyleSheet("QPushButton::hover { color: #585957; }");
+    pastle->setStyleSheet("QPushButton::hover { background-color: #f24bef; }");
     QIcon pastleIcon(QPixmap((":/objectmode/icons/objectmode/pastle.svg")));
     pastle->setIcon(pastleIcon);
     pastle->setIconSize(QSize(27, 27));
