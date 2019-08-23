@@ -56,11 +56,11 @@ QStyleSheetString::QStyleSheetString(QString name)
                               "border: 2px solid #1d7f88;"
                               "border-radius: 5px;"
                               "color: #ffffff; }"
-                              "QPushButton::hover {"
+                              ".") + name + "::hover {"
                               "background: #6ac7bc;"
                               "border: 2px solid #1d7f88;"
                               "border-radius: 5px;"
-                              "color: #ffffff; }");
+                              "color: #ffffff; }";
 }
 
 void QStyleSheetString::SetBorder(QString size, QString color, QString radius)
@@ -86,12 +86,23 @@ void QStyleSheetString::SetHoverBorder(QString size, QString color, QString radi
 
 void QStyleSheetString::SetHoverBackground(QString color)
 {
-    int globalPos = styleSheet.indexOf("background");
+    int globalPos = styleSheet.indexOf("hover");
     Background(globalPos, color);
 }
 
 void QStyleSheetString::SetHoverTextColor(QString color)
 {
-    int globalPos = styleSheet.indexOf("color");
+    int globalPos = styleSheet.indexOf("hover");
     TextColor(globalPos, color);
+}
+
+void QStyleSheetString::EraseBlock(QString block)
+{
+    int posS = styleSheet.indexOf(block);
+    int posE = styleSheet.indexOf("}", posS);
+    if (posS == -1 || posE == -1)
+        return;
+    qDebug() << styleSheet;
+    styleSheet = styleSheet.remove(posS - 1, posE - posS + 2);
+    qDebug() << styleSheet;
 }

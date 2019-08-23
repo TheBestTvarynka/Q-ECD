@@ -30,6 +30,9 @@ class MainGUIWindow : public QMainWindow
 
     QLineEdit *name;
     QLineEdit *value;
+
+    QStyleSheetString *barStyle;
+    QStyleSheetString *buttonStyle;
 public:
     explicit MainGUIWindow(QWidget *parent = nullptr);
     void keyPressEvent(QKeyEvent *);

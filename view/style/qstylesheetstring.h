@@ -20,6 +20,8 @@ public:
     void SetHoverBorder(QString, QString, QString);
     void SetHoverBackground(QString);
     void SetHoverTextColor(QString);
+    void EraseBlock(QString);
+    ~QStyleSheetString() { styleSheet.clear(); }
 };
 
 #endif // QSTYLESHEETSTRING_H
