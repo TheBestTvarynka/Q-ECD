@@ -92,7 +92,11 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
 
     QPushButton *setObjectMode = new QPushButton("Object Mode");
     setObjectMode->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    QStyleSheetString style;
+    QStyleSheetString style("QPushButton");
+    style.SetBackground("#1d7f88");
+    style.SetBorder("6", "#e32ddd", "20");
+    style.SetHoverBorder("2", "#1d7f88", "12");
+    style.SetTextColor("#ede72b");
     setObjectMode->setStyleSheet(style.GetStyleSheet());
 
     QPushButton *setDrawCableMode = new QPushButton("Draw Cable Mode");
