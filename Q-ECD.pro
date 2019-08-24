@@ -43,7 +43,8 @@ SOURCES += \
     view/qtreeitem.cpp \
     view/qtree.cpp \
     modes/removecablemode.cpp \
-    view/style/qstylesheetstring.cpp
+    view/style/qstylesheetstring.cpp \
+    view/settingsform.cpp
 
 HEADERS += \
         mainguiwindow.h \
@@ -63,10 +64,12 @@ HEADERS += \
     view/qtreeitem.h \
     view/qtree.h \
     modes/removecablemode.h \
-    view/style/qstylesheetstring.h
+    view/style/qstylesheetstring.h \
+    view/settingsform.h
 
 FORMS += \
-        mainguiwindow.ui
+        mainguiwindow.ui \
+    view/settingsform.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

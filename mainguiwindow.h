@@ -14,6 +14,7 @@
 
 #include "view/qtree.h"
 #include "view/style/qstylesheetstring.h"
+#include "view/settingsform.h"
 
 namespace Ui {
 class MainGUIWindow;
@@ -46,6 +47,7 @@ private slots:
     void SetObjectMode();
     void LoadPropereties(QString, QString);
     void ClearPropereties();
+    void on_actionSettings_triggered();
 };
 
 #endif // MAINGUIWINDOW_H

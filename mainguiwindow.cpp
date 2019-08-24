@@ -57,8 +57,8 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     QListWidget *list_new = new QListWidget;
     connect(list_new, SIGNAL(currentRowChanged(int)), ui->widget, SLOT(CreateFigure(int)));
     list_new->setStyleSheet("QListWidget{"
-                            "border: 2px solid #1d7f88;"
-                            "border-radius: 5px;"
+                            "border: none;"
+//                            "border-radius: 5px;"
                             "background: #d0f3f7;"
                             "color: black;"
                             "selection-background-color: darkgray;"
@@ -74,7 +74,7 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     list_new->insertItem(0, resistor);
     list_new->insertItem(0, capasitor);
     layout->addWidget(list_new);
-    layout->setMargin(0);
+    layout->setMargin(5);
     listNew->setStyleSheet(barStyle->GetStyleSheet());
     listNew->setLayout(layout);
 
@@ -144,6 +144,7 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
                                      "background: white;"
                                      "border: none;"
                                      "}");
+
     connect(ui->widget, SIGNAL(LoadFigurePropereties(QString, QString)), this, SLOT(LoadPropereties(QString, QString)));
     connect(ui->widget, SIGNAL(ClearPropereties()), this, SLOT(ClearPropereties()));
     connect(name, SIGNAL(textChanged(const QString &)), ui->widget, SLOT(SetNameSelectedFigure(const QString &)));
@@ -162,6 +163,13 @@ void MainGUIWindow::keyReleaseEvent(QKeyEvent *event)
 
 MainGUIWindow::~MainGUIWindow()
 {
+    delete modes;
+    delete actions;
+    delete allFigures;
+    delete propereties;
+    delete listNew;
+    delete barStyle;
+    delete buttonStyle;
     delete ui;
 }
 
@@ -329,4 +337,10 @@ void MainGUIWindow::ClearPropereties()
 {
     name->clear();
     value->clear();
+}
+
+void MainGUIWindow::on_actionSettings_triggered()
+{
+    SettingsForm *settings = new SettingsForm(barStyle, buttonStyle);
+    settings->show();
 }

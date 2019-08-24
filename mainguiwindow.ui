@@ -65,7 +65,7 @@
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
-    <addaction name="actionHistory"/>
+    <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -114,7 +114,7 @@
     <string>Redo</string>
    </property>
   </action>
-  <action name="actionHistory">
+  <action name="actionSettings">
    <property name="text">
     <string>Settings</string>
    </property>

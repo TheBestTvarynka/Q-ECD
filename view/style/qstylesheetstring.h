@@ -14,6 +14,11 @@ public:
     QStyleSheetString();
     QStyleSheetString(QString);
     QString GetStyleSheet() { return styleSheet; }
+
+    QList<QString> GetBorder();
+    QString GetBackground();
+    QString GetTextColor();
+
     void SetBorder(QString, QString, QString);
     void SetBackground(QString);
     void SetTextColor(QString);

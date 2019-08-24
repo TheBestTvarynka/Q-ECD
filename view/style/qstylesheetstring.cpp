@@ -63,6 +63,38 @@ QStyleSheetString::QStyleSheetString(QString name)
                               "color: #ffffff; }";
 }
 
+QList<QString> QStyleSheetString::GetBorder()
+{
+    QList<QString> border;
+    int posS = styleSheet.indexOf("border");
+    int posE = styleSheet.indexOf("px", posS);
+    border.append(styleSheet.mid(posS + 8, posE - posS - 8));
+    border.append(styleSheet.mid(posE + 9, 7));
+    posS = styleSheet.indexOf("border-radius");
+    posE = styleSheet.indexOf("px", posS);
+    border.append(styleSheet.mid(posS + 15, posE - posS - 15));
+    qDebug() << border;
+    return border;
+}
+
+QString QStyleSheetString::GetBackground()
+{
+    int pos = styleSheet.indexOf("background");
+    if (pos == -1)
+        return "#ffffff";
+    qDebug() << styleSheet.mid(pos + 12, 7);
+    return styleSheet.mid(pos + 12, 7);
+}
+
+QString QStyleSheetString::GetTextColor()
+{
+    int pos = styleSheet.indexOf("color");
+    if (pos == -1)
+        return "#ffffff";
+    qDebug() << styleSheet.mid(pos + 7, 7);
+    return styleSheet.mid(pos + 7, 7);
+}
+
 void QStyleSheetString::SetBorder(QString size, QString color, QString radius)
 {
     Border(0, size, color, radius);
