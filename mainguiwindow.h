@@ -48,6 +48,7 @@ private slots:
     void LoadPropereties(QString, QString);
     void ClearPropereties();
     void on_actionSettings_triggered();
+    void UpdateStyle(QString, QString);
 };
 
 #endif // MAINGUIWINDOW_H

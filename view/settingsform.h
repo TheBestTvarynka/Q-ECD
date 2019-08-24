@@ -16,21 +16,26 @@ namespace Ui {
 class SettingsForm;
 }
 
+class MainGUIWindow;
+
 class SettingsForm : public QWidget
 {
     Q_OBJECT
+    MainGUIWindow *Parent;
     QStyleSheetString *barStyle;
     QStyleSheetString *buttonStyle;
 
     QWidget *colorTheme;
     QList<QWidget *> bars;
 public:
-    explicit SettingsForm(QStyleSheetString *, QStyleSheetString *, QWidget *parent = nullptr);
+    explicit SettingsForm(QStyleSheetString *, QStyleSheetString *, MainGUIWindow *parent);
     ~SettingsForm();
 public slots:
     void ApplySettings();
 private:
     Ui::SettingsForm *ui;
+signals:
+    void UpdateStyle(QString, QString);
 };
 
 #endif // SETTINGSFORM_H

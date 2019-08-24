@@ -341,6 +341,16 @@ void MainGUIWindow::ClearPropereties()
 
 void MainGUIWindow::on_actionSettings_triggered()
 {
-    SettingsForm *settings = new SettingsForm(barStyle, buttonStyle);
+    SettingsForm *settings = new SettingsForm(barStyle, buttonStyle, ui->centralWidget);
     settings->show();
+}
+
+void MainGUIWindow::UpdateStyle(QString bar, QString button)
+{
+    barStyle->SetStyleSheet(bar);
+    modes->setStyleSheet(barStyle->GetStyleSheet());
+    actions->setStyleSheet(barStyle->GetStyleSheet());
+    allFigures->setStyleSheet(barStyle->GetStyleSheet());
+    propereties->setStyleSheet(barStyle->GetStyleSheet());
+    listNew->setStyleSheet(barStyle->GetStyleSheet());
 }

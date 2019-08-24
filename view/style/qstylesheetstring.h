@@ -19,6 +19,7 @@ public:
     QString GetBackground();
     QString GetTextColor();
 
+    void SetStyleSheet(QString style) { styleSheet = style; }
     void SetBorder(QString, QString, QString);
     void SetBackground(QString);
     void SetTextColor(QString);

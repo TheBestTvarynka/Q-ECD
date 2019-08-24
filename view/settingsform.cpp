@@ -1,9 +1,11 @@
 #include "settingsform.h"
 #include "ui_settingsform.h"
+#include "mainguiwindow.h"
 #include <QDebug>
 
-SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, QWidget *parent) : QWidget(parent), ui(new Ui::SettingsForm)
+SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, MainGUIWindow *parent) : QWidget(nullptr), ui(new Ui::SettingsForm)
 {
+    Parent = parent;
     ui->setupUi(this);
 
     barStyle = bar;
@@ -89,6 +91,8 @@ SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, QW
     this->setStyleSheet(".QWidget {"
                         "background-color: #d0f3f7;"
                         "color: black; }");
+
+    connect(this, SIGNAL(UpdateStyle(QString, QString)), Parent, SLOT(UpdateStyle(QString, QString)));
 }
 
 SettingsForm::~SettingsForm()
@@ -98,5 +102,9 @@ SettingsForm::~SettingsForm()
 
 void SettingsForm::ApplySettings()
 {
-
+    foreach (QWidget *i, bars)
+    {
+        i->setStyleSheet(barStyle->GetStyleSheet());
+    }
+    emit UpdateStyle(barStyle->GetStyleSheet(), buttonStyle->GetStyleSheet());
 }
