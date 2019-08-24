@@ -82,6 +82,7 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     modes->setStyleSheet(barStyle->GetStyleSheet());
 
     QLabel *logo = new QLabel("Q-ECD");
+//    logo->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     logo->setStyleSheet("QLabel {"
                         "color: black;"
                         "background: #6ac7bc;"
@@ -90,12 +91,14 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
                         "}");
 
     QPushButton *setObjectMode = new QPushButton("Object Mode");
-    setObjectMode->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+//    setObjectMode->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     setObjectMode->setStyleSheet(buttonStyle->GetStyleSheet());
+    setObjectMode->setFixedHeight(40);
 
     QPushButton *setDrawCableMode = new QPushButton("Draw Cable Mode");
-    setDrawCableMode->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+//    setDrawCableMode->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     setDrawCableMode->setStyleSheet(buttonStyle->GetStyleSheet());
+    setDrawCableMode->setFixedHeight(40);
 
     connect(setDrawCableMode, SIGNAL(clicked()), this, SLOT(SetDrawCableMode()));
     connect(setObjectMode, SIGNAL(clicked()), this, SLOT(SetObjectMode()));
@@ -103,9 +106,11 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     QHBoxLayout *swapModes = new QHBoxLayout;
     swapModes->addWidget(setObjectMode);
     swapModes->addWidget(setDrawCableMode);
+    swapModes->setMargin(5);
     modes->setLayout(swapModes);
 
     QSplitter *up_bar = new QSplitter(Qt::Horizontal);
+//    up_bar->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     up_bar->addWidget(logo);
     up_bar->addWidget(modes);
     up_bar->addWidget(actions);
@@ -119,16 +124,16 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     main_area->addWidget(ui->widget);
     main_area->addWidget(right_bar);
 
+    SetObjectMode();
+
     QSplitter *all = new QSplitter(Qt::Vertical);
     all->setStyleSheet("QSplitter::handle {"
-                             "background: transparent;"
-                             "border: 0px solid #777;"
-                             "height: 2px;"
-                             "}");
+                       "background: transparent;"
+                       "border: 0px solid #777;"
+                       "height: 2px;"
+                       "}");
     all->addWidget(up_bar);
     all->addWidget(main_area);
-
-    SetObjectMode();
 
     QLayout *our = ui->centralWidget->layout();
     our = new QHBoxLayout;
@@ -180,45 +185,45 @@ void MainGUIWindow::SetDrawCableMode()
     ClearLayout(layout);
 
     QPushButton *newCable = new QPushButton("");
-    newCable->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+//    newCable->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     newCable->setStyleSheet(buttonStyle->GetStyleSheet());
     QIcon newIcon(QPixmap((":/drawcablemode/icons/drawcablemode/add_cable.svg")));
     newCable->setIcon(newIcon);
     newCable->setIconSize(QSize(27, 27));
-    newCable->setFixedSize(40, 40);
+    newCable->setMinimumSize(40, 40);
 
     QPushButton *movePoint = new QPushButton("");
-    movePoint->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+//    movePoint->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     movePoint->setStyleSheet(buttonStyle->GetStyleSheet());
     QIcon movePIcon(QPixmap((":/drawcablemode/icons/drawcablemode/move_point.svg")));
     movePoint->setIcon(movePIcon);
     movePoint->setIconSize(QSize(27, 27));
-    movePoint->setFixedSize(40, 40);
+    movePoint->setMinimumSize(40, 40);
 
     QPushButton *moveEdge = new QPushButton("");
-    moveEdge->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+//    moveEdge->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     moveEdge->setStyleSheet(buttonStyle->GetStyleSheet());
     QIcon moveEIcon(QPixmap((":/drawcablemode/icons/drawcablemode/move_edge.svg")));
     moveEdge->setIcon(moveEIcon);
     moveEdge->setIconSize(QSize(27, 27));
-    moveEdge->setFixedSize(40, 40);
+    moveEdge->setMinimumSize(40, 40);
 
     QPushButton *selectCable = new QPushButton("");
-    selectCable->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+//    selectCable->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     selectCable->setStyleSheet(buttonStyle->GetStyleSheet());
     QIcon selectCIcon(QPixmap((":/drawcablemode/icons/drawcablemode/select_cables.svg")));
     selectCable->setIcon(selectCIcon);
     selectCable->setIconSize(QSize(27, 27));
-    selectCable->setFixedSize(40, 40);
+    selectCable->setMinimumSize(40, 40);
     connect(selectCable, SIGNAL(clicked()), ui->widget, SLOT(SetRemoveCableMode()));
 
     QPushButton *removeCables = new QPushButton("");
-    removeCables->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+//    removeCables->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     removeCables->setStyleSheet(buttonStyle->GetStyleSheet());
     QIcon removeCIcon(QPixmap((":/drawcablemode/icons/drawcablemode/remove_cables.svg")));
     removeCables->setIcon(removeCIcon);
     removeCables->setIconSize(QSize(27, 27));
-    removeCables->setFixedSize(40, 40);
+    removeCables->setMinimumSize(40, 40);
     connect(removeCables, SIGNAL(clicked()), ui->widget, SLOT(RemoveSelectedCables()));
 
     QSpacerItem *space = new QSpacerItem(40, 60, QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -228,6 +233,7 @@ void MainGUIWindow::SetDrawCableMode()
     layout->addWidget(selectCable);
     layout->addWidget(removeCables);
     layout->addItem(space);
+    layout->setMargin(5);
 
     actions->setStyleSheet(barStyle->GetStyleSheet());
 
@@ -244,49 +250,54 @@ void MainGUIWindow::SetObjectMode()
     ClearLayout(layout);
 
     QPushButton *copy = new QPushButton("");
-    copy->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+//    copy->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     copy->setStyleSheet(buttonStyle->GetStyleSheet());
     QIcon copyIcon(QPixmap((":/objectmode/icons/objectmode/copy.svg")));
     copy->setIcon(copyIcon);
     copy->setIconSize(QSize(27, 27));
-    copy->setFixedSize(40, 40);
+//    copy->setFixedSize(40, 40);
+    copy->setMinimumSize(40, 40);
     connect(copy, SIGNAL(clicked()), ui->widget, SLOT(CopySelectedFigure()));
 
     QPushButton *pastle = new QPushButton("");
-    pastle->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+//    pastle->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
 //    pastle->setStyleSheet("QPushButton {"
     pastle->setStyleSheet(buttonStyle->GetStyleSheet());
     QIcon pastleIcon(QPixmap((":/objectmode/icons/objectmode/pastle.svg")));
     pastle->setIcon(pastleIcon);
     pastle->setIconSize(QSize(27, 27));
-    pastle->setFixedSize(40, 40);
+//    pastle->setFixedSize(40, 40);
+    pastle->setMinimumSize(40, 40);
     connect(pastle, SIGNAL(clicked()), ui->widget, SLOT(PasteFromBuffer()));
 
     QPushButton *deLete = new QPushButton("");
-    deLete->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+//    deLete->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     deLete->setStyleSheet(buttonStyle->GetStyleSheet());
     QIcon deleteIcon(QPixmap((":/objectmode/icons/objectmode/delete.svg")));
     deLete->setIcon(deleteIcon);
     deLete->setIconSize(QSize(27, 27));
-    deLete->setFixedSize(40, 40);
+//    deLete->setFixedSize(40, 40);
+    deLete->setMinimumSize(40, 40);
     connect(deLete, SIGNAL(clicked()), ui->widget, SLOT(RemoveSelectedFigure()));
 
     QPushButton *rotateL = new QPushButton("");
-    rotateL->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+//    rotateL->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     rotateL->setStyleSheet(buttonStyle->GetStyleSheet());
     QIcon rotateLIcon(QPixmap((":/objectmode/icons/objectmode/rotate_left.svg")));
     rotateL->setIcon(rotateLIcon);
     rotateL->setIconSize(QSize(27, 27));
-    rotateL->setFixedSize(40, 40);
+//    rotateL->setFixedSize(40, 40);
+    rotateL->setMinimumSize(40, 40);
     connect(rotateL, SIGNAL(clicked()), ui->widget, SLOT(RotateSelectedFigureLeft()));
 
     QPushButton *rotateR = new QPushButton("");
-    rotateR->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+//    rotateR->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     rotateR->setStyleSheet(buttonStyle->GetStyleSheet());
     QIcon rotateRIcon(QPixmap((":/objectmode/icons/objectmode/rotate_right.svg")));
     rotateR->setIcon(rotateRIcon);
     rotateR->setIconSize(QSize(27, 27));
-    rotateR->setFixedSize(40, 40);
+//    rotateR->setFixedSize(40, 40);
+    rotateR->setMinimumSize(40, 40);
     connect(rotateR, SIGNAL(clicked()), ui->widget, SLOT(RotateSelectedFigureRight()));
 
     QSpacerItem *space = new QSpacerItem(40, 60, QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -296,6 +307,7 @@ void MainGUIWindow::SetObjectMode()
     layout->addWidget(rotateL);
     layout->addWidget(rotateR);
     layout->addItem(space);
+    layout->setMargin(5);
 
     actions->setStyleSheet(barStyle->GetStyleSheet());
     actions->setLayout(layout);

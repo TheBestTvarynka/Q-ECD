@@ -102,7 +102,5 @@ void QStyleSheetString::EraseBlock(QString block)
     int posE = styleSheet.indexOf("}", posS);
     if (posS == -1 || posE == -1)
         return;
-    qDebug() << styleSheet;
     styleSheet = styleSheet.remove(posS - 1, posE - posS + 2);
-    qDebug() << styleSheet;
 }
