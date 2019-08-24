@@ -38,32 +38,65 @@ SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, QW
     colorBackgroundBar->setStyleSheet(plainButton.GetStyleSheet());
 
     QHBoxLayout *hBor = new QHBoxLayout;
-    QSpacerItem *s_hBor = new QSpacerItem(40, 60, QSizePolicy::Preferred, QSizePolicy::Preferred);
+    QSpacerItem *s_hBor = new QSpacerItem(40, 60, QSizePolicy::Expanding, QSizePolicy::Preferred);
     hBor->addWidget(borderBar);
     hBor->addWidget(sizeBar);
     hBor->addWidget(colorBorderBar);
     hBor->addWidget(radiusBar);
     hBor->addItem(s_hBor);
-    hBor->setMargin(5);
+    hBor->setSpacing(15);
     QHBoxLayout *hBack = new QHBoxLayout;
-    hBack->setMargin(5);
-    QSpacerItem *s_Back = new QSpacerItem(40, 60, QSizePolicy::Preferred, QSizePolicy::Preferred);
+    hBack->setSpacing(15);
+    QSpacerItem *s_Back = new QSpacerItem(40, 60, QSizePolicy::Expanding, QSizePolicy::Preferred);
     hBack->addWidget(backgroundBar);
     hBack->addWidget(colorBackgroundBar);
     hBack->addItem(s_Back);
+
+    QVBoxLayout *barSettings = new QVBoxLayout;
+    barSettings->addItem(hBor);
+    barSettings->addItem(hBack);
+    QWidget *bar_settings = new QWidget;
+    bars.append(bar_settings);
+    bar_settings->setLayout(barSettings);
+    bar_settings->setStyleSheet(barStyle->GetStyleSheet());
+
+    QHBoxLayout *results = new QHBoxLayout;
+    QSpacerItem *res = new QSpacerItem(40, 60, QSizePolicy::Expanding, QSizePolicy::Preferred);
+    QPushButton *cansel = new QPushButton("Cancel");
+    cansel->setStyleSheet(buttonStyle->GetStyleSheet());
+    cansel->setFixedSize(120, 35);
+    QPushButton *apply = new QPushButton("Apply changes");
+    apply->setStyleSheet(buttonStyle->GetStyleSheet());
+    apply->setFixedSize(120, 35);
+    QPushButton *ok = new QPushButton("Ok");
+    ok->setStyleSheet(buttonStyle->GetStyleSheet());
+    ok->setFixedSize(120, 35);
+    results->addItem(res);
+    results->addWidget(cansel);
+    results->addWidget(apply);
+    results->addWidget(ok);
+    results->setSpacing(15);
 
     QVBoxLayout *page = new QVBoxLayout;
     QSpacerItem *space = new QSpacerItem(40, 60, QSizePolicy::Preferred, QSizePolicy::Expanding);
     page->addWidget(title);
     page->addWidget(titleBar);
-    page->addItem(hBor);
-    page->addItem(hBack);
+    page->addWidget(bar_settings);
     page->addItem(space);
+    page->addItem(results);
 
     this->setLayout(page);
+    this->setStyleSheet(".QWidget {"
+                        "background-color: #d0f3f7;"
+                        "color: black; }");
 }
 
 SettingsForm::~SettingsForm()
 {
     delete ui;
+}
+
+void SettingsForm::ApplySettings()
+{
+
 }

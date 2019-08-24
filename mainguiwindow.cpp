@@ -86,7 +86,7 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     logo->setStyleSheet("QLabel {"
                         "color: black;"
                         "background: #6ac7bc;"
-                        "border: 0px solid #1d7f88;"
+                        "border: 2px solid #1d7f88;"
                         "border-radius: 5px;"
                         "}");
 

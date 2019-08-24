@@ -23,10 +23,12 @@ class SettingsForm : public QWidget
     QStyleSheetString *buttonStyle;
 
     QWidget *colorTheme;
-
+    QList<QWidget *> bars;
 public:
     explicit SettingsForm(QStyleSheetString *, QStyleSheetString *, QWidget *parent = nullptr);
     ~SettingsForm();
+public slots:
+    void ApplySettings();
 private:
     Ui::SettingsForm *ui;
 };
