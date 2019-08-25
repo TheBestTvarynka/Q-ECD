@@ -19,6 +19,7 @@ public:
     QList<QString> GetBorder();
     QString GetBackground();
     QString GetTextColor();
+    QString GetHoverBackground();
 
     void SetStyleSheet(QString style) { styleSheet = style; }
     void SetBorder(QString, QString, QString);

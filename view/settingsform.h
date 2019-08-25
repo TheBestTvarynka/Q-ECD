@@ -29,22 +29,36 @@ class SettingsForm : public QWidget
 
     QWidget *colorTheme;
     QList<QWidget *> bars;
+    QList<QPushButton *> buttons;
     // elements for bars
-    QPushButton *borderColorBar;
-    QPushButton *backgroundColorBar;
-    QSpinBox *borderSizeBar;
-    QSpinBox *borderRadiusBar;
+    QSpinBox *bar_border_size;
+    QPushButton *bar_border_color;
+    QSpinBox *bar_border_radius;
+    QPushButton *bar_background;
     // elements for buttons
+    QSpinBox *button_border_size;
+    QPushButton *button_border_color;
+    QSpinBox *button_border_radius;
+    QPushButton *button_background;
+    QPushButton *button_hover_color;
 public:
     explicit SettingsForm(QStyleSheetString *, QStyleSheetString *, MainGUIWindow *parent);
+    QWidget *SetBarSettings();
+    QWidget *SetButtonSettings();
     ~SettingsForm();
 public slots:
     void ApplySettings();
+
     void ClikedBarBorderColor();
     void ClikedBarBackgroundColor();
     void ChangedBarBorderSize(int);
     void ChangedBarBorderRadius(int);
-//    void ClikedBarBackgroundColor();
+
+    void ClikedButtonBorderColor();
+    void ClikedButtonBackgroundColor();
+    void ClikedButtonHoverBackgroundColor();
+    void ChangedButtonBorderSize(int);
+    void ChangedButtonBorderRadius(int);
 private:
     Ui::SettingsForm *ui;
 signals:

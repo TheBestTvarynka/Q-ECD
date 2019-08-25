@@ -358,4 +358,20 @@ void MainGUIWindow::UpdateStyle(QString bar, QString button)
     QStyleSheetString str(*barStyle);
     str.SetName("QLabel");
     logo->setStyleSheet(str.GetStyleSheet());
+
+    QWidget *w;
+    QLayout *act = actions->layout();
+    for (int i = 0; i < act->count(); i++)
+    {
+        w = act->itemAt(i)->widget();
+        if (w != nullptr)
+            w->setStyleSheet(buttonStyle->GetStyleSheet());
+    }
+    act = modes->layout();
+    for (int i = 0; i < act->count(); i++)
+    {
+        w = act->itemAt(i)->widget();
+        if (w != nullptr)
+            w->setStyleSheet(buttonStyle->GetStyleSheet());
+    }
 }
