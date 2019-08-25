@@ -3,6 +3,7 @@
 
 QColorDialogWindow::QColorDialogWindow(QColor initial)
 {
+    this->setWindowTitle("Choose a color:");
     color = initial;
 
     red = new QSpinBox;
@@ -25,14 +26,16 @@ QColorDialogWindow::QColorDialogWindow(QColor initial)
     components->addWidget(green);
     components->addWidget(blue);
     components->addWidget(name);
+    components->setSpacing(10);
 
     example = new QPushButton;
+    example->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     example->setStyleSheet("QPushButton { background: " + color.name() +"; border: none; }");
 
     QHBoxLayout *chooseColor = new QHBoxLayout;
     chooseColor->addItem(components);
     chooseColor->addWidget(example);
-
+    chooseColor->setSpacing(10);
 
     QSpacerItem *answer_space = new QSpacerItem(40, 40, QSizePolicy::Expanding, QSizePolicy::Preferred);
     QPushButton *ok = new QPushButton("OK");
@@ -41,6 +44,7 @@ QColorDialogWindow::QColorDialogWindow(QColor initial)
     result->addItem(answer_space);
     result->addWidget(cancel);
     result->addWidget(ok);
+    result->setSpacing(10);
 
     QVBoxLayout *all = new QVBoxLayout;
     QSpacerItem *main_space = new QSpacerItem(40, 40, QSizePolicy::Preferred, QSizePolicy::Expanding);
@@ -69,6 +73,10 @@ QColor QColorDialogWindow::GetColor()
 QColorDialogWindow::~QColorDialogWindow()
 {
     qDebug() << "deconstructor called";
+    delete example;
+    delete red;
+    delete green;
+    delete blue;
 }
 
 void QColorDialogWindow::RedChanged(int value)

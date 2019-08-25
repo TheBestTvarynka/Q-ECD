@@ -17,6 +17,10 @@ SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, Ma
     QList<QString> curBorder = bar->GetBorder();
 
     QLabel *borderBar = new QLabel("Border:");
+    borderBar->setStyleSheet("QLabel {"
+                             "background: transparent;"
+                             "color: black;"
+                             "border: none; }");
     QSpinBox *sizeBar = new QSpinBox;
     sizeBar->setMinimum(0);
     sizeBar->setSingleStep(1);
@@ -25,7 +29,7 @@ SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, Ma
 
     QPushButton *colorBorderBar = new QPushButton("");
     QStyleSheetString plainButton("QPushButton");
-    plainButton.SetBorder("0", "#ffffff", "0");
+    plainButton.SetBorder("2", "#ffffff", "2");
     plainButton.SetBackground(curBorder[1]);
     plainButton.EraseBlock("QPushButton::hover");
     colorBorderBar->setStyleSheet(plainButton.GetStyleSheet());
@@ -39,13 +43,17 @@ SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, Ma
 //    radiusBar->setDisplayIntegerBase(curBorder[2].toInt());
 
     QLabel *backgroundBar = new QLabel("Background:");
+    backgroundBar->setStyleSheet("QLabel {"
+                                 "background: transparent;"
+                                 "color: black;"
+                                 "border: none; }");
     QPushButton *colorBackgroundBar = new QPushButton("");
     plainButton.SetBackground(bar->GetBackground());
     colorBackgroundBar->setStyleSheet(plainButton.GetStyleSheet());
     backgroundColorBar = colorBackgroundBar;
 
     QHBoxLayout *hBor = new QHBoxLayout;
-    QSpacerItem *s_hBor = new QSpacerItem(40, 60, QSizePolicy::Expanding, QSizePolicy::Preferred);
+    QSpacerItem *s_hBor = new QSpacerItem(40, 60, QSizePolicy::Preferred, QSizePolicy::Preferred);
     hBor->addWidget(borderBar);
     hBor->addWidget(sizeBar);
     hBor->addWidget(colorBorderBar);
@@ -54,7 +62,7 @@ SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, Ma
     hBor->setSpacing(15);
     QHBoxLayout *hBack = new QHBoxLayout;
     hBack->setSpacing(15);
-    QSpacerItem *s_Back = new QSpacerItem(40, 60, QSizePolicy::Expanding, QSizePolicy::Preferred);
+    QSpacerItem *s_Back = new QSpacerItem(40, 60, QSizePolicy::Preferred, QSizePolicy::Preferred);
     hBack->addWidget(backgroundBar);
     hBack->addWidget(colorBackgroundBar);
     hBack->addItem(s_Back);
@@ -93,7 +101,7 @@ SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, Ma
     page->addItem(results);
 
     this->setLayout(page);
-    this->setStyleSheet(".QWidget {"
+    this->setStyleSheet("QWidget {"
                         "background-color: #d0f3f7;"
                         "color: black; }");
 
@@ -102,6 +110,7 @@ SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, Ma
     connect(apply, SIGNAL(clicked()), this, SLOT(ApplySettings()));
     connect(sizeBar, SIGNAL(valueChanged(int)), this, SLOT(ChangedBarBorderSize(int)));
     connect(radiusBar, SIGNAL(valueChanged(int)), this, SLOT(ChangedBarBorderRadius(int)));
+    connect(backgroundColorBar, SIGNAL(clicked()), this, SLOT(ClikedBarBackgroundColor()));
 }
 
 SettingsForm::~SettingsForm()
@@ -111,10 +120,8 @@ SettingsForm::~SettingsForm()
 
 void SettingsForm::ApplySettings()
 {
-    qDebug() << "ererferf";
     foreach (QWidget *i, bars)
     {
-//        qDebug() << barStyle->GetStyleSheet();
         i->setStyleSheet(barStyle->GetStyleSheet());
     }
     emit UpdateStyle(barStyle->GetStyleSheet(), buttonStyle->GetStyleSheet());
@@ -134,6 +141,21 @@ void SettingsForm::ClikedBarBorderColor()
 
     QList<QString> border = barStyle->GetBorder();
     barStyle->SetBorder(border[0], barColor.name(), border[2]);
+}
+
+void SettingsForm::ClikedBarBackgroundColor()
+{
+    QStyleSheetString str;
+    str.SetStyleSheet(barStyle->GetStyleSheet());
+    QColorDialogWindow *color = new QColorDialogWindow(str.GetBackground());
+    QColor barColor = color->GetColor();
+    delete color;
+    if (!barColor.isValid())
+        return;
+    barStyle->SetBackground(barColor.name());
+    str.SetStyleSheet(backgroundColorBar->styleSheet());
+    str.SetBackground(barColor.name());
+    backgroundColorBar->setStyleSheet(str.GetStyleSheet());
 }
 
 void SettingsForm::ChangedBarBorderSize(int size)

@@ -41,6 +41,7 @@ public:
 public slots:
     void ApplySettings();
     void ClikedBarBorderColor();
+    void ClikedBarBackgroundColor();
     void ChangedBarBorderSize(int);
     void ChangedBarBorderRadius(int);
 //    void ClikedBarBackgroundColor();
