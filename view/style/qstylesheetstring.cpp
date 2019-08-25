@@ -37,6 +37,11 @@ void QStyleSheetString::TextColor(int gPos, QString color)
     styleSheet = styleSheet.replace(pos + 7, 7, color);
 }
 
+QStyleSheetString::QStyleSheetString(const QStyleSheetString &s)
+{
+    this->SetStyleSheet(s.styleSheet);
+}
+
 QStyleSheetString::QStyleSheetString()
 {
     styleSheet = QLatin1String("QWidget {"
@@ -126,6 +131,18 @@ void QStyleSheetString::SetHoverTextColor(QString color)
 {
     int globalPos = styleSheet.indexOf("hover");
     TextColor(globalPos, color);
+}
+
+void QStyleSheetString::SetName(QString new_name)
+{
+    int pos = styleSheet.indexOf('{');
+    QString name = styleSheet.left(pos - 1);
+    pos = styleSheet.indexOf(name);
+    while (pos != -1)
+    {
+        styleSheet.replace(pos, name.length(), new_name);
+        pos = styleSheet.indexOf(name, pos);
+    }
 }
 
 void QStyleSheetString::EraseBlock(QString block)

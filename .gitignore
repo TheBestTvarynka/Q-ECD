@@ -1,6 +1,8 @@
 
 build-Q-ECD-Desktop-Debug/
 
+build-Q-ECD-Desktop-Release/
+
 build-Q-ECD-Desktop-Debug/Q-ECD
 
 .connect_push.sh

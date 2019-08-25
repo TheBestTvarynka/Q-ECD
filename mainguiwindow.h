@@ -28,6 +28,7 @@ class MainGUIWindow : public QMainWindow
     QWidget *allFigures;
     QWidget *propereties;
     QWidget *listNew;
+    QLabel *logo;
 
     QLineEdit *name;
     QLineEdit *value;

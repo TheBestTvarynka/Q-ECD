@@ -11,6 +11,7 @@ class QStyleSheetString
     void Background(int, QString);
     void TextColor(int, QString);
 public:
+    QStyleSheetString(const QStyleSheetString &);
     QStyleSheetString();
     QStyleSheetString(QString);
     QString GetStyleSheet() { return styleSheet; }
@@ -26,6 +27,7 @@ public:
     void SetHoverBorder(QString, QString, QString);
     void SetHoverBackground(QString);
     void SetHoverTextColor(QString);
+    void SetName(QString);
     void EraseBlock(QString);
     ~QStyleSheetString() { styleSheet.clear(); }
 };

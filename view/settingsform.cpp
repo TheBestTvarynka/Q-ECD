@@ -20,7 +20,8 @@ SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, Ma
     QSpinBox *sizeBar = new QSpinBox;
     sizeBar->setMinimum(0);
     sizeBar->setSingleStep(1);
-//    sizeBar->setDisplayIntegerBase(curBorder[0].toInt());
+    sizeBar->setValue(curBorder[0].toInt());
+    borderSizeBar = sizeBar;
 
     QPushButton *colorBorderBar = new QPushButton("");
     QStyleSheetString plainButton("QPushButton");
@@ -28,16 +29,20 @@ SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, Ma
     plainButton.SetBackground(curBorder[1]);
     plainButton.EraseBlock("QPushButton::hover");
     colorBorderBar->setStyleSheet(plainButton.GetStyleSheet());
+    borderColorBar = colorBorderBar;
 
     QSpinBox *radiusBar = new QSpinBox;
     radiusBar->setMinimum(0);
     radiusBar->setSingleStep(1);
+    radiusBar->setValue(curBorder[2].toInt());
+    borderRadiusBar = radiusBar;
 //    radiusBar->setDisplayIntegerBase(curBorder[2].toInt());
 
     QLabel *backgroundBar = new QLabel("Background:");
     QPushButton *colorBackgroundBar = new QPushButton("");
     plainButton.SetBackground(bar->GetBackground());
     colorBackgroundBar->setStyleSheet(plainButton.GetStyleSheet());
+    backgroundColorBar = colorBackgroundBar;
 
     QHBoxLayout *hBor = new QHBoxLayout;
     QSpacerItem *s_hBor = new QSpacerItem(40, 60, QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -93,6 +98,10 @@ SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, Ma
                         "color: black; }");
 
     connect(this, SIGNAL(UpdateStyle(QString, QString)), Parent, SLOT(UpdateStyle(QString, QString)));
+    connect(borderColorBar, SIGNAL(clicked()), this, SLOT(ClikedBarBorderColor()));
+    connect(apply, SIGNAL(clicked()), this, SLOT(ApplySettings()));
+    connect(sizeBar, SIGNAL(valueChanged(int)), this, SLOT(ChangedBarBorderSize(int)));
+    connect(radiusBar, SIGNAL(valueChanged(int)), this, SLOT(ChangedBarBorderRadius(int)));
 }
 
 SettingsForm::~SettingsForm()
@@ -102,9 +111,39 @@ SettingsForm::~SettingsForm()
 
 void SettingsForm::ApplySettings()
 {
+    qDebug() << "ererferf";
     foreach (QWidget *i, bars)
     {
+//        qDebug() << barStyle->GetStyleSheet();
         i->setStyleSheet(barStyle->GetStyleSheet());
     }
     emit UpdateStyle(barStyle->GetStyleSheet(), buttonStyle->GetStyleSheet());
+}
+
+void SettingsForm::ClikedBarBorderColor()
+{
+    QStyleSheetString str;
+    str.SetStyleSheet(borderColorBar->styleSheet());
+    QColorDialogWindow *color = new QColorDialogWindow(str.GetBackground());
+    QColor barColor = color->GetColor();
+    delete color;
+    if (!barColor.isValid())
+        return;
+    str.SetBackground(barColor.name());
+    borderColorBar->setStyleSheet(str.GetStyleSheet());
+
+    QList<QString> border = barStyle->GetBorder();
+    barStyle->SetBorder(border[0], barColor.name(), border[2]);
+}
+
+void SettingsForm::ChangedBarBorderSize(int size)
+{
+    QList<QString> border = barStyle->GetBorder();
+    barStyle->SetBorder(QString::number(size), border[1], border[2]);
+}
+
+void SettingsForm::ChangedBarBorderRadius(int size)
+{
+    QList<QString> border = barStyle->GetBorder();
+    barStyle->SetBorder(border[0], border[1], QString::number(size));
 }

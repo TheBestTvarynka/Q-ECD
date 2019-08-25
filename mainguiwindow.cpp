@@ -5,9 +5,11 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
 {
     ui->setupUi(this);
 
+
     barStyle = new QStyleSheetString("QWidget");
     barStyle->SetBorder("2", "#1d7f88", "5");
     barStyle->SetBackground("#6ac7bc");
+    barStyle->SetTextColor("#000000");
     barStyle->EraseBlock("QWidget::hover");
 
     buttonStyle = new QStyleSheetString("QPushButton");
@@ -81,14 +83,11 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     modes = new QWidget(this);
     modes->setStyleSheet(barStyle->GetStyleSheet());
 
-    QLabel *logo = new QLabel("Q-ECD");
+    logo = new QLabel("Q-ECD");
 //    logo->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    logo->setStyleSheet("QLabel {"
-                        "color: black;"
-                        "background: #6ac7bc;"
-                        "border: 2px solid #1d7f88;"
-                        "border-radius: 5px;"
-                        "}");
+    QStyleSheetString str(*barStyle);
+    str.SetName("QLabel");
+    logo->setStyleSheet(str.GetStyleSheet());
 
     QPushButton *setObjectMode = new QPushButton("Object Mode");
 //    setObjectMode->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
@@ -137,18 +136,19 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
 
     QLayout *our = ui->centralWidget->layout();
     our = new QHBoxLayout;
-    our->setMargin(0);
+    our->setMargin(3);
     our->addWidget(all);
     ui->centralWidget->setLayout(our);
     ui->centralWidget->setStyleSheet("QWidget {"
                                      "background: white;"
                                      "border: none;"
                                      "}");
-
     connect(ui->widget, SIGNAL(LoadFigurePropereties(QString, QString)), this, SLOT(LoadPropereties(QString, QString)));
     connect(ui->widget, SIGNAL(ClearPropereties()), this, SLOT(ClearPropereties()));
     connect(name, SIGNAL(textChanged(const QString &)), ui->widget, SLOT(SetNameSelectedFigure(const QString &)));
     connect(value, SIGNAL(textChanged(const QString &)), ui->widget, SLOT(SetValueSelectedFigure(const QString &)));
+
+//    QColorDialog::getColor();
 }
 
 void MainGUIWindow::keyPressEvent(QKeyEvent *event)
@@ -341,7 +341,8 @@ void MainGUIWindow::ClearPropereties()
 
 void MainGUIWindow::on_actionSettings_triggered()
 {
-    SettingsForm *settings = new SettingsForm(barStyle, buttonStyle, ui->centralWidget);
+//    QColorDialog::getColor(Qt::blue, this, "Choose color");
+    SettingsForm *settings = new SettingsForm(barStyle, buttonStyle, this);
     settings->show();
 }
 
@@ -353,4 +354,8 @@ void MainGUIWindow::UpdateStyle(QString bar, QString button)
     allFigures->setStyleSheet(barStyle->GetStyleSheet());
     propereties->setStyleSheet(barStyle->GetStyleSheet());
     listNew->setStyleSheet(barStyle->GetStyleSheet());
+
+    QStyleSheetString str(*barStyle);
+    str.SetName("QLabel");
+    logo->setStyleSheet(str.GetStyleSheet());
 }
