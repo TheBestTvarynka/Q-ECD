@@ -7,6 +7,7 @@ SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, Ma
 {
     Parent = parent;
     ui->setupUi(this);
+    this->setWindowTitle("Settings");
 
     barStyle = bar;
     buttonStyle = button;

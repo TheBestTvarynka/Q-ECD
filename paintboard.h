@@ -22,6 +22,12 @@ using std::pair;
 class PaintBoard : public QGLWidget
 {
     Q_OBJECT
+    QColor grid;
+    QColor figure;
+    QColor figure_seleced;
+    QColor cable;
+    QColor cable_selected;
+
     QTimer mpTimer;
     ModeInterface *mode;
     DataFigures figures;

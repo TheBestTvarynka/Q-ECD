@@ -3,6 +3,8 @@
 
 PaintBoard::PaintBoard(QWidget *parent, ModeInterface *start_state): QGLWidget(parent)
 {
+
+
     Scale = 20;
     Delta.setX(0);
     Delta.setY(0);
@@ -13,8 +15,6 @@ PaintBoard::PaintBoard(QWidget *parent, ModeInterface *start_state): QGLWidget(p
 
     if (start_state == nullptr)
         mode = new ObjectMode(this, Scale, QPoint(0, 0), width(), height());
-//    figures.add(new Resistor(5, 7, "R1"));
-//    figures.add(new Capacitor(4, 3, "C1"));
 }
 
 void PaintBoard::initializeGL()
