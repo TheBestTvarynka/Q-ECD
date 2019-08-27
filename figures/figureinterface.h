@@ -40,12 +40,14 @@ public:
     void MoveFigure(double, double);
     double GetX() { return x; }
     double GetY() { return y; }
+    pair<double, double> GetPos() { return pair<double, double>(x, y); }
     int GetRotation() { return rotation; }
     QString GetName() { return name; }
     QString GetValue() { return value; }
     int GetType() { return type; }
     QMap<int, GetClampCoordinates> GetClams() { return clamp_coordiantes; }
     pair<double, double> GetClamp(int clamp) { return RotatePoint((*clamp_coordiantes[clamp])(x, y), rotation); }
+    QMap<QString, QVector<QVariant> > GetData() { return data; }
     void SetMainColor(double [3]);
     void SetPosition(double, double);
     void SetTreeItem(QTreeItem *item) { treeItem = item; }

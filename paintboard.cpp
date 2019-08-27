@@ -3,12 +3,15 @@
 
 PaintBoard::PaintBoard(QWidget *parent, ModeInterface *start_state): QGLWidget(parent)
 {
-
-
     Scale = 20;
     Delta.setX(0);
     Delta.setY(0);
+    Center = Delta;
     click = Qt::MouseButton::NoButton;
+
+    paint_devices.insert("GL_LINE_LOOP", &PaintBoard::LINE_LOOP);
+    paint_devices.insert("GL_LINES", &PaintBoard::LINES);
+    paint_devices.insert("TEXT", &PaintBoard::TEXT);
 
     connect(&mpTimer, SIGNAL(timeout()), this, SLOT(updateGL()));
     mpTimer.start(10);
@@ -29,7 +32,59 @@ void PaintBoard::resizeGL(int w, int h)
 
 void PaintBoard::paintGL()
 {
-    mode->paintGL(Delta);
+//    mode->paintGL(Delta);
+    QColor background(220, 220, 220, 255);
+    glClearColor(220, 220, 220, 255);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable (GL_TEXTURE_2D);
+    glEnable (GL_BLEND);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+//    glTranslated(Delta.x(), Delta.y(), 0);
+//    Center += Delta;
+
+    glColor3d(0.0, 0.0, 1.0);
+    glPointSize(20);
+    glBegin(GL_POINTS);
+    glVertex2f(float(0), float(0));
+    glEnd();
+
+    glPointSize(int(Scale / 10));
+    glBegin(GL_POINTS);
+
+    int nV = int(width() / Scale) + 1;
+    int nH = int(height() / Scale) + 1;
+    double DeltaX = Center.x() - int(Center.x() / Scale) * Scale, DeltaY = Center.y() - int(Center.y() / Scale) * Scale;
+    for (int i = 0; i < nH; i++)
+    {
+        for (int j = 0; j < nV; j++)
+        {
+            glVertex2f(float(j * Scale - Center.x() + DeltaX), float(i * Scale - Center.y() + DeltaY));
+        }
+    }
+    glEnd();
+
+    QVector<FigureInterface *> f = figures.GetFigures();
+    QMap<QString, QVector<QVariant> > d;
+    pair<double, double> pos;
+    foreach (FigureInterface *i, f)
+    {
+        d = i->GetData();
+        pos = i->GetPos();
+        glPushMatrix();
+        glTranslated(pos.first * Scale, pos.second * Scale, 0);
+        glRotatef(i->GetRotation(), 0.0, 0.0, 1.0);
+
+        QMapIterator<QString, QVector<QVariant> > iT(d);
+        while (iT.hasNext())
+        {
+            iT.next();
+            (this->*paint_devices[iT.key()])(iT.value());
+        }
+
+        glPopMatrix();
+    }
 }
 
 void PaintBoard::mousePressEvent(QMouseEvent *ap)
@@ -88,20 +143,37 @@ void PaintBoard::keyReleaseEvent(QKeyEvent *event)
     mode->keyReleaseEvent(event);
 }
 
-void PaintBoard::RenderText(pair<double, double> point, double rotation, QString text)
+void PaintBoard::LINES(QVector<QVariant> lines)
 {
-    glPushMatrix();
-    glTranslated(point.first * Scale, point.second * Scale, 0.0);
-    glRotated(rotation, 0.0, 0.0, 1.1);
-    renderText(mode->GetCenter().x() + int(point.first * Scale), mode->GetCenter().y() + int(point.second * Scale), text, QFont("Arial", int(Scale * 0.67), 5, false));
-    glColor3d(0.0, 0.0, 0.0);
-//    glPointSize(40);
-//    glBegin(GL_POINTS);
-//    glVertex2f(float(0), float(0));
-//    glEnd();
+//    qDebug() << "LINES";
+    QPointF point;
+    glBegin(GL_LINES);
+    foreach (QVariant i, lines)
+    {
+        point = i.toPointF();
+        glVertex2f(float(point.x()) * float(Scale), float(point.y()) * float(Scale));
+    }
+    glEnd();
+}
 
-    renderText(0, 0, text, QFont("Arial", int(Scale * 0.67), 5, false));
-    glPopMatrix();
+void PaintBoard::LINE_LOOP(QVector<QVariant> lines)
+{
+//    qDebug() << "LINE_LOOP";
+    QPointF point;
+    glBegin(GL_LINE_LOOP);
+    foreach (QVariant i, lines)
+    {
+        point = i.toPointF();
+        glVertex2f(float(point.x()) * float(Scale), float(point.y()) * float(Scale));
+    }
+    glEnd();
+}
+
+void PaintBoard::TEXT(QVector<QVariant> text)
+{
+//    qDebug() << "TEXT";
+    QPointF pos = text[0].toPointF();
+    renderText(int(pos.x() * Scale), int(pos.y() * Scale), text[1].toString(), QFont("Arial", int(Scale * 0.67), 5, false));
 }
 
 void PaintBoard::SetMode(ModeInterface *newMode)

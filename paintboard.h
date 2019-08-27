@@ -35,12 +35,16 @@ class PaintBoard : public QGLWidget
     FigureCreator creator;
 
     QPoint Delta;
+    QPoint Center;
     double Scale;
     // temp variavle. use when we drag a mouse
     QPoint start_position;
     Qt::MouseButton click;
+
+    typedef void (PaintBoard::*PaintDevice)(QVector<QVariant>);
+    QMap<QString, PaintDevice> paint_devices;
 public:
-    PaintBoard(QWidget *parent = 0, ModeInterface *start_state = nullptr);
+    PaintBoard(QWidget *parent = nullptr, ModeInterface *start_state = nullptr);
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL();
@@ -50,7 +54,11 @@ public:
     void wheelEvent(QWheelEvent *);
     void keyPressEvent(QKeyEvent *);
     void keyReleaseEvent(QKeyEvent *event);
-    void RenderText(pair<double, double>, double, QString);
+    // painter device
+    void LINES(QVector<QVariant>);
+    void LINE_LOOP(QVector<QVariant>);
+    void TEXT(QVector<QVariant>);
+    /////////////////
 
     double GetScale() { return Scale; }
     QPoint GetCenter() { return mode->GetCenter(); }

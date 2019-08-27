@@ -25,6 +25,7 @@ public:
     void RoundCoordinates(FigureInterface *);
     void Register(FigureInterface *, int, IObserver *, int);
     FigureInterface *GetSelectedFigure();
+    QVector<FigureInterface *> GetFigures() { return figures; }
     pair<QPoint, double> SelectClamp(QPoint, double, FigureInterface *&, int &);
     int size() { return figures.size(); }
     void SetSelectedFigure(FigureInterface *);
