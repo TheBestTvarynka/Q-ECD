@@ -13,29 +13,6 @@ RemoveCableMode::RemoveCableMode(PaintBoard *p, double s, QPoint c, int w, int h
     radius = 0;
 }
 
-void RemoveCableMode::initializeGL()
-{
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(0, 649, 649, 0, 0, 1);
-    glEnable (GL_TEXTURE_2D);
-    ////////// enable alfa
-    glEnable(GL_BLEND);
-    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
-
-void RemoveCableMode::resizeGL(int w, int h)
-{
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(0, w, h, 0, 0, 1);
-    glViewport(0, 0, w, h);
-    glTranslated(Center.x(), Center.y(), 0);
-
-    Weight = w;
-    Height = h;
-}
-
 void RemoveCableMode::paintGL(QPoint &Delta)
 {
     QColor background(220, 220, 220, 255);

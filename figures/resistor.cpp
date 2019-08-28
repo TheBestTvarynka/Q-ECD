@@ -12,7 +12,7 @@ Resistor::Resistor(int X, int Y, int R, QString N, QString V, int T) : FigureInt
     item.push_back(*(new QVariant(QPointF(-2, 1))));
     item.push_back(*(new QVariant(QPointF(2, 1))));
     item.push_back(*(new QVariant(QPointF(2, -1))));
-    item.push_back(*(new QVariant(QPointF(-1, -1))));
+    item.push_back(*(new QVariant(QPointF(-2, -1))));
     data.insert("GL_LINE_LOOP", item);
     QVector<QVariant> lines;
     lines.push_back(*(new QVariant(QPointF(-2, 0))));
@@ -21,6 +21,7 @@ Resistor::Resistor(int X, int Y, int R, QString N, QString V, int T) : FigureInt
     lines.push_back(*(new QVariant(QPointF(4, 0))));
     data.insert("GL_LINES", lines);
     QVector<QVariant> text;
+    text.push_back(*(new QVariant(QPointF(x, y))));
     text.push_back(*(new QVariant(QPointF(0, -1.2))));
     text.push_back(*(new QVariant(name)));
     data.insert("TEXT", text);

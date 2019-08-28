@@ -53,6 +53,7 @@ void FigureInterface::SetMainColor(double color[3])
 void FigureInterface::SetPosition(double X, double Y)
 {
     x = X; y = Y;
+    data["TEXT"][0] = *(new QVariant(QPointF(x, y)));
 }
 
 void FigureInterface::SetName(QString Name)
@@ -87,6 +88,7 @@ pair<double, double> FigureInterface::RotatePoint(pair<double, double> point, do
 void FigureInterface::MoveFigure(double dX, double dY)
 {
     x += dX; y += dY;
+    data["TEXT"][0] = *(new QVariant(QPointF(x, y)));
     Notify();
 }
 

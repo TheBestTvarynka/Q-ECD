@@ -22,12 +22,22 @@ PaintBoard::PaintBoard(QWidget *parent, ModeInterface *start_state): QGLWidget(p
 
 void PaintBoard::initializeGL()
 {
-    mode->initializeGL();
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0, 649, 649, 0, 0, 1);
+    glEnable (GL_TEXTURE_2D);
+    ////////// enable alfa
+    glEnable(GL_BLEND);
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void PaintBoard::resizeGL(int w, int h)
 {
-    mode->resizeGL(w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0, w, h, 0, 0, 1);
+    glViewport(0, 0, w, h);
+    glTranslated(Center.x(), Center.y(), 0);
 }
 
 void PaintBoard::paintGL()
@@ -105,6 +115,8 @@ void PaintBoard::mouseMoveEvent(QMouseEvent *ap)
     if (ap->buttons() == Qt::MidButton)
     {
         Delta = ap->pos() - start_position;
+        Center += Delta;
+        glTranslated(Delta.x(), Delta.y(), 0);
         start_position = ap->pos();
     }
     else
@@ -147,6 +159,7 @@ void PaintBoard::LINES(QVector<QVariant> lines)
 {
 //    qDebug() << "LINES";
     QPointF point;
+    glLineWidth(float(Scale / 5));
     glBegin(GL_LINES);
     foreach (QVariant i, lines)
     {
@@ -160,6 +173,7 @@ void PaintBoard::LINE_LOOP(QVector<QVariant> lines)
 {
 //    qDebug() << "LINE_LOOP";
     QPointF point;
+    glLineWidth(float(Scale / 5));
     glBegin(GL_LINE_LOOP);
     foreach (QVariant i, lines)
     {
@@ -171,9 +185,11 @@ void PaintBoard::LINE_LOOP(QVector<QVariant> lines)
 
 void PaintBoard::TEXT(QVector<QVariant> text)
 {
-//    qDebug() << "TEXT";
-    QPointF pos = text[0].toPointF();
-    renderText(int(pos.x() * Scale), int(pos.y() * Scale), text[1].toString(), QFont("Arial", int(Scale * 0.67), 5, false));
+    if (text.size() != 3)
+        return;
+    QPointF f_pos = text[0].toPointF();
+    QPointF pos = text[1].toPointF();
+    renderText(Center.x() + int(pos.x() * Scale + f_pos.x() * Scale), Center.y() + int(pos.y() * Scale + f_pos.y() * Scale), text[2].toString(), QFont("Arial", int(Scale * 0.67), 5, false));
 }
 
 void PaintBoard::SetMode(ModeInterface *newMode)

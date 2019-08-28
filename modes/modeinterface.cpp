@@ -66,7 +66,7 @@ void ModeInterface::ScaleEvent(bool zoom, QPoint mouse, double &Scale)
 //    qDebug() << new_Center.x() << " " << new_Center.y();
 //    glTranslated(new_Center.x() - Center.x(), new_Center.y() - Center.y(), 0);
     Center = new_Center;
-    resizeGL(Weight, Height);
+    Parent->resizeGL(Weight, Height);
 }
 
 ModeInterface::~ModeInterface()

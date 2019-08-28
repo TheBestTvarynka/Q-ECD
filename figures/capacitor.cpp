@@ -19,6 +19,7 @@ Capacitor::Capacitor(int X, int Y, int R, QString N, QString V, int T) : FigureI
     item.push_back(*(new QVariant(QPointF(0.5, -1.5))));
     data.insert("GL_LINES", item);
     QVector<QVariant> text;
+    text.push_back(*(new QVariant(QPointF(x, y))));
     text.push_back(*(new QVariant(QPointF(0, -1.6))));
     text.push_back(*(new QVariant(name)));
     data.insert("TEXT", text);
