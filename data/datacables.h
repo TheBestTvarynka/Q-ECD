@@ -29,6 +29,7 @@ public:
     QList<Cable *> GetForDeleting(QPoint,  double);
     bool GetDirectionEnd(Cable *);
     QList<Cable *> GetSelectedCables() { return selected; }
+    QVector<Cable *> GetCables() { return cables; }
     void SetPoint(pair<double, double> &, pair<double, double>);
     void SetSelected(QList<Cable *> s) { selected = s; }
 };

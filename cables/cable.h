@@ -14,6 +14,7 @@ class Cable : public IObserver
 {
     QVector<pair<double, double> > points;
     double main_color[3];
+    QMap<QString, QVector<QVariant> > data;
 public:
     Cable(int, int);
     void print(double);
@@ -24,9 +25,11 @@ public:
     bool CheckIntersection(QPoint, double);
     bool CheckState(pair<double, double>, pair<double, double>);
     bool IsMarked();
+    void BuilData();
     pair<double, double> *GetLastPoint() { return &points.back(); }
     int GetSize() { return points.size(); }
     pair<double, double> GetPoint(int i) { return points[i]; }
+    QMap<QString, QVector<QVariant> > GetData() { return data; }
 //    void MovePoint(int, double, double);
     void SetPoint(int i, double X, double Y);
     void SetMainColor(double [3]);

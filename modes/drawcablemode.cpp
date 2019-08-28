@@ -113,6 +113,7 @@ void DrawCableMode::mouseMoveEvent(QMouseEvent *ap)
         else
             point->second = (ap->pos().y() - Center.y()) / scale;
     }
+    Parent->GetDataCables()->GetLast()->BuilData();
     Parent->GetDataCables()->RemoveLoop(Parent->GetDataCables()->GetLast(), ap->pos() - Center, scale);
 }
 

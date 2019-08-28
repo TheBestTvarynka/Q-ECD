@@ -51,18 +51,15 @@ void PaintBoard::paintGL()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-//    glTranslated(Delta.x(), Delta.y(), 0);
-//    Center += Delta;
-
+    // draw central point
     glColor3d(0.0, 0.0, 1.0);
     glPointSize(20);
     glBegin(GL_POINTS);
     glVertex2f(float(0), float(0));
     glEnd();
-
+    // draw grid
     glPointSize(int(Scale / 10));
     glBegin(GL_POINTS);
-
     int nV = int(width() / Scale) + 1;
     int nH = int(height() / Scale) + 1;
     double DeltaX = Center.x() - int(Center.x() / Scale) * Scale, DeltaY = Center.y() - int(Center.y() / Scale) * Scale;
@@ -74,7 +71,7 @@ void PaintBoard::paintGL()
         }
     }
     glEnd();
-
+    // draw figures
     QVector<FigureInterface *> f = figures.GetFigures();
     QMap<QString, QVector<QVariant> > d;
     pair<double, double> pos;
@@ -94,6 +91,18 @@ void PaintBoard::paintGL()
         }
 
         glPopMatrix();
+    }
+    // draw cables
+    QVector<Cable *> c = cables.GetCables();
+    foreach (Cable *i, c)
+    {
+        d = i->GetData();
+        QMapIterator<QString, QVector<QVariant> > iT(d);
+        while (iT.hasNext())
+        {
+            iT.next();
+            (this->*paint_devices[iT.key()])(iT.value());
+        }
     }
 }
 

@@ -7,6 +7,10 @@ Cable::Cable(int x, int y)
     main_color[0] = 0.0;
     main_color[1] = 0.0;
     main_color[2] = 0.0;
+
+    QVector<QVariant> item;
+    item.push_back(*(new QVariant(QPointF(x, y))));
+    data.insert("GL_LINES", item);
 }
 
 void Cable::print(double Scale)
@@ -31,6 +35,7 @@ void Cable::update(IObservable *parent, double X, double Y)
 void Cable::insert_back(double x, double y)
 {
     points.push_back(pair<double, double>(x, y));
+    data["GL_LINES"].push_back(*(new QVariant(QPointF(x, y))));
 }
 
 void Cable::RemoveLoops(QPoint pos, double scale)
@@ -42,7 +47,7 @@ void Cable::RemoveLoops(QPoint pos, double scale)
         if (distance < scale)
         {
             points.erase(points.begin() + i + 1, points.end());
-
+            BuilData();
             return;
         }
     }
@@ -128,6 +133,18 @@ bool Cable::IsMarked()
     if (main_color[0] != 0.0 || main_color[1] != 0.0 || main_color[2] != 0.0)
         return true;
     return false;
+}
+
+void Cable::BuilData()
+{
+    data.clear();
+    QVector<QVariant> item;
+    for (int i = 0; i < points.size() - 1; i++)
+    {
+        item.push_back(*(new QVariant(QPointF(points[i].first, points[i].second))));
+        item.push_back(*(new QVariant(QPointF(points[i + 1].first, points[i + 1].second))));
+    }
+    data.insert("GL_LINES", item);
 }
 
 void Cable::SetPoint(int i, double X, double Y)
