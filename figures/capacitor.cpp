@@ -23,6 +23,9 @@ Capacitor::Capacitor(int X, int Y, int R, QString N, QString V, int T) : FigureI
     text.push_back(*(new QVariant(QPointF(0, -1.6))));
     text.push_back(*(new QVariant(name)));
     data.insert("TEXT", text);
+
+    clamp.insert(0, [] (double x, double y) { return QPointF(x + 4, y); });
+    clamp.insert(1, [] (double x, double y) { return QPointF(x - 4, y); });
 }
 
 void Capacitor::print(double Scale, PaintBoard *Parent)

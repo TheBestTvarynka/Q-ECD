@@ -9,6 +9,7 @@
 #include "figures/iobservable.h"
 
 using std::pair;
+using std::function;
 
 typedef pair<double, double> (*GetClampCoordinates)(double, double);
 
@@ -29,6 +30,7 @@ protected:
     int type;
 
     QMap<QString, QVector<QVariant> > data;
+    QMap<int, function<QPointF (double, double)> > clamp;
 public:
     FigureInterface() : x(10.0), y(10.0), rotation(0), name("R1") {}
     FigureInterface(int X, int Y, int R, QString n, QString v, int t);
