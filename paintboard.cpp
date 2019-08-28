@@ -214,11 +214,11 @@ void PaintBoard::CreateCustomFigure(int type, int x, int y, int rotation, QStrin
     emit AddToTree(new_figure);
 }
 
-void PaintBoard::SetSelectedFigure(FigureInterface *f)
-{
-    figures.SetSelectedFigure(f);
-    emit LoadFigurePropereties(f->GetName(), f->GetValue());
-}
+//void PaintBoard::SetSelectedFigure(FigureInterface *f)
+//{
+//    figures.SetSelectedFigure(f);
+//    emit LoadFigurePropereties(f->GetName(), f->GetValue());
+//}
 
 void PaintBoard::CreateFigure(int f)
 {
@@ -227,52 +227,52 @@ void PaintBoard::CreateFigure(int f)
     emit AddToTree(new_figure);
 }
 
-void PaintBoard::RemoveSelectedFigure()
-{
-    QList<IObserver *> cabs = figures.erase(figures.GetSelectedFigure());
-    cables.RemoveCables(cabs);
-    emit ClearPropereties();
-}
+//void PaintBoard::RemoveSelectedFigure()
+//{
+//    QList<IObserver *> cabs = figures.erase(figures.GetSelectedFigure());
+//    cables.RemoveCables(cabs);
+//    emit ClearPropereties();
+//}
 
-void PaintBoard::RemoveSelectedCables()
-{
-    cables.RemoveCables(cables.GetSelectedCables());
-    cables.ClearSelected();
-}
+//void PaintBoard::RemoveSelectedCables()
+//{
+//    cables.RemoveCables(cables.GetSelectedCables());
+//    cables.ClearSelected();
+//}
 
-void PaintBoard::SetNameSelectedFigure(const QString &name)
-{
-    FigureInterface *selected = figures.GetSelectedFigure();
-    if (selected == nullptr)
-        return;
-    selected->SetName(name);
-}
+//void PaintBoard::SetNameSelectedFigure(const QString &name)
+//{
+//    FigureInterface *selected = figures.GetSelectedFigure();
+//    if (selected == nullptr)
+//        return;
+//    selected->SetName(name);
+//}
 
-void PaintBoard::SetValueSelectedFigure(const QString &value)
-{
-    FigureInterface *selected = figures.GetSelectedFigure();
-    if (selected == nullptr)
-        return;
-    selected->SetValue(value);
-}
+//void PaintBoard::SetValueSelectedFigure(const QString &value)
+//{
+//    FigureInterface *selected = figures.GetSelectedFigure();
+//    if (selected == nullptr)
+//        return;
+//    selected->SetValue(value);
+//}
 
-void PaintBoard::RotateSelectedFigureRight()
-{
-    FigureInterface *selected = figures.GetSelectedFigure();
-    if (selected == nullptr)
-        return;
-    selected->Rotate(90);
-    selected->Notify();
-}
+//void PaintBoard::RotateSelectedFigureRight()
+//{
+//    FigureInterface *selected = figures.GetSelectedFigure();
+//    if (selected == nullptr)
+//        return;
+//    selected->Rotate(90);
+//    selected->Notify();
+//}
 
-void PaintBoard::RotateSelectedFigureLeft()
-{
-    FigureInterface *selected = figures.GetSelectedFigure();
-    if (selected == nullptr)
-        return;
-    selected->Rotate(-90);
-    selected->Notify();
-}
+//void PaintBoard::RotateSelectedFigureLeft()
+//{
+//    FigureInterface *selected = figures.GetSelectedFigure();
+//    if (selected == nullptr)
+//        return;
+//    selected->Rotate(-90);
+//    selected->Notify();
+//}
 
 void PaintBoard::CopySelectedFigure()
 {

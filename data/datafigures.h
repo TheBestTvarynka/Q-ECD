@@ -2,16 +2,20 @@
 #define DATAFIGURES_H
 
 #include <QVector>
+#include <QList>
 #include <math.h>
 #include "cables/iobserver.h"
 #include "figures/figureinterface.h"
+//#include "figures/figurecreator.h"
 #include "figures/resistor.h"
 #include "figures/capacitor.h"
 
 class PaintBoard;
 
-class DataFigures
+class DataFigures : public QObject
 {
+    Q_OBJECT
+
     QVector<FigureInterface *> figures;
     FigureInterface *selected_figure;
     int selected_clamp;
@@ -28,7 +32,17 @@ public:
     QVector<FigureInterface *> GetFigures() { return figures; }
     pair<QPoint, double> SelectClamp(QPoint, double, FigureInterface *&, int &);
     int size() { return figures.size(); }
+public slots:
     void SetSelectedFigure(FigureInterface *);
+    void RemoveSelectedFigure();
+    void SetNameSelectedFigure(const QString &);
+    void SetValueSelectedFigure(const QString &);
+    void RotateSelectedFigureRight();
+    void RotateSelectedFigureLeft();
+signals:
+    void LoadFigurePropereties(QString, QString);
+    void ClearPropereties();
+    void RemoveCables(QList<IObserver *>);
 };
 
 #endif // DATAFIGURES_H

@@ -68,14 +68,17 @@ public:
     void SetMode(ModeInterface *);
     void CreateCustomFigure(int, int, int, int, QString, QString);
 public slots:
-    void SetSelectedFigure(FigureInterface *);
+//    void SetSelectedFigure(FigureInterface *);
     void CreateFigure(int);
-    void RemoveSelectedFigure();
-    void RemoveSelectedCables();
-    void SetNameSelectedFigure(const QString &);
-    void SetValueSelectedFigure(const QString &);
-    void RotateSelectedFigureRight();
-    void RotateSelectedFigureLeft();
+//    void RemoveSelectedFigure();
+
+//    void RemoveSelectedCables();
+
+//    void SetNameSelectedFigure(const QString &);
+//    void SetValueSelectedFigure(const QString &);
+//    void RotateSelectedFigureRight();
+//    void RotateSelectedFigureLeft();
+
     void CopySelectedFigure();
     void PasteFromBuffer();
     void SetRemoveCableMode();

@@ -44,6 +44,12 @@ void DataCables::RemoveCables(QList<Cable *>c)
     }
 }
 
+void DataCables::RemoveSelectedCables()
+{
+    RemoveCables(selected);
+    ClearSelected();
+}
+
 void DataCables::print(double Scale)
 {
     for(int i = 0; i < cables.size(); i++)

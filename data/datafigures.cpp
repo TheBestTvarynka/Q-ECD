@@ -105,7 +105,53 @@ void DataFigures::SetSelectedFigure(FigureInterface *f)
         selected_figure->SetMainColor(new double[3]{0.0, 1.0, 0.0});
     selected_figure = f;
     selected_figure->SetMainColor(new double[3]{1.0, 0.0, 0.0});
+    emit LoadFigurePropereties(f->GetName(), f->GetValue());
 }
+
+void DataFigures::RemoveSelectedFigure()
+{
+    QList<IObserver *> cabs = erase(selected_figure);
+//    cables.RemoveCables(cabs);
+    emit RemoveCables(cabs);
+    emit ClearPropereties();
+}
+
+void DataFigures::SetNameSelectedFigure(const QString &name)
+{
+    if (selected_figure == nullptr)
+        return;
+    selected_figure->SetName(name);
+}
+
+void DataFigures::SetValueSelectedFigure(const QString &value)
+{
+    if (selected_figure == nullptr)
+        return;
+    selected_figure->SetValue(value);
+}
+
+void DataFigures::RotateSelectedFigureRight()
+{
+    if (selected_figure == nullptr)
+        return;
+    selected_figure->Rotate(90);
+    selected_figure->Notify();
+}
+
+void DataFigures::RotateSelectedFigureLeft()
+{
+    if (selected_figure == nullptr)
+        return;
+    selected_figure->Rotate(-90);
+    selected_figure->Notify();
+}
+
+//void DataFigures::CreateFigure(int f)
+//{
+//    FigureInterface *new_figure = creator.GetNewFigure(f, int((width() / 2 - mode->GetCenter().x()) / Scale), int((height() / 2 - mode->GetCenter().y()) / Scale), 0, "F" + QString::number(figures.size()), "vl");
+//    this->add(new_figure);
+//    emit AddToTree(new_figure);
+//}
 
 pair<QPoint, double> DataFigures::SelectClamp(QPoint mouse_pos, double Scale, FigureInterface *(&select), int &s_clamp)
 {

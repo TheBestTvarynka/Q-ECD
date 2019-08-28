@@ -2,20 +2,21 @@
 #define DATACABLES_H
 
 #include <QVector>
+#include <QList>
 
 #include "cables/iobserver.h"
 #include "cables/cable.h"
 
-class DataCables
+class DataCables : public QObject
 {
+    Q_OBJECT
+
     QVector<Cable *> cables;
     QList<Cable *> selected;
 public:
     DataCables();
     void AddCable(Cable *);
     bool RemoveCable(Cable *);
-    void RemoveCables(QList<IObserver *>);
-    void RemoveCables(QList<Cable *>);
     void print(double);
     void SetCablesColor(QList<Cable *>, double [3]);
     void InsertVertex(Cable *, double, double);
@@ -32,6 +33,10 @@ public:
     QVector<Cable *> GetCables() { return cables; }
     void SetPoint(pair<double, double> &, pair<double, double>);
     void SetSelected(QList<Cable *> s) { selected = s; }
+public slots:
+    void RemoveCables(QList<IObserver *>);
+    void RemoveCables(QList<Cable *>);
+    void RemoveSelectedCables();
 };
 
 #endif // DATACABLES_H
