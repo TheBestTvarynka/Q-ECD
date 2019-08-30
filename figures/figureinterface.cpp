@@ -20,27 +20,31 @@ FigureInterface::FigureInterface(const FigureInterface *origin)
     *this = *origin;
 }
 
-pair<int, double> FigureInterface::SelectClamp(QPoint mouse_pos, double Scale, QMap<int, GetClampCoordinates> clamp_c)
+pair<int, double> FigureInterface::SelectClamp(QPoint mouse_pos, double Scale)
 {
-    if (clamp_c.size() == 0)
+    if (clamp.size() == 0)
     {
         return pair<int, double>(-1, -1.0);
     }
-    pair<double, double> clamp = (*clamp_c[0])(int(x), int(y));
-    int best_clamp = 0;
-    double min_distance = sqrt(pow((clamp.first) * Scale - mouse_pos.x(), 2) + pow((clamp.second) * Scale - mouse_pos.y(), 2));
-    double distance = min_distance;
-    for(int i = 1; i < clamp_c.size(); i++)
+    int best_clamp = -1;
+    QPointF cur_clamp;
+    double dis, min_dis = Scale * 3;
+    auto determine_dis = [=] () {
+        return sqrt( pow(cur_clamp.x() - mouse_pos.x(), 2) + pow(cur_clamp.y() - mouse_pos.y(), 2) );
+    };
+    QMapIterator<int, function<QPointF (double, double)> > it(clamp);
+    while (it.hasNext())
     {
-        clamp = (*clamp_c[i])(int(x), int(y));
-        distance = sqrt(pow((clamp.first) * Scale - mouse_pos.x(), 2) + pow((clamp.second) * Scale - mouse_pos.y(), 2));
-        if (distance < min_distance)
+        it.next();
+        cur_clamp = it.value()(x, y);
+        dis = determine_dis();
+        if (dis < min_dis)
         {
-            min_distance = distance;
-            best_clamp = i;
+            min_dis = dis;
+            best_clamp = it.key();
         }
     }
-    return pair<int, double>(best_clamp, min_distance);
+    return min_dis < Scale * 3 ? pair<int, double>(best_clamp, min_dis) : pair<int, double>(-1, -1.0);
 }
 
 void FigureInterface::SetMainColor(double color[3])

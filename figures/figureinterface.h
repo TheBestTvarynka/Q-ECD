@@ -38,7 +38,7 @@ public:
 
     virtual void print(double, PaintBoard *) = 0;
     void Notify();
-    pair<int, double> SelectClamp(QPoint, double, QMap<int, GetClampCoordinates>);
+    pair<int, double> SelectClamp(QPoint, double);
     void MoveFigure(double, double);
     double GetX() { return x; }
     double GetY() { return y; }
