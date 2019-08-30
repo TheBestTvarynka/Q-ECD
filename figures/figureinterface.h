@@ -48,7 +48,8 @@ public:
     QString GetValue() { return value; }
     int GetType() { return type; }
     QMap<int, GetClampCoordinates> GetClams() { return clamp_coordiantes; }
-    pair<double, double> GetClamp(int clamp) { return RotatePoint((*clamp_coordiantes[clamp])(x, y), rotation); }
+    pair<double, double> GetClampp(int clamp) { return RotatePoint((*clamp_coordiantes[clamp])(x, y), rotation); } // bad code
+    QPointF GetClamp(int c) { return RotatePoint(clamp[c](x, y), rotation); }
     QMap<QString, QVector<QVariant> > GetData() { return data; }
     void SetMainColor(double [3]);
     void SetPosition(double, double);
@@ -58,6 +59,7 @@ public:
     void Rotate(double);
     void DeleteTreeItem();
     pair<double, double> RotatePoint(pair<double, double>, double);
+    QPointF RotatePoint(QPointF, double);
 };
 
 #endif // FIGUREINTERFACE_H

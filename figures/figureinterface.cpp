@@ -24,13 +24,14 @@ pair<int, double> FigureInterface::SelectClamp(QPoint mouse_pos, double Scale)
 {
     if (clamp.size() == 0)
     {
+        qDebug() << "wfffwfooosssh";
         return pair<int, double>(-1, -1.0);
     }
     int best_clamp = -1;
     QPointF cur_clamp;
     double dis, min_dis = Scale * 3;
-    auto determine_dis = [=] () {
-        return sqrt( pow(cur_clamp.x() - mouse_pos.x(), 2) + pow(cur_clamp.y() - mouse_pos.y(), 2) );
+    auto determine_dis = [&] () {
+        return sqrt( pow(cur_clamp.x() * Scale - mouse_pos.x(), 2) + pow(cur_clamp.y() * Scale - mouse_pos.y(), 2) );
     };
     QMapIterator<int, function<QPointF (double, double)> > it(clamp);
     while (it.hasNext())
@@ -86,7 +87,15 @@ void FigureInterface::DeleteTreeItem()
 pair<double, double> FigureInterface::RotatePoint(pair<double, double> point, double angel)
 {
     angel *= M_PI / 180;
-    return pair<double, double>(cos(angel) * (point.first - x) - sin(angel) * (point.second - y) + x, sin(angel) * (point.first - x) + cos(angel) * (point.second - y) + y);
+    return pair<double, double>(cos(angel) * (point.first - x) - sin(angel) * (point.second - y) + x,
+                                sin(angel) * (point.first - x) + cos(angel) * (point.second - y) + y);
+}
+
+QPointF FigureInterface::RotatePoint(QPointF point, double angel)
+{
+    angel *= M_PI / 180;
+    return QPointF(cos(angel) * (point.x() - x) - sin(angel) * (point.y() - y) + x,
+                   sin(angel) * (point.x() - x) + cos(angel) * (point.y() - y) + y);
 }
 
 void FigureInterface::MoveFigure(double dX, double dY)
@@ -103,7 +112,7 @@ void FigureInterface::Notify()
     while (it.hasNext())
     {
         it.next();
-        clamp = this->GetClamp(it.value());
+        clamp = this->GetClampp(it.value());
         it.key()->update(this, clamp.first, clamp.second);
     }
 }

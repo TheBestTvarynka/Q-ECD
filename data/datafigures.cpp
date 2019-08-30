@@ -4,8 +4,6 @@
 
 DataFigures::DataFigures()
 {
-//    FigureInterface *tmp = new capacitor;
-//    figures.push_back(tmp);
     selected_figure = nullptr;
     selected_clamp = -1;
 }
@@ -146,32 +144,24 @@ void DataFigures::RotateSelectedFigureLeft()
     selected_figure->Notify();
 }
 
-//void DataFigures::CreateFigure(int f)
-//{
-//    FigureInterface *new_figure = creator.GetNewFigure(f, int((width() / 2 - mode->GetCenter().x()) / Scale), int((height() / 2 - mode->GetCenter().y()) / Scale), 0, "F" + QString::number(figures.size()), "vl");
-//    this->add(new_figure);
-//    emit AddToTree(new_figure);
-//}
-
-pair<QPoint, double> DataFigures::SelectClamp(QPoint mouse_pos, double Scale, FigureInterface *(&select), int &s_clamp)
+pair<FigureInterface *, int> DataFigures::SelectClamp(QPoint mouse_pos, double Scale)
 {
     if (figures.size() == 0)
     {
-        return pair<QPoint, double>(QPoint(0, 0), -1);
+        return pair<FigureInterface *, int>(nullptr, -1.0);
     }
-    pair<int, double> clamp, best_clamp = figures[0]->SelectClamp(mouse_pos, Scale, figures[0]->GetClams());
-    select = figures[0];
-    for (int i = 1; i < figures.size(); i++)
+    pair<FigureInterface *, int> result(nullptr, -1.0);
+    pair<int, double> cur;
+    double min_dis = Scale * 3;
+    for (int i = 0; i < figures.size(); i++)
     {
-        clamp = figures[i]->SelectClamp(mouse_pos, Scale, figures[i]->GetClams());
-        if (clamp.second < best_clamp.second && !qFuzzyCompare(clamp.first, -1.0))
+        cur = figures[i]->SelectClamp(mouse_pos, Scale);
+        if (cur.first != -1 && cur.second < min_dis)
         {
-            select = figures[i];
-            best_clamp = clamp;
+            min_dis = cur.second;
+            result.first = figures[i];
+            result.second = cur.first;
         }
     }
-    s_clamp = best_clamp.first;
-    qDebug() << "initialaizing";
-    pair<double, double> res_clamp = select->GetClamp(best_clamp.first);
-    return pair<QPoint, double>(QPoint(int(res_clamp.first), int(res_clamp.second)), best_clamp.second);
+    return result;
 }

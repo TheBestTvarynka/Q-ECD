@@ -30,7 +30,7 @@ public:
     void Register(FigureInterface *, int, IObserver *, int);
     FigureInterface *GetSelectedFigure();
     QVector<FigureInterface *> GetFigures() { return figures; }
-    pair<QPoint, double> SelectClamp(QPoint, double, FigureInterface *&, int &);
+    pair<FigureInterface *, int> SelectClamp(QPoint, double);
     int size() { return figures.size(); }
 public slots:
     void SetSelectedFigure(FigureInterface *);
