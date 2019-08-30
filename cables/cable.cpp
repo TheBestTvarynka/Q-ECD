@@ -177,6 +177,7 @@ void Cable::SetPoint(int i, double X, double Y)
             points[i - 1].first = points[i].first;
         }
     }
+    BuilData();
 }
 
 void Cable::SetMainColor(double color[3])
