@@ -27,11 +27,9 @@ public:
     bool CheckState(int, int);
     bool IsMarked();
     void BuilData();
-//    pair<double, double> *GetLastPoint() { return &points.back(); }
     int GetSize() { return points.size(); }
     pair<double, double> GetPoint(int i) { return points[i]; }
     QMap<QString, QVector<QVariant> > GetData() { return data; }
-//    void MovePoint(int, double, double);
     void SetPoint(int, double, double);
     void SetPoint(int, QPoint);
     void SetMainColor(double [3]);

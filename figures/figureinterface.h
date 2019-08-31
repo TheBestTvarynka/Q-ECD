@@ -36,7 +36,6 @@ public:
     FigureInterface(int X, int Y, int R, QString n, QString v, int t);
     FigureInterface(const FigureInterface *);
 
-    virtual void print(double, PaintBoard *) = 0;
     void Notify();
     pair<int, double> SelectClamp(QPoint, double);
     void MoveFigure(double, double);

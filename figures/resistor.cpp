@@ -29,32 +29,3 @@ Resistor::Resistor(int X, int Y, int R, QString N, QString V, int T) : FigureInt
     clamp.insert(0, [] (double x, double y) { return QPointF(x + 4, y); });
     clamp.insert(1, [] (double x, double y) { return QPointF(x - 4, y); });
 }
-
-void Resistor::print(double Scale, PaintBoard *Parent)
-{
-    glLineWidth(float(Scale / 5));
-    glColor3d(main_color[0], main_color[1], main_color[2]);
-
-    glPushMatrix();
-    glTranslated(x * Scale, y * Scale, 0.0);
-    glRotatef(rotation, 0.0, 0.0, 1.0);
-
-    glBegin(GL_LINE_LOOP);
-    glVertex2d((-2) * Scale, Scale);
-    glVertex2d((2) * Scale, Scale);
-    glVertex2d((2) * Scale, (-1) * Scale);
-    glVertex2d((-2) * Scale, (-1) * Scale);
-    glEnd();
-    glBegin(GL_LINES);
-    glVertex2d((-2) * Scale, 0);
-    glVertex2d((-4) * Scale, 0);
-    glEnd();
-    glBegin(GL_LINES);
-    glVertex2d((2) * Scale, 0);
-    glVertex2d((4) * Scale, 0);
-    glEnd();
-
-    glPopMatrix();
-
-//    Parent->RenderText(RotatePoint(pair<double, double>(x + nameX, y + nameY), rotation), rotation, name);
-}

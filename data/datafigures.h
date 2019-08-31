@@ -21,7 +21,6 @@ class DataFigures : public QObject
     int selected_clamp;
 public:
     DataFigures();
-    void print(double, PaintBoard *);
     void add(FigureInterface *);
     QList<IObserver *> erase(FigureInterface *);
     void select_figure(QPoint, double);

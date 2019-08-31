@@ -8,13 +8,6 @@ DataFigures::DataFigures()
     selected_clamp = -1;
 }
 
-void DataFigures::print(double Scale, PaintBoard *Parent)
-{
-    for (int i = 0; i < figures.size(); i++) {
-        figures[i]->print(Scale, Parent);
-    }
-}
-
 void DataFigures::add(FigureInterface *new_Figure)
 {
     figures.push_back(new_Figure);

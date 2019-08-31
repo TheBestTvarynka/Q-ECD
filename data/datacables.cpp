@@ -50,12 +50,6 @@ void DataCables::RemoveSelectedCables()
     ClearSelected();
 }
 
-void DataCables::print(double Scale)
-{
-    for(int i = 0; i < cables.size(); i++)
-        cables[i]->print(Scale);
-}
-
 void DataCables::SetCablesColor(QList<Cable *>c, double color[3])
 {
     foreach (Cable *i, c)
@@ -108,13 +102,4 @@ QList<Cable *> DataCables::GetForDeleting(QPoint brush, double scale)
             removing.append(i);
     }
     return removing;
-}
-
-bool DataCables::GetDirectionEnd(Cable *cable)
-{
-    int last_point = cable->GetSize() - 1;
-    if (qFuzzyCompare(cable->GetPoint(last_point).first, cable->GetPoint(last_point - 1).first))
-        return false;
-    else
-        return true;
 }

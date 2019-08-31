@@ -17,7 +17,6 @@ public:
     double scale;
 
     explicit ModeInterface(double, PaintBoard *, int, int);
-    virtual void paintGL(QPoint &) = 0;
     virtual void mousePressEvent(QMouseEvent *) = 0;
     virtual void mouseMoveEvent(QMouseEvent *) = 0;
     virtual void mouseReleaseEvent(QMouseEvent *) = 0;
