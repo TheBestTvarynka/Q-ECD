@@ -128,6 +128,13 @@ bool Cable::CheckState(pair<double, double> a, pair<double, double> b)
     return false;
 }
 
+bool Cable::CheckState(int i, int j)
+{
+    if (qFuzzyCompare(points[i].second, points[j].second))
+        return  true;
+    return false;
+}
+
 bool Cable::IsMarked()
 {
     if (main_color[0] != 0.0 || main_color[1] != 0.0 || main_color[2] != 0.0)
@@ -149,8 +156,6 @@ void Cable::BuilData()
 
 void Cable::SetPoint(int i, double X, double Y)
 {
-//    qDebug() << i << points.size();
-//    qDebug() << points;
     if (i == 0)
     {
         if (qFuzzyCompare(points[i].second, points[i + 1].second))
@@ -174,6 +179,37 @@ void Cable::SetPoint(int i, double X, double Y)
         else
         {
             points[i] = pair<double, double>(X, Y);
+            points[i - 1].first = points[i].first;
+        }
+    }
+    BuilData();
+}
+
+void Cable::SetPoint(int i, QPoint p)
+{
+    if (i == 0)
+    {
+        if (qFuzzyCompare(points[i].second, points[i + 1].second))
+        {
+            points[i] = pair<double, double>(p.x(), p.y());
+            points[i + 1].second = points[i].second;
+        }
+        else
+        {
+            points[i] = pair<double, double>(p.x(), p.y());
+            points[i + 1].first = points[i].first;
+        }
+    }
+    else if (i == points.size() - 1)
+    {
+        if (qFuzzyCompare(points[i].second, points[i - 1].second))
+        {
+            points[i] = pair<double, double>(p.x(), p.y());
+            points[i - 1].second = points[i].second;
+        }
+        else
+        {
+            points[i] = pair<double, double>(p.x(), p.y());
             points[i - 1].first = points[i].first;
         }
     }

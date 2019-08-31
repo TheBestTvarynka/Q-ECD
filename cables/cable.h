@@ -24,14 +24,16 @@ public:
     bool CheckIntersection(pair<QPoint, QPoint>, double);
     bool CheckIntersection(QPoint, double);
     bool CheckState(pair<double, double>, pair<double, double>);
+    bool CheckState(int, int);
     bool IsMarked();
     void BuilData();
-    pair<double, double> *GetLastPoint() { return &points.back(); }
+//    pair<double, double> *GetLastPoint() { return &points.back(); }
     int GetSize() { return points.size(); }
     pair<double, double> GetPoint(int i) { return points[i]; }
     QMap<QString, QVector<QVariant> > GetData() { return data; }
 //    void MovePoint(int, double, double);
-    void SetPoint(int i, double X, double Y);
+    void SetPoint(int, double, double);
+    void SetPoint(int, QPoint);
     void SetMainColor(double [3]);
 };
 
