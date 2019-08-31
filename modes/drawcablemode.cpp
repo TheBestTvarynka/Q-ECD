@@ -123,33 +123,40 @@ void DrawCableMode::mouseReleaseEvent(QMouseEvent *ap)
     }
     click = Qt::MouseButton::NoButton;
 
-//    FigureInterface *select;
-//    int num_clamp = -1;
-//    QPointF clamp;
-//    pair<FigureInterface *, int> finish = Parent->GetDataFigures()->SelectClamp(ap->pos() - Center, scale);
-//    select = finish.first;
-//    num_clamp = finish.second;
-//    clamp = select->GetClamp(finish.second);
-//    pair<double, double> *point = Parent->GetDataCables()->GetLastPoint(Parent->GetDataCables()->GetLast());
-//    if (select != nullptr)
-//    {
-//        if (Parent->GetDataCables()->GetDirectionEnd(Parent->GetDataCables()->GetLast()))
-//        {
-//            point->first = clamp.x();
-//            if (!qFuzzyCompare(clamp.y(), point->second))
-//                Parent->GetDataCables()->GetLast()->insert_back(clamp.x(), clamp.y());
-//        }
-//        else
-//        {
-//            point->second = clamp.y();
-//            if (!qFuzzyCompare(clamp.x(), point->first))
-//                Parent->GetDataCables()->GetLast()->insert_back(clamp.x(), clamp.y());
-//        }
-//        Parent->GetDataFigures()->Register(select, num_clamp, Parent->GetDataCables()->GetLast(), Parent->GetDataCables()->GetLast()->GetSize() - 1);
-//        Parent->GetDataCables()->GetLast()->BuilData();
-//    }
-//    else
-//    {
-//        Parent->GetDataCables()->RemoveCable(Parent->GetDataCables()->GetLast());
-//    }
+    FigureInterface *select = nullptr;      // selected figure
+    int num_clamp = -1;                     // number of selecting clamp (need for register)
+    QPointF clamp;                          // coordinates of selected clamp
+    pair<FigureInterface *, int> finish = Parent->GetDataFigures()->SelectClamp(ap->pos() - Center, scale);
+    Cable *cable = Parent->GetDataCables()->GetLast();  // current cable
+    int points = cable->GetSize();
+    pair<double, double> point = cable->GetPoint(points - 1);
+
+    select = finish.first;
+    num_clamp = finish.second;
+    if (select != nullptr)
+    {
+        clamp = select->GetClamp(finish.second);
+        if (cable->CheckState(points - 1, points - 2))
+        {
+            point.first = clamp.x();
+            cable->SetPoint(points - 1, point.first, point.second);
+            if (!qFuzzyCompare(clamp.y(), point.second))
+            {
+                cable->insert_back(clamp.x(), clamp.y());
+            }
+        }
+        else
+        {
+            point.second = clamp.y();
+            cable->SetPoint(points - 1, point.first, point.second);
+            if (!qFuzzyCompare(clamp.x(), point.first))
+                cable->insert_back(clamp.x(), clamp.y());
+        }
+        Parent->GetDataFigures()->Register(select, num_clamp, Parent->GetDataCables()->GetLast(), Parent->GetDataCables()->GetLast()->GetSize() - 1);
+        cable->BuilData();
+    }
+    else
+    {
+        Parent->GetDataCables()->RemoveCable(cable);
+    }
 }
