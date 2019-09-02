@@ -2,9 +2,8 @@
 #include "paintboard.h"
 #include <QFont>
 
-RemoveCableMode::RemoveCableMode(PaintBoard *p, double s, QPoint c, int w, int h) : ModeInterface (s, p, w, h)
+RemoveCableMode::RemoveCableMode(PaintBoard *parent, double scale) : ModeInterface (parent, scale)
 {
-    Center = c;
     click = Qt::MouseButton::NoButton;
     line.first = QPoint(0, 0);
     line.second = line.first;
@@ -23,18 +22,18 @@ void RemoveCableMode::mousePressEvent(QMouseEvent *ap)
 
 void RemoveCableMode::mouseMoveEvent(QMouseEvent *ap)
 {
-    brush = ap->pos() - Center;
+    brush = ap->pos() - Parent->GetCenter();
     QList<Cable *> new_selected = Parent->GetDataCables()->GetForDeleting(brush, scale);
     if (!shiftPressed)
     {
-        Parent->GetDataCables()->SetCablesColor(new_selected, new double[3]{0.8, 0.9, 0.9});
+        Parent->GetDataCables()->SetCablesColor(new_selected, QColor(180, 220, 200));
 //        selected_cables += new_selected;
         Parent->GetDataCables()->AddToSelected(new_selected);
     }
     else
     {
         qDebug() << "remove" << new_selected.size();
-        Parent->GetDataCables()->SetCablesColor(new_selected, new double[3]{0.0, 0.0, 0.0});
+        Parent->GetDataCables()->SetCablesColor(new_selected, QColor(0, 0, 0));
         Parent->GetDataCables()->RemoveFromSelected(new_selected);
     }
 }

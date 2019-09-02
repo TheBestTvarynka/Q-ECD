@@ -17,7 +17,7 @@ PaintBoard::PaintBoard(QWidget *parent, ModeInterface *start_state): QGLWidget(p
     mpTimer.start(10);
 
     if (start_state == nullptr)
-        mode = new ObjectMode(this, Scale, QPoint(0, 0), width(), height());
+        mode = new ObjectMode(this, Scale);
 }
 
 void PaintBoard::initializeGL()
@@ -87,7 +87,7 @@ void PaintBoard::paintGL()
         while (iT.hasNext())
         {
             iT.next();
-            (this->*paint_devices[iT.key()])(iT.value());
+            (this->*paint_devices[iT.key()])(iT.value(), QColor(i->GetColor()));
         }
 
         glPopMatrix();
@@ -101,7 +101,7 @@ void PaintBoard::paintGL()
         while (iT.hasNext())
         {
             iT.next();
-            (this->*paint_devices[iT.key()])(iT.value());
+            (this->*paint_devices[iT.key()])(iT.value(), i->GetColor());
         }
     }
 }
@@ -148,10 +148,39 @@ void PaintBoard::mouseReleaseEvent(QMouseEvent *ap)
 
 void PaintBoard::wheelEvent(QWheelEvent *event)
 {
+    QPoint new_Center;
+    QPoint mouse = event->pos();
+    double new_Scale = 10.0;
+
+    int n = int((mouse.x() - Center.x()) / Scale);
+    double k = mouse.x() - Center.x() - n * Scale;
     if (event->angleDelta().y() > 0)
-        mode->ScaleEvent(true, event->pos(), Scale);
+    {
+        k *= 1.1;
+        new_Scale = Scale * 1.1;
+    }
     else
-        mode->ScaleEvent(false, event->pos(), Scale);
+    {
+        k *= 0.9;
+        new_Scale = Scale * 0.9;
+    }
+    new_Center.setX( int(mouse.x() - new_Scale * n - k) );
+
+    n = int((mouse.y() - Center.y()) / Scale);
+    k = mouse.y() - Center.y() - n * Scale;
+    if (event->angleDelta().y() > 0)
+    {
+        k *= 1.1;
+    }
+    else
+    {
+        k *= 0.9;
+    }
+    new_Center.setY( int(mouse.y() - new_Scale * n - k) );
+
+    Scale = new_Scale;
+    Center = new_Center;
+    resizeGL(width(), height());
 }
 
 void PaintBoard::keyPressEvent(QKeyEvent *event)
@@ -164,12 +193,12 @@ void PaintBoard::keyReleaseEvent(QKeyEvent *event)
     mode->keyReleaseEvent(event);
 }
 
-void PaintBoard::LINES(QVector<QVariant> lines)
+void PaintBoard::LINES(QVector<QVariant> lines, QColor color)
 {
-//    qDebug() << "LINES";
     QPointF point;
     glLineWidth(float(Scale / 5));
     glBegin(GL_LINES);
+    glColor3ub(color.red(), color.green(), color.blue());
     foreach (QVariant i, lines)
     {
         point = i.toPointF();
@@ -178,12 +207,12 @@ void PaintBoard::LINES(QVector<QVariant> lines)
     glEnd();
 }
 
-void PaintBoard::LINE_LOOP(QVector<QVariant> lines)
+void PaintBoard::LINE_LOOP(QVector<QVariant> lines, QColor color)
 {
-//    qDebug() << "LINE_LOOP";
     QPointF point;
     glLineWidth(float(Scale / 5));
     glBegin(GL_LINE_LOOP);
+    glColor3ub(color.red(), color.green(), color.blue());
     foreach (QVariant i, lines)
     {
         point = i.toPointF();
@@ -192,12 +221,13 @@ void PaintBoard::LINE_LOOP(QVector<QVariant> lines)
     glEnd();
 }
 
-void PaintBoard::TEXT(QVector<QVariant> text)
+void PaintBoard::TEXT(QVector<QVariant> text, QColor color)
 {
     if (text.size() != 3)
         return;
     QPointF f_pos = text[0].toPointF();
     QPointF pos = text[1].toPointF();
+    glColor3ub(color.red(), color.green(), color.blue());
     renderText(Center.x() + int(pos.x() * Scale + f_pos.x() * Scale), Center.y() + int(pos.y() * Scale + f_pos.y() * Scale), text[2].toString(), QFont("Arial", int(Scale * 0.67), 5, false));
 }
 
@@ -214,65 +244,12 @@ void PaintBoard::CreateCustomFigure(int type, int x, int y, int rotation, QStrin
     emit AddToTree(new_figure);
 }
 
-//void PaintBoard::SetSelectedFigure(FigureInterface *f)
-//{
-//    figures.SetSelectedFigure(f);
-//    emit LoadFigurePropereties(f->GetName(), f->GetValue());
-//}
-
 void PaintBoard::CreateFigure(int f)
 {
-    FigureInterface *new_figure = creator.GetNewFigure(f, int((width() / 2 - mode->GetCenter().x()) / Scale), int((height() / 2 - mode->GetCenter().y()) / Scale), 0, "F" + QString::number(figures.size()), "vl");
+    FigureInterface *new_figure = creator.GetNewFigure(f, int((width() / 2 - Center.x()) / Scale), int((height() / 2 - Center.y()) / Scale), 0, "F" + QString::number(figures.size()), "vl");
     figures.add(new_figure);
     emit AddToTree(new_figure);
 }
-
-//void PaintBoard::RemoveSelectedFigure()
-//{
-//    QList<IObserver *> cabs = figures.erase(figures.GetSelectedFigure());
-//    cables.RemoveCables(cabs);
-//    emit ClearPropereties();
-//}
-
-//void PaintBoard::RemoveSelectedCables()
-//{
-//    cables.RemoveCables(cables.GetSelectedCables());
-//    cables.ClearSelected();
-//}
-
-//void PaintBoard::SetNameSelectedFigure(const QString &name)
-//{
-//    FigureInterface *selected = figures.GetSelectedFigure();
-//    if (selected == nullptr)
-//        return;
-//    selected->SetName(name);
-//}
-
-//void PaintBoard::SetValueSelectedFigure(const QString &value)
-//{
-//    FigureInterface *selected = figures.GetSelectedFigure();
-//    if (selected == nullptr)
-//        return;
-//    selected->SetValue(value);
-//}
-
-//void PaintBoard::RotateSelectedFigureRight()
-//{
-//    FigureInterface *selected = figures.GetSelectedFigure();
-//    if (selected == nullptr)
-//        return;
-//    selected->Rotate(90);
-//    selected->Notify();
-//}
-
-//void PaintBoard::RotateSelectedFigureLeft()
-//{
-//    FigureInterface *selected = figures.GetSelectedFigure();
-//    if (selected == nullptr)
-//        return;
-//    selected->Rotate(-90);
-//    selected->Notify();
-//}
 
 void PaintBoard::CopySelectedFigure()
 {
@@ -308,7 +285,7 @@ void PaintBoard::PasteFromBuffer()
 
 void PaintBoard::SetRemoveCableMode()
 {
-    ModeInterface *Mode = new RemoveCableMode(this, GetScale(), GetCenter(), width(), height());
+    ModeInterface *Mode = new RemoveCableMode(this, GetScale());
     delete mode;
     mode = Mode;
 }

@@ -22,7 +22,7 @@ void QTree::CteateFigureItem(FigureInterface *new_figure)
     emit SetCurrentFigure(new_figure);
 }
 
-void QTree::CurrentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+void QTree::CurrentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *)
 {
     qDebug() << current->text(0);
 //    ((QTreeItem*)current)->GetFigure();

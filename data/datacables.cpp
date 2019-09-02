@@ -50,7 +50,7 @@ void DataCables::RemoveSelectedCables()
     ClearSelected();
 }
 
-void DataCables::SetCablesColor(QList<Cable *>c, double color[3])
+void DataCables::SetCablesColor(QList<Cable *>c, QColor color)
 {
     foreach (Cable *i, c)
     {

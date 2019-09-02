@@ -1,16 +1,15 @@
 #include "objectmode.h"
 #include "paintboard.h"
 
-ObjectMode::ObjectMode(PaintBoard *p, double s, QPoint c, int w, int h) : ModeInterface (s, p, w, h)
+ObjectMode::ObjectMode(PaintBoard *parent, double scale) : ModeInterface (parent, scale)
 {
-    Center = c;
     click = Qt::NoButton;
 }
 
 void ObjectMode::mousePressEvent(QMouseEvent *ap)
 {
     Parent->setCursor(Qt::SizeAllCursor);
-    Parent->GetDataFigures()->select_figure(ap->pos() - Center, scale);
+    Parent->GetDataFigures()->select_figure(ap->pos() - Parent->GetCenter(), scale);
     start_position = ap->pos();
     FigureInterface *sf = Parent->GetDataFigures()->GetSelectedFigure();
     if (sf != nullptr && ap->button() == Qt::LeftButton)

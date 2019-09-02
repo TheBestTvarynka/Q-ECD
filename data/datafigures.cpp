@@ -35,7 +35,7 @@ QList<IObserver *> DataFigures::erase(FigureInterface *select)
 void DataFigures::select_figure(QPoint position, double Scale)
 {
     if (selected_figure != nullptr)
-        selected_figure->SetMainColor(new double[3]{0.0, 1.0, 0.0});
+        selected_figure->SetMainColor(QColor(0, 0, 255));
     if (figures.size() == 0)
     {
         selected_figure = nullptr;
@@ -53,7 +53,7 @@ void DataFigures::select_figure(QPoint position, double Scale)
             selected_figure = (*i);
         }
     }
-    selected_figure->SetMainColor(new double[3]{1.0, 0.0, 0.0});
+    selected_figure->SetMainColor(QColor(255, 0, 0));
 }
 
 void DataFigures::MoveSelectedFigure(FigureInterface *figure, double dX, double dY)
@@ -63,8 +63,6 @@ void DataFigures::MoveSelectedFigure(FigureInterface *figure, double dX, double 
 
 FigureInterface *DataFigures::GetSelectedFigure()
 {
-//    if (selected_figure == nullptr)
-//        return  nullptr;
     return selected_figure;
 }
 
@@ -93,16 +91,15 @@ void DataFigures::Register(FigureInterface *select, int clamp, IObserver *cable,
 void DataFigures::SetSelectedFigure(FigureInterface *f)
 {
     if (selected_figure != nullptr)
-        selected_figure->SetMainColor(new double[3]{0.0, 1.0, 0.0});
+        selected_figure->SetMainColor(QColor(0, 0, 255));
     selected_figure = f;
-    selected_figure->SetMainColor(new double[3]{1.0, 0.0, 0.0});
-    emit LoadFigurePropereties(f->GetName(), f->GetValue());
+    selected_figure->SetMainColor(QColor(255, 0, 0));
+    emit LoadFigurePropereties(selected_figure->GetName(), selected_figure->GetValue());
 }
 
 void DataFigures::RemoveSelectedFigure()
 {
     QList<IObserver *> cabs = erase(selected_figure);
-//    cables.RemoveCables(cabs);
     emit RemoveCables(cabs);
     emit ClearPropereties();
 }

@@ -17,7 +17,6 @@ public:
     DataCables();
     void AddCable(Cable *);
     bool RemoveCable(Cable *);
-    void SetCablesColor(QList<Cable *>, double [3]);
     void InsertVertex(Cable *, double, double);
     void RemoveLoop(Cable *, QPoint, double);
     void ClearSelected() { selected.clear(); }
@@ -28,7 +27,7 @@ public:
     QList<Cable *> GetForDeleting(QPoint,  double);
     QList<Cable *> GetSelectedCables() { return selected; }
     QVector<Cable *> GetCables() { return cables; }
-//    void SetPoint(pair<double, double> &, pair<double, double>);
+    void SetCablesColor(QList<Cable *>, QColor);
     void SetSelected(QList<Cable *> s) { selected = s; }
 public slots:
     void RemoveCables(QList<IObserver *>);

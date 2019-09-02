@@ -12,11 +12,9 @@ class ModeInterface
 {
 public:
     PaintBoard *Parent;
-    int Weight, Height;
-    QPoint Center;
     double scale;
 
-    explicit ModeInterface(double, PaintBoard *, int, int);
+    explicit ModeInterface(PaintBoard *, double);
     virtual void mousePressEvent(QMouseEvent *) = 0;
     virtual void mouseMoveEvent(QMouseEvent *) = 0;
     virtual void mouseReleaseEvent(QMouseEvent *) = 0;
@@ -24,9 +22,6 @@ public:
     virtual void keyReleaseEvent(QKeyEvent *);
 
     QPoint RoundCoordinates(double, double);
-    void ScaleEvent(bool, QPoint, double &);
-    QPoint GetCenter() { return Center; }
-
     virtual ~ModeInterface();
 };
 

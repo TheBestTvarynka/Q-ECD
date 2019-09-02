@@ -4,27 +4,11 @@
 Cable::Cable(int x, int y)
 {
     points.push_back(pair<double, double>(x, y));
-    main_color[0] = 0.0;
-    main_color[1] = 0.0;
-    main_color[2] = 0.0;
+    main_color.setRgb(0, 0, 0);
 
     QVector<QVariant> item;
     item.push_back(*(new QVariant(QPointF(x, y))));
     data.insert("GL_LINES", item);
-}
-
-void Cable::print(double Scale)
-{
-    glLineWidth(float(Scale / 5));
-    glColor3d(main_color[0], main_color[1], main_color[2]);
-
-    glBegin(GL_LINES);
-    for(int i = 0; i < points.size() - 1; i++)
-    {
-        glVertex2d(points[i].first * Scale, points[i].second * Scale);
-        glVertex2d(points[i + 1].first * Scale, points[i + 1].second * Scale);
-    }
-    glEnd();
 }
 
 void Cable::update(IObservable *parent, double X, double Y)
@@ -137,7 +121,7 @@ bool Cable::CheckState(int i, int j)
 
 bool Cable::IsMarked()
 {
-    if (main_color[0] != 0.0 || main_color[1] != 0.0 || main_color[2] != 0.0)
+    if (main_color != QColor(0, 0, 0))
         return true;
     return false;
 }
@@ -216,9 +200,7 @@ void Cable::SetPoint(int i, QPoint p)
     BuilData();
 }
 
-void Cable::SetMainColor(double color[3])
+void Cable::SetMainColor(QColor color)
 {
-    main_color[0] = color[0];
-    main_color[1] = color[1];
-    main_color[2] = color[2];
+    main_color = color;
 }

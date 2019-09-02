@@ -13,11 +13,10 @@ using std::pair;
 class Cable : public IObserver
 {
     QVector<pair<double, double> > points;
-    double main_color[3];
+    QColor main_color;
     QMap<QString, QVector<QVariant> > data;
 public:
     Cable(int, int);
-    void print(double);
     void update(IObservable *, double, double);
     void insert_back(double, double);
     void RemoveLoops(QPoint, double);
@@ -30,9 +29,10 @@ public:
     int GetSize() { return points.size(); }
     pair<double, double> GetPoint(int i) { return points[i]; }
     QMap<QString, QVector<QVariant> > GetData() { return data; }
+    QColor GetColor() { return main_color; }
     void SetPoint(int, double, double);
     void SetPoint(int, QPoint);
-    void SetMainColor(double [3]);
+    void SetMainColor(QColor);
 };
 
 #endif // CABLE_H

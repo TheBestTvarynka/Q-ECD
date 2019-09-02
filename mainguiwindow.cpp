@@ -143,6 +143,7 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
                                      "background: white;"
                                      "border: none;"
                                      "}");
+    connect(ui->widget, SIGNAL(LoadFigurePropereties(QString, QString)), this, SLOT(LoadPropereties(QString, QString)));
     connect(ui->widget->GetDataFigures(), SIGNAL(LoadFigurePropereties(QString, QString)), this, SLOT(LoadPropereties(QString, QString)));
     connect(ui->widget->GetDataFigures(), SIGNAL(ClearPropereties()), this, SLOT(ClearPropereties()));
     connect(name, SIGNAL(textChanged(const QString &)), ui->widget->GetDataFigures(), SLOT(SetNameSelectedFigure(const QString &)));
@@ -185,7 +186,7 @@ void MainGUIWindow::ClearLayout(QLayout *layout)
 
 void MainGUIWindow::SetDrawCableMode()
 {
-    ui->widget->SetMode(new DrawCableMode(ui->widget, ui->widget->GetScale(), ui->widget->GetCenter(), ui->widget->width(), ui->widget->height()));
+    ui->widget->SetMode(new DrawCableMode(ui->widget, ui->widget->GetScale()));
     QLayout *layout;
 
     layout = actions->layout();
@@ -245,7 +246,7 @@ void MainGUIWindow::SetDrawCableMode()
 }
 void MainGUIWindow::SetObjectMode()
 {
-    ui->widget->SetMode(new ObjectMode(ui->widget, ui->widget->GetScale(), ui->widget->GetCenter(), ui->widget->width(), ui->widget->height()));
+    ui->widget->SetMode(new ObjectMode(ui->widget, ui->widget->GetScale()));
     QLayout *layout;
 
     layout = actions->layout();

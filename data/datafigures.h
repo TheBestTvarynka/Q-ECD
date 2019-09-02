@@ -39,9 +39,9 @@ public slots:
     void RotateSelectedFigureRight();
     void RotateSelectedFigureLeft();
 signals:
-    void LoadFigurePropereties(QString, QString);
     void ClearPropereties();
     void RemoveCables(QList<IObserver *>);
+    void LoadFigurePropereties(QString, QString);
 };
 
 #endif // DATAFIGURES_H

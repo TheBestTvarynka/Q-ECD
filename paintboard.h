@@ -41,7 +41,7 @@ class PaintBoard : public QGLWidget
     QPoint start_position;
     Qt::MouseButton click;
 
-    typedef void (PaintBoard::*PaintDevice)(QVector<QVariant>);
+    typedef void (PaintBoard::*PaintDevice)(QVector<QVariant>, QColor);
     QMap<QString, PaintDevice> paint_devices;
 public:
     PaintBoard(QWidget *parent = nullptr, ModeInterface *start_state = nullptr);
@@ -55,30 +55,18 @@ public:
     void keyPressEvent(QKeyEvent *);
     void keyReleaseEvent(QKeyEvent *event);
     // painter device
-    void LINES(QVector<QVariant>);
-    void LINE_LOOP(QVector<QVariant>);
-    void TEXT(QVector<QVariant>);
+    void LINES(QVector<QVariant>, QColor);
+    void LINE_LOOP(QVector<QVariant>, QColor);
+    void TEXT(QVector<QVariant>, QColor);
     /////////////////
-
     double GetScale() { return Scale; }
-    QPoint GetCenter() { return mode->GetCenter(); }
-
+    QPoint GetCenter() { return Center; }
     DataFigures *GetDataFigures() { return &figures; }
     DataCables *GetDataCables() { return &cables; }
     void SetMode(ModeInterface *);
     void CreateCustomFigure(int, int, int, int, QString, QString);
 public slots:
-//    void SetSelectedFigure(FigureInterface *);
     void CreateFigure(int);
-//    void RemoveSelectedFigure();
-
-//    void RemoveSelectedCables();
-
-//    void SetNameSelectedFigure(const QString &);
-//    void SetValueSelectedFigure(const QString &);
-//    void RotateSelectedFigureRight();
-//    void RotateSelectedFigureLeft();
-
     void CopySelectedFigure();
     void PasteFromBuffer();
     void SetRemoveCableMode();

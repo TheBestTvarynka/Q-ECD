@@ -7,9 +7,7 @@ FigureInterface::FigureInterface(int X, int Y, int R, QString n, QString v, int 
     rotation = R;
     x = X;
     y = Y;
-    main_color[0] = 0.0;
-    main_color[1] = 1.0;
-    main_color[2] = 0.0;
+    main_color.setRgb(0, 0, 255);
     name = n;
     value = v;
     type = t;
@@ -48,11 +46,9 @@ pair<int, double> FigureInterface::SelectClamp(QPoint mouse_pos, double Scale)
     return min_dis < Scale * 3 ? pair<int, double>(best_clamp, min_dis) : pair<int, double>(-1, -1.0);
 }
 
-void FigureInterface::SetMainColor(double color[3])
+void FigureInterface::SetMainColor(QColor new_color)
 {
-    main_color[0] = color[0];
-    main_color[1] = color[1];
-    main_color[2] = color[2];
+    main_color = new_color;
 }
 
 void FigureInterface::SetPosition(double X, double Y)
@@ -65,6 +61,7 @@ void FigureInterface::SetName(QString Name)
 {
     name = Name;
     treeItem->setText(0, Name);
+    data["TEXT"][2] = *(new QVariant(Name));
 }
 
 void FigureInterface::SetValue(QString Value)

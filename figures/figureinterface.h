@@ -24,7 +24,7 @@ protected:
     QString name;
     QString value;
     double nameX, nameY;
-    double main_color[3];
+    QColor main_color;
     QTreeItem *treeItem;
     QMap<int, GetClampCoordinates> clamp_coordiantes;
     int type;
@@ -32,7 +32,6 @@ protected:
     QMap<QString, QVector<QVariant> > data;
     QMap<int, function<QPointF (double, double)> > clamp;
 public:
-    FigureInterface() : x(10.0), y(10.0), rotation(0), name("R1") {}
     FigureInterface(int X, int Y, int R, QString n, QString v, int t);
     FigureInterface(const FigureInterface *);
 
@@ -50,7 +49,8 @@ public:
     pair<double, double> GetClampp(int clamp) { return RotatePoint((*clamp_coordiantes[clamp])(x, y), rotation); } // bad code
     QPointF GetClamp(int c) { return RotatePoint(clamp[c](x, y), rotation); }
     QMap<QString, QVector<QVariant> > GetData() { return data; }
-    void SetMainColor(double [3]);
+    QColor GetColor() { return main_color; }
+    void SetMainColor(QColor);
     void SetPosition(double, double);
     void SetTreeItem(QTreeItem *item) { treeItem = item; }
     void SetName(QString Name);
