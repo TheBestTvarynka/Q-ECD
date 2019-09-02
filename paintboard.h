@@ -58,6 +58,8 @@ public:
     void LINES(QVector<QVariant>, QColor);
     void LINE_LOOP(QVector<QVariant>, QColor);
     void TEXT(QVector<QVariant>, QColor);
+    void CIRCLE(QVector<QVariant>, QColor);
+    void CIRCLE_FULL(QVector<QVariant>, QColor);
     /////////////////
     double GetScale() { return Scale; }
     QPoint GetCenter() { return Center; }

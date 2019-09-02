@@ -32,6 +32,18 @@ void IObserver::RemoveAllObservable()
     connections.clear();
 }
 
+bool IObserver::isConnected(IObservable *f)
+{
+    QMapIterator<IObservable*, int> it(connections);
+    while (it.hasNext())
+    {
+        it.next();
+        if (it.key() == f)
+            return true;
+    }
+    return false;
+}
+
 IObserver::~IObserver()
 {
 

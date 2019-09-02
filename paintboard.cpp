@@ -12,6 +12,8 @@ PaintBoard::PaintBoard(QWidget *parent, ModeInterface *start_state): QGLWidget(p
     paint_devices.insert("GL_LINE_LOOP", &PaintBoard::LINE_LOOP);
     paint_devices.insert("GL_LINES", &PaintBoard::LINES);
     paint_devices.insert("TEXT", &PaintBoard::TEXT);
+    paint_devices.insert("CIRCLE", &PaintBoard::CIRCLE);
+    paint_devices.insert("CIRCLE_FULL", &PaintBoard::CIRCLE_FULL);
 
     connect(&mpTimer, SIGNAL(timeout()), this, SLOT(updateGL()));
     mpTimer.start(10);
@@ -42,7 +44,6 @@ void PaintBoard::resizeGL(int w, int h)
 
 void PaintBoard::paintGL()
 {
-//    mode->paintGL(Delta);
     QColor background(220, 220, 220, 255);
     glClearColor(220, 220, 220, 255);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -103,6 +104,14 @@ void PaintBoard::paintGL()
             iT.next();
             (this->*paint_devices[iT.key()])(iT.value(), i->GetColor());
         }
+    }
+    // draw data from mode
+    d = mode->GetData();
+    QMapIterator<QString, QVector<QVariant> > iT(d);
+    while (iT.hasNext())
+    {
+        iT.next();
+        (this->*paint_devices[iT.key()])(iT.value(), mode->GetDataColor());
     }
 }
 
@@ -198,7 +207,7 @@ void PaintBoard::LINES(QVector<QVariant> lines, QColor color)
     QPointF point;
     glLineWidth(float(Scale / 5));
     glBegin(GL_LINES);
-    glColor3ub(color.red(), color.green(), color.blue());
+    glColor3ub(GLubyte(color.red()), GLubyte(color.green()), GLubyte(color.blue()));
     foreach (QVariant i, lines)
     {
         point = i.toPointF();
@@ -212,7 +221,7 @@ void PaintBoard::LINE_LOOP(QVector<QVariant> lines, QColor color)
     QPointF point;
     glLineWidth(float(Scale / 5));
     glBegin(GL_LINE_LOOP);
-    glColor3ub(color.red(), color.green(), color.blue());
+    glColor3ub(GLubyte(color.red()), GLubyte(color.green()), GLubyte(color.blue()));
     foreach (QVariant i, lines)
     {
         point = i.toPointF();
@@ -227,8 +236,48 @@ void PaintBoard::TEXT(QVector<QVariant> text, QColor color)
         return;
     QPointF f_pos = text[0].toPointF();
     QPointF pos = text[1].toPointF();
-    glColor3ub(color.red(), color.green(), color.blue());
+    glColor3ub(GLubyte(color.red()), GLubyte(color.green()), GLubyte(color.blue()));
     renderText(Center.x() + int(pos.x() * Scale + f_pos.x() * Scale), Center.y() + int(pos.y() * Scale + f_pos.y() * Scale), text[2].toString(), QFont("Arial", int(Scale * 0.67), 5, false));
+}
+
+void PaintBoard::CIRCLE(QVector<QVariant> circle, QColor color)
+{
+    if (circle.size() != 2)
+        return;
+    double theta, x, y;
+    QPointF brush = circle[0].toPointF();
+    double radius = circle[1].toDouble();
+    glColor3ub(GLubyte(color.red()), GLubyte(color.green()), GLubyte(color.blue()));
+    glLineWidth(3);
+    glBegin(GL_LINE_LOOP);
+    for (int i = 0; i < 30; i++)
+    {
+        theta = 2.0 * 3.1415926 * double(i) / double(30);
+        x = radius * cos(theta);
+        y = radius * sin(theta);
+        glVertex2d(x + brush.x() * Scale, y + brush.y() * Scale);
+    }
+    glEnd();
+}
+
+void PaintBoard::CIRCLE_FULL(QVector<QVariant> circle, QColor color)
+{
+    if (circle.size() != 2)
+        return;
+    double theta, x, y;
+    QPointF brush = circle[0].toPointF();
+    double radius = circle[1].toDouble();
+    glColor3ub(GLubyte(color.red()), GLubyte(color.green()), GLubyte(color.blue()));
+    glLineWidth(3);
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 30; i++)
+    {
+        theta = 2.0 * 3.1415926 * double(i) / double(30);
+        x = radius * cos(theta);
+        y = radius * sin(theta);
+        glVertex2d(x + brush.x() * Scale, y + brush.y() * Scale);
+    }
+    glEnd();
 }
 
 void PaintBoard::SetMode(ModeInterface *newMode)

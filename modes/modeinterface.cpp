@@ -6,6 +6,7 @@ ModeInterface::ModeInterface(PaintBoard *p, double s)
 {
     Parent = p;
     scale = s;
+    color.setRgb(135, 65, 23);
 }
 
 void ModeInterface::keyPressEvent(QKeyEvent *)

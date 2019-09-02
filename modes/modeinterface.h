@@ -5,12 +5,15 @@
 #include <QTimer>
 #include <QMouseEvent>
 #include <QPoint>
+#include <QVariant>
 
 class PaintBoard;
 
 class ModeInterface
 {
 public:
+    QMap<QString, QVector<QVariant> > data;
+    QColor color;
     PaintBoard *Parent;
     double scale;
 
@@ -20,7 +23,8 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent *) = 0;
     virtual void keyPressEvent(QKeyEvent *event);
     virtual void keyReleaseEvent(QKeyEvent *);
-
+    QMap<QString, QVector<QVariant> > GetData() { return data; }
+    QColor GetDataColor() { return color; }
     QPoint RoundCoordinates(double, double);
     virtual ~ModeInterface();
 };

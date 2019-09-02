@@ -5,6 +5,7 @@
 DrawCableMode::DrawCableMode(PaintBoard *parent, double scale) : ModeInterface (parent, scale)
 {
     click = Qt::MouseButton::NoButton;
+    data.clear();
 }
 
 void DrawCableMode::mousePressEvent(QMouseEvent *ap)
@@ -19,6 +20,7 @@ void DrawCableMode::mousePressEvent(QMouseEvent *ap)
     {
         click = Qt::MouseButton::LeftButton;
         Parent->setCursor(Qt::CrossCursor);
+        data.clear();
     }
     else
     {
@@ -68,6 +70,19 @@ void DrawCableMode::mouseMoveEvent(QMouseEvent *ap)
         cable->SetPoint(points - 1, point.first, point.second);
     }
     cable->RemoveLoops(ap->pos() - Parent->GetCenter(), scale);
+    pair<FigureInterface *, int> start = Parent->GetDataFigures()->SelectClamp(ap->pos() - Parent->GetCenter(), scale);
+    if (start.first != nullptr && !cable->isConnected(start.first))
+    {
+        QVector<QVariant> item;
+        item.push_back(*(new QVariant(QPointF(start.first->GetClamp(start.second)))));
+        item.push_back(*(new QVariant(double(scale / 3))));
+        data["CIRCLE_FULL"] = item;
+        color.setRgb(170, 227, 79);
+    }
+    else
+    {
+        data.clear();
+    }
 }
 
 void DrawCableMode::mouseReleaseEvent(QMouseEvent *ap)
@@ -78,7 +93,7 @@ void DrawCableMode::mouseReleaseEvent(QMouseEvent *ap)
         return;
     }
     click = Qt::MouseButton::NoButton;
-
+    data.clear();
     FigureInterface *select = nullptr;      // selected figure
     int num_clamp = -1;                     // number of selecting clamp (need for register)
     QPointF clamp;                          // coordinates of selected clamp

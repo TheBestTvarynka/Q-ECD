@@ -16,6 +16,7 @@ public:
     void RemoveObservable(IObservable *);
     void RemoveAllObservable();
     int GetVertex(IObservable *p) { return connections[p]; }
+    bool isConnected(IObservable *);
     virtual ~IObserver() = 0;
 };
 

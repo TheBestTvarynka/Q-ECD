@@ -4,6 +4,7 @@
 ObjectMode::ObjectMode(PaintBoard *parent, double scale) : ModeInterface (parent, scale)
 {
     click = Qt::NoButton;
+    data.clear();
 }
 
 void ObjectMode::mousePressEvent(QMouseEvent *ap)

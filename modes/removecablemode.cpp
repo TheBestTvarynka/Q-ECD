@@ -4,6 +4,7 @@
 
 RemoveCableMode::RemoveCableMode(PaintBoard *parent, double scale) : ModeInterface (parent, scale)
 {
+    data.clear();
     click = Qt::MouseButton::NoButton;
     line.first = QPoint(0, 0);
     line.second = line.first;
