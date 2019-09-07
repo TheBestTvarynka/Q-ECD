@@ -67,7 +67,7 @@ public:
     DataFigures *GetDataFigures() { return &figures; }
     DataCables *GetDataCables() { return &cables; }
     void SetMode(ModeInterface *);
-    void CreateCustomFigure(int, int, int, int, QString, QString);
+    void CreateCustomFigure(QString, int, int, int, QString, QString);
 public slots:
     void CreateFigure(QListWidgetItem *);
     void CopySelectedFigure();

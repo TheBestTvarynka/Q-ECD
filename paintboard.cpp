@@ -286,10 +286,13 @@ void PaintBoard::SetMode(ModeInterface *newMode)
     mode = newMode;
 }
 
-void PaintBoard::CreateCustomFigure(int type, int x, int y, int rotation, QString name, QString value)
+void PaintBoard::CreateCustomFigure(QString type, int x, int y, int rotation, QString name, QString value)
 {
-//    FigureInterface *new_figure = creator.GetNewFigure(type, x, y, rotation, name, value);
-    FigureInterface *new_figure = nullptr;
+    FigureCreator *creator = new FigureCreator;
+    FigureInterface *new_figure = new FigureInterface(x, y, rotation, name, value, type);
+    new_figure->SetData(creator->GetFigureData(type, new_figure->GetX(), new_figure->GetY(), new_figure->GetName()));
+    new_figure->SetClamp(creator->GetFigureClamp(type));
+    delete creator;
     figures.add(new_figure);
     emit AddToTree(new_figure);
 }
@@ -298,7 +301,6 @@ void PaintBoard::CreateFigure(QListWidgetItem *f)
 {
     QString type = f->text();
     FigureCreator *creator = new FigureCreator;
-//    FigureInterface *new_figure = creator.GetNewFigure(f, int((width() / 2 - Center.x()) / Scale), int((height() / 2 - Center.y()) / Scale), 0, "F" + QString::number(figures.size()), "vl");
     int x = int((width() / 2 - Center.x()) / Scale);
     int y = int((height() / 2 - Center.y()) / Scale);
     FigureInterface *new_figure = new FigureInterface(x,
@@ -309,6 +311,7 @@ void PaintBoard::CreateFigure(QListWidgetItem *f)
                                                       type);
     new_figure->SetData(creator->GetFigureData(type, new_figure->GetX(), new_figure->GetY(), new_figure->GetName()));
     new_figure->SetClamp(creator->GetFigureClamp(type));
+    delete creator;
     figures.add(new_figure);
     emit AddToTree(new_figure);
 }
@@ -341,7 +344,7 @@ void PaintBoard::PasteFromBuffer()
     int rotation = str.section(';', 2, 2).toInt();
     QString name = str.section(';', 3, 3);
     QString value = str.section(';', 4, 4);
-    int type =  str.section(';', 5, 5).toInt();
+    QString type =  str.section(';', 5, 5);
     CreateCustomFigure(type, x, y, rotation, name, value);
 }
 
