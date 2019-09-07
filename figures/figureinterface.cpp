@@ -103,12 +103,12 @@ void FigureInterface::MoveFigure(double dX, double dY)
 
 void FigureInterface::Notify()
 {
-    pair<double, double> clamp;
+    QPointF clamp;
     QMapIterator<IObserver*, int> it(connections);
     while (it.hasNext())
     {
         it.next();
-        clamp = this->GetClampp(it.value());
-        it.key()->update(this, clamp.first, clamp.second);
+        clamp = this->GetClamp(it.value());
+        it.key()->update(this, clamp.x(), clamp.y());
     }
 }

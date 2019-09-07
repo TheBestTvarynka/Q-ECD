@@ -6,6 +6,7 @@
 #include <QMap>
 #include <QString>
 #include <QVariant>
+#include <QPointF>
 #include "figures/iobservable.h"
 
 using std::pair;
@@ -51,7 +52,6 @@ public:
     QString GetValue() { return value; }
     QString GetType() { return type; }
     QMap<int, GetClampCoordinates> GetClams() { return clamp_coordiantes; }
-    pair<double, double> GetClampp(int clamp) { return RotatePoint((*clamp_coordiantes[clamp])(x, y), rotation); } // bad code
     QPointF GetClamp(int c) { return RotatePoint(clamp[c](x, y), rotation); }
     QMap<QString, QVector<QVariant> > GetData() { return data; }
     QColor GetColor() { return main_color; }
