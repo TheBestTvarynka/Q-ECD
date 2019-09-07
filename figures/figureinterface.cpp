@@ -2,7 +2,7 @@
 #include "view/qtreeitem.h"
 #include <QDebug>
 
-FigureInterface::FigureInterface(int X, int Y, int R, QString n, QString v, int t)
+FigureInterface::FigureInterface(int X, int Y, int R, QString n, QString v, QString t)
 {
     rotation = R;
     x = X;
@@ -22,7 +22,6 @@ pair<int, double> FigureInterface::SelectClamp(QPoint mouse_pos, double Scale)
 {
     if (clamp.size() == 0)
     {
-        qDebug() << "wfffwfooosssh";
         return pair<int, double>(-1, -1.0);
     }
     int best_clamp = -1;
@@ -72,7 +71,7 @@ void FigureInterface::SetValue(QString Value)
 
 void FigureInterface::Rotate(double angle)
 {
-    rotation += angle;
+    rotation += int(angle);
     rotation = rotation % 360;
 }
 

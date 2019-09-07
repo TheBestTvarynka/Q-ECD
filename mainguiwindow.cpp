@@ -57,7 +57,7 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     listNew = new QWidget(this);
     layout = new QVBoxLayout;
     QListWidget *list_new = new QListWidget;
-    connect(list_new, SIGNAL(currentRowChanged(int)), ui->widget, SLOT(CreateFigure(int)));
+    connect(list_new, SIGNAL(itemClicked(QListWidgetItem *)), ui->widget, SLOT(CreateFigure(QListWidgetItem *)));
     list_new->setStyleSheet("QListWidget{"
                             "border: none;"
 //                            "border-radius: 5px;"
@@ -72,7 +72,7 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
                             "QListWidget::item:selected:active { background: #b2c8eb; }"
                             "QListWidget::item:hover { background: #f095ee; }");
     QListWidgetItem *resistor = new QListWidgetItem(QIcon(":/figures/icons/figures/resistor.svg"), "Resistor", list_new);
-    QListWidgetItem *capasitor = new QListWidgetItem(QIcon(":/figures/icons/figures/capasitor.svg"), "Capasitor", list_new);
+    QListWidgetItem *capasitor = new QListWidgetItem(QIcon(":/figures/icons/figures/capasitor.svg"), "Capacitor", list_new);
     list_new->insertItem(0, resistor);
     list_new->insertItem(0, capasitor);
     layout->addWidget(list_new);

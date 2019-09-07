@@ -1,19 +1,31 @@
 #ifndef FIGURECREATOR_H
 #define FIGURECREATOR_H
 
-#include "figures/resistor.h"
-#include "figures/capacitor.h"
+#include <QString>
+#include <QMap>
+#include <QPoint>
+#include <QPointF>
+#include <QVariant>
 
-typedef FigureInterface* (*NewFigure)(int, int, int, QString, QString, int);
+using std::function;
 
 class FigureCreator
 {
-    QMap<int, NewFigure> templates;
+    typedef QMap<QString, QVector<QVariant> > (FigureCreator::*DataGenerator)(double, double, QString);
+    typedef QMap<int, function<QPointF (double, double)> > (FigureCreator::*ClampGenerator)();
+    QMap<QString, ClampGenerator> CLAMP;
+    QMap<QString, DataGenerator> DATA;
 public:
     FigureCreator();
-    static FigureInterface* resistor(int x, int y, int r, QString name, QString value, int type);
-    static FigureInterface* capacitor(int x, int y, int r, QString name, QString value, int type);
-    FigureInterface* GetNewFigure(int i, int x, int y, int r, QString name, QString value) { return templates[i](x, y, r, name, value, i); }
+    QMap<QString, QVector<QVariant> > GetFigureData(QString type, double x, double y, QString name) { return (this->*DATA[type])(x, y, name); }
+    QMap<int, function<QPointF (double, double)> > GetFigureClamp(QString type) { return (this->*CLAMP[type])(); }
+    // simple resistor
+    QMap<QString, QVector<QVariant> > ResistorData(double, double, QString);
+    QMap<int, function<QPointF (double, double)> > ResistorClamp();
+    // simple capasitor
+    QMap<QString, QVector<QVariant> > CapacitorData(double, double, QString);
+    QMap<int, function<QPointF (double, double)> > CapacitorClamp();
+    //
 };
 
 #endif // FIGURECREATOR_H

@@ -288,14 +288,27 @@ void PaintBoard::SetMode(ModeInterface *newMode)
 
 void PaintBoard::CreateCustomFigure(int type, int x, int y, int rotation, QString name, QString value)
 {
-    FigureInterface *new_figure = creator.GetNewFigure(type, x, y, rotation, name, value);
+//    FigureInterface *new_figure = creator.GetNewFigure(type, x, y, rotation, name, value);
+    FigureInterface *new_figure = nullptr;
     figures.add(new_figure);
     emit AddToTree(new_figure);
 }
 
-void PaintBoard::CreateFigure(int f)
+void PaintBoard::CreateFigure(QListWidgetItem *f)
 {
-    FigureInterface *new_figure = creator.GetNewFigure(f, int((width() / 2 - Center.x()) / Scale), int((height() / 2 - Center.y()) / Scale), 0, "F" + QString::number(figures.size()), "vl");
+    QString type = f->text();
+    FigureCreator *creator = new FigureCreator;
+//    FigureInterface *new_figure = creator.GetNewFigure(f, int((width() / 2 - Center.x()) / Scale), int((height() / 2 - Center.y()) / Scale), 0, "F" + QString::number(figures.size()), "vl");
+    int x = int((width() / 2 - Center.x()) / Scale);
+    int y = int((height() / 2 - Center.y()) / Scale);
+    FigureInterface *new_figure = new FigureInterface(x,
+                                                      y,
+                                                      0,
+                                                      "F" + QString::number(figures.size()),
+                                                      "0",
+                                                      type);
+    new_figure->SetData(creator->GetFigureData(type, new_figure->GetX(), new_figure->GetY(), new_figure->GetName()));
+    new_figure->SetClamp(creator->GetFigureClamp(type));
     figures.add(new_figure);
     emit AddToTree(new_figure);
 }
@@ -310,7 +323,7 @@ void PaintBoard::CopySelectedFigure()
     QString r; r.setNum(selected->GetRotation());
     QString n = selected->GetName();
     QString v = selected->GetValue();
-    QString t; t.setNum(selected->GetType());
+    QString t = selected->GetType();
     QString buffer = x + ";" + y + ";" + r + ";" + n + ";" + v + ";" + t;
     qDebug() << buffer;
     QClipboard *buf = QApplication::clipboard();

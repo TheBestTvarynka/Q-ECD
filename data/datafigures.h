@@ -7,8 +7,6 @@
 #include "cables/iobserver.h"
 #include "figures/figureinterface.h"
 //#include "figures/figurecreator.h"
-#include "figures/resistor.h"
-#include "figures/capacitor.h"
 
 class PaintBoard;
 

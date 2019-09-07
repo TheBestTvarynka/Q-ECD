@@ -30,11 +30,9 @@ SOURCES += \
     modes/modeinterface.cpp \
     figures/figureinterface.cpp \
     figures/iobservable.cpp \
-    figures/resistor.cpp \
     data/datafigures.cpp \
     modes/objectmode.cpp \
     paintboard.cpp \
-    figures/capacitor.cpp \
     cables/cable.cpp \
     modes/drawcablemode.cpp \
     cables/iobserver.cpp \
@@ -52,11 +50,9 @@ HEADERS += \
     modes/modeinterface.h \
     figures/figureinterface.h \
     figures/iobservable.h \
-    figures/resistor.h \
     data/datafigures.h \
     modes/objectmode.h \
     paintboard.h \
-    figures/capacitor.h \
     cables/cable.h \
     modes/drawcablemode.h \
     cables/iobserver.h \

@@ -16,6 +16,7 @@
 #include <QWheelEvent>
 #include <QClipboard>
 #include <QApplication>
+#include <QListWidgetItem>
 
 using std::pair;
 
@@ -32,7 +33,7 @@ class PaintBoard : public QGLWidget
     ModeInterface *mode;
     DataFigures figures;
     DataCables cables;
-    FigureCreator creator;
+//    FigureCreator creator;
 
     QPoint Delta;
     QPoint Center;
@@ -68,7 +69,7 @@ public:
     void SetMode(ModeInterface *);
     void CreateCustomFigure(int, int, int, int, QString, QString);
 public slots:
-    void CreateFigure(int);
+    void CreateFigure(QListWidgetItem *);
     void CopySelectedFigure();
     void PasteFromBuffer();
     void SetRemoveCableMode();
