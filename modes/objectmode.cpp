@@ -1,7 +1,7 @@
 #include "objectmode.h"
 #include "paintboard.h"
 
-ObjectMode::ObjectMode(PaintBoard *parent, double scale) : ModeInterface (parent, scale)
+ObjectMode::ObjectMode(PaintBoard *parent) : ModeInterface (parent)
 {
     click = Qt::NoButton;
     data.clear();
@@ -10,7 +10,7 @@ ObjectMode::ObjectMode(PaintBoard *parent, double scale) : ModeInterface (parent
 void ObjectMode::mousePressEvent(QMouseEvent *ap)
 {
     Parent->setCursor(Qt::SizeAllCursor);
-    Parent->GetDataFigures()->select_figure(ap->pos() - Parent->GetCenter(), scale);
+    Parent->GetDataFigures()->select_figure(ap->pos() - Parent->GetCenter(), Parent->GetScale());
     start_position = ap->pos();
     FigureInterface *sf = Parent->GetDataFigures()->GetSelectedFigure();
     if (sf != nullptr && ap->button() == Qt::LeftButton)
@@ -24,7 +24,7 @@ void ObjectMode::mouseMoveEvent(QMouseEvent *ap)
 {
     if (click == Qt::LeftButton)
     {
-        Parent->GetDataFigures()->MoveSelectedFigure(Parent->GetDataFigures()->GetSelectedFigure(), (ap->x() - start_position.x()) / scale, (ap->y() - start_position.y()) / scale);
+        Parent->GetDataFigures()->MoveSelectedFigure(Parent->GetDataFigures()->GetSelectedFigure(), (ap->x() - start_position.x()) / Parent->GetScale(), (ap->y() - start_position.y()) / Parent->GetScale());
         start_position = ap->pos();
     }
 }

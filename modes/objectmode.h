@@ -9,7 +9,7 @@ class ObjectMode : public ModeInterface
     QPoint start_position;
     Qt::MouseButton click;
 public:
-    explicit ObjectMode(PaintBoard *, double);
+    explicit ObjectMode(PaintBoard *);
     void mousePressEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);

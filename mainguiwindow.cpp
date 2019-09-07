@@ -186,7 +186,7 @@ void MainGUIWindow::ClearLayout(QLayout *layout)
 
 void MainGUIWindow::SetDrawCableMode()
 {
-    ui->widget->SetMode(new DrawCableMode(ui->widget, ui->widget->GetScale()));
+    ui->widget->SetMode(new DrawCableMode(ui->widget));
     QLayout *layout;
 
     layout = actions->layout();
@@ -246,7 +246,7 @@ void MainGUIWindow::SetDrawCableMode()
 }
 void MainGUIWindow::SetObjectMode()
 {
-    ui->widget->SetMode(new ObjectMode(ui->widget, ui->widget->GetScale()));
+    ui->widget->SetMode(new ObjectMode(ui->widget));
     QLayout *layout;
 
     layout = actions->layout();

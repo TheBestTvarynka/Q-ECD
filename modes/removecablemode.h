@@ -13,13 +13,10 @@ class RemoveCableMode : public ModeInterface
     QPoint start_position;
     Qt::MouseButton click;
 
-    pair<QPoint, QPoint> line;
-    QPoint brush;
-    double radius;
     QList<Cable *> selected_cables;
     bool shiftPressed;
 public:
-    explicit RemoveCableMode(PaintBoard *, double);
+    explicit RemoveCableMode(PaintBoard *);
     void mousePressEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);

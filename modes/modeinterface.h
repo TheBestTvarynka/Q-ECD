@@ -15,9 +15,8 @@ public:
     QMap<QString, QVector<QVariant> > data;
     QColor color;
     PaintBoard *Parent;
-    double scale;
 
-    explicit ModeInterface(PaintBoard *, double);
+    explicit ModeInterface(PaintBoard *);
     virtual void mousePressEvent(QMouseEvent *) = 0;
     virtual void mouseMoveEvent(QMouseEvent *) = 0;
     virtual void mouseReleaseEvent(QMouseEvent *) = 0;

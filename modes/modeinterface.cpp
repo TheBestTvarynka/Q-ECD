@@ -2,10 +2,9 @@
 #include "paintboard.h"
 #include <QDebug>
 
-ModeInterface::ModeInterface(PaintBoard *p, double s)
+ModeInterface::ModeInterface(PaintBoard *p)
 {
     Parent = p;
-    scale = s;
     color.setRgb(135, 65, 23);
 }
 

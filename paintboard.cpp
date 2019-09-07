@@ -19,7 +19,7 @@ PaintBoard::PaintBoard(QWidget *parent, ModeInterface *start_state): QGLWidget(p
     mpTimer.start(10);
 
     if (start_state == nullptr)
-        mode = new ObjectMode(this, Scale);
+        mode = new ObjectMode(this);
 }
 
 void PaintBoard::initializeGL()
@@ -323,7 +323,7 @@ void PaintBoard::PasteFromBuffer()
     QString str = buffer->text();
     if (str.isNull())
         return;
-    int x =  str.section(';', 0, 0).toInt();
+    int x =  str.section(';', 0, 0).toInt() ;
     int y = str.section(';', 1, 1).toInt();
     int rotation = str.section(';', 2, 2).toInt();
     QString name = str.section(';', 3, 3);
@@ -334,7 +334,7 @@ void PaintBoard::PasteFromBuffer()
 
 void PaintBoard::SetRemoveCableMode()
 {
-    ModeInterface *Mode = new RemoveCableMode(this, GetScale());
+    ModeInterface *Mode = new RemoveCableMode(this);
     delete mode;
     mode = Mode;
 }
