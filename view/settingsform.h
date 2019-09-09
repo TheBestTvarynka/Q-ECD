@@ -41,6 +41,7 @@ class SettingsForm : public QWidget
     QSpinBox *button_border_radius;
     QPushButton *button_background;
     QPushButton *button_hover_color;
+    QPushButton *button_text_color;
 public:
     explicit SettingsForm(QStyleSheetString *, QStyleSheetString *, MainGUIWindow *parent);
     QWidget *SetBarSettings();
@@ -57,8 +58,11 @@ public slots:
     void ClikedButtonBorderColor();
     void ClikedButtonBackgroundColor();
     void ClikedButtonHoverBackgroundColor();
+    void ClikedButtonTextColor();
     void ChangedButtonBorderSize(int);
     void ChangedButtonBorderRadius(int);
+    void Cancel();
+    void Ok();
 private:
     Ui::SettingsForm *ui;
 signals:

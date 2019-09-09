@@ -49,6 +49,8 @@ SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, Ma
 
     connect(this, SIGNAL(UpdateStyle(QString, QString)), Parent, SLOT(UpdateStyle(QString, QString)));
     connect(apply, SIGNAL(clicked()), this, SLOT(ApplySettings()));
+    connect(ok, SIGNAL(clicked()), this, SLOT(Ok()));
+    connect(cansel, SIGNAL(clicked()), this, SLOT(Cancel()));
 }
 
 QWidget *SettingsForm::SetBarSettings()
@@ -172,6 +174,15 @@ QWidget *SettingsForm::SetButtonSettings()
     plainButton.SetBackground(buttonStyle->GetHoverBackground());
     button_hover_color->setStyleSheet(plainButton.GetStyleSheet());
 
+    QLabel *button_text_color_label = new QLabel("Hover:");
+    button_text_color_label->setStyleSheet("QLabel {"
+                                      "background: transparent;"
+                                      "color: black;"
+                                      "border: none; }");
+    button_text_color = new QPushButton("");
+    plainButton.SetBackground(buttonStyle->GetTextColor());
+    button_text_color->setStyleSheet(plainButton.GetStyleSheet());
+
     QHBoxLayout *button_border_layout = new QHBoxLayout;
     button_border_layout->setSpacing(15);
     QSpacerItem *button_border_space = new QSpacerItem(40, 60, QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -180,12 +191,14 @@ QWidget *SettingsForm::SetButtonSettings()
     button_border_layout->addWidget(button_border_color);
     button_border_layout->addWidget(button_border_radius);
     button_border_layout->addItem(button_border_space);
+
     QHBoxLayout *button_background_layout = new QHBoxLayout;
     button_background_layout->setSpacing(15);
     QSpacerItem *button_background_space = new QSpacerItem(40, 60, QSizePolicy::Preferred, QSizePolicy::Preferred);
     button_background_layout->addWidget(button_backgroud_label);
     button_background_layout->addWidget(button_background);
     button_background_layout->addItem(button_background_space);
+
     QHBoxLayout *button_hover_layout = new QHBoxLayout;
     button_hover_layout->setSpacing(15);
     QSpacerItem *button_hover_background_space = new QSpacerItem(40, 60, QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -193,11 +206,19 @@ QWidget *SettingsForm::SetButtonSettings()
     button_hover_layout->addWidget(button_hover_color);
     button_hover_layout->addItem(button_hover_background_space);
 
+    QHBoxLayout *button_text_color_layout = new QHBoxLayout;
+    button_text_color_layout->setSpacing(15);
+    QSpacerItem *button_text_color_space = new QSpacerItem(40, 60, QSizePolicy::Preferred, QSizePolicy::Preferred);
+    button_text_color_layout->addWidget(button_text_color_label);
+    button_text_color_layout->addWidget(button_text_color);
+    button_text_color_layout->addItem(button_text_color_space);
+
     QVBoxLayout *button_settings = new QVBoxLayout;
     button_settings->addWidget(titleBar);
     button_settings->addItem(button_border_layout);
     button_settings->addItem(button_background_layout);
     button_settings->addItem(button_hover_layout);
+    button_settings->addItem(button_text_color_layout);
     QWidget *button = new QWidget;
     bars.append(button);
     button->setLayout(button_settings);
@@ -208,6 +229,7 @@ QWidget *SettingsForm::SetButtonSettings()
     connect(button_border_radius, SIGNAL(valueChanged(int)), this, SLOT(ChangedButtonBorderRadius(int)));
     connect(button_background, SIGNAL(clicked()), this, SLOT(ClikedButtonBackgroundColor()));
     connect(button_hover_color, SIGNAL(clicked()), this, SLOT(ClikedButtonHoverBackgroundColor()));
+    connect(button_text_color, SIGNAL(clicked()), this, SLOT(ClikedButtonTextColor()));
     return button;
 }
 
@@ -318,6 +340,21 @@ void SettingsForm::ClikedButtonHoverBackgroundColor()
     button_hover_color->setStyleSheet(str.GetStyleSheet());
 }
 
+void SettingsForm::ClikedButtonTextColor()
+{
+    QStyleSheetString str;
+    str.SetStyleSheet(buttonStyle->GetStyleSheet());
+    QColorDialogWindow *color = new QColorDialogWindow(str.GetTextColor());
+    QColor buttonColor = color->GetColor();
+    delete color;
+    if (!buttonColor.isValid())
+        return;
+    buttonStyle->SetTextColor(buttonColor.name());
+    str.SetStyleSheet(button_background->styleSheet());
+    str.SetBackground(buttonColor.name());
+    button_text_color->setStyleSheet(str.GetStyleSheet());
+}
+
 void SettingsForm::ChangedButtonBorderSize(int size)
 {
     QList<QString> border = buttonStyle->GetBorder();
@@ -328,4 +365,15 @@ void SettingsForm::ChangedButtonBorderRadius(int radius)
 {
     QList<QString> border = buttonStyle->GetBorder();
     buttonStyle->SetBorder(border[0], border[1], QString::number(radius));
+}
+
+void SettingsForm::Cancel()
+{
+    this->close();
+}
+
+void SettingsForm::Ok()
+{
+    ApplySettings();
+    Cancel();
 }
