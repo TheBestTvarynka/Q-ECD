@@ -26,6 +26,11 @@ class SettingsForm : public QWidget
     MainGUIWindow *Parent;
     QStyleSheetString *barStyle;
     QStyleSheetString *buttonStyle;
+    QColor grid;
+    QColor figure;
+    QColor figure_seleced;
+    QColor cable;
+    QColor cable_selected;
 
     QWidget *colorTheme;
     QList<QWidget *> bars;
@@ -42,10 +47,17 @@ class SettingsForm : public QWidget
     QPushButton *button_background;
     QPushButton *button_hover_color;
     QPushButton *button_text_color;
+    // elements for grid settings
+    QPushButton *button_grid;
+    QPushButton *button_figure;
+    QPushButton *button_figure_seleced;
+    QPushButton *button_cable;
+    QPushButton *button_cable_selected;
 public:
     explicit SettingsForm(QStyleSheetString *, QStyleSheetString *, MainGUIWindow *parent);
     QWidget *SetBarSettings();
     QWidget *SetButtonSettings();
+    QWidget *SetBorderSettings();
     ~SettingsForm();
 public slots:
     void ApplySettings();

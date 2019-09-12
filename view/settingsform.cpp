@@ -39,6 +39,7 @@ SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, Ma
     page->addWidget(title);
     page->addWidget(SetBarSettings());
     page->addWidget(SetButtonSettings());
+    page->addWidget(SetBorderSettings());
     page->addItem(space);
     page->addItem(result);
 
@@ -174,7 +175,7 @@ QWidget *SettingsForm::SetButtonSettings()
     plainButton.SetBackground(buttonStyle->GetHoverBackground());
     button_hover_color->setStyleSheet(plainButton.GetStyleSheet());
 
-    QLabel *button_text_color_label = new QLabel("Hover:");
+    QLabel *button_text_color_label = new QLabel("Text color:");
     button_text_color_label->setStyleSheet("QLabel {"
                                       "background: transparent;"
                                       "color: black;"
@@ -231,6 +232,93 @@ QWidget *SettingsForm::SetButtonSettings()
     connect(button_hover_color, SIGNAL(clicked()), this, SLOT(ClikedButtonHoverBackgroundColor()));
     connect(button_text_color, SIGNAL(clicked()), this, SLOT(ClikedButtonTextColor()));
     return button;
+}
+
+QWidget *SettingsForm::SetBorderSettings()
+{
+    QStyleSheetString plainButton("QPushButton");
+    plainButton.SetBorder("2", "#ffffff", "2");
+//    plainButton.SetBackground(figure.name());
+    plainButton.SetBackground("#ff00aa");
+    plainButton.EraseBlock("QPushButton::hover");
+
+    QLabel *figure_color_lable = new QLabel("Figure color");
+    figure_color_lable->setStyleSheet("QLabel {"
+                                      "background: transparent;"
+                                      "color: black;"
+                                      "border: none; }");
+    button_figure = new QPushButton("");
+    button_figure->setStyleSheet(plainButton.GetStyleSheet());
+
+    QLabel *figure_selected_color_lable = new QLabel("Selected figure color");
+    figure_selected_color_lable->setStyleSheet("QLabel {"
+                                      "background: transparent;"
+                                      "color: black;"
+                                      "border: none; }");
+    button_figure_seleced = new QPushButton("");
+    button_figure_seleced->setStyleSheet(plainButton.GetStyleSheet());
+
+    QLabel *cable_color_lable = new QLabel("Cable color");
+    cable_color_lable->setStyleSheet("QLabel {"
+                                      "background: transparent;"
+                                      "color: black;"
+                                      "border: none; }");
+    button_cable = new QPushButton("");
+    button_cable->setStyleSheet(plainButton.GetStyleSheet());
+
+    QLabel *cable_selected_color_lable = new QLabel("Selected figure color");
+    cable_selected_color_lable->setStyleSheet("QLabel {"
+                                      "background: transparent;"
+                                      "color: black;"
+                                      "border: none; }");
+    button_cable_selected = new QPushButton("");
+    button_cable_selected->setStyleSheet(plainButton.GetStyleSheet());
+
+    QLabel *grid_color_lable = new QLabel("Grid color");
+    grid_color_lable->setStyleSheet("QLabel {"
+                                      "background: transparent;"
+                                      "color: black;"
+                                      "border: none; }");
+    button_grid = new QPushButton("");
+    button_grid->setStyleSheet(plainButton.GetStyleSheet());
+
+    QHBoxLayout *figure_layout = new QHBoxLayout;
+    figure_layout->setSpacing(15);
+    figure_layout->addWidget(figure_color_lable);
+    figure_layout->addWidget(button_figure);
+    figure_layout->addWidget(figure_selected_color_lable);
+    figure_layout->addWidget(button_figure_seleced);
+
+    QHBoxLayout *cable_layout = new QHBoxLayout;
+    cable_layout->setSpacing(15);
+    cable_layout->addWidget(cable_color_lable);
+    cable_layout->addWidget(button_cable);
+    cable_layout->addWidget(cable_selected_color_lable);
+    cable_layout->addWidget(button_cable_selected);
+
+    QHBoxLayout *grid_layot = new QHBoxLayout;
+    grid_layot->setSpacing(15);
+    grid_layot->addWidget(grid_color_lable);
+    grid_layot->addWidget(button_grid);
+
+    QLabel *bar_name = new QLabel("Board");
+    bar_name->setStyleSheet("QLabel {"
+                            "background: transparent;"
+                            "color: black;"
+                            "border: none; }");
+
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(bar_name);
+    layout->addItem(figure_layout);
+    layout->addItem(cable_layout);
+    layout->addItem(grid_layot);
+
+    QWidget *board_settings = new QWidget;
+    board_settings->setStyleSheet(barStyle->GetStyleSheet());
+    board_settings->setLayout(layout);
+    bars.append(board_settings);
+
+    return board_settings;
 }
 
 SettingsForm::~SettingsForm()
