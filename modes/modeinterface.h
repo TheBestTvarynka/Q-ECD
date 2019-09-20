@@ -5,32 +5,26 @@
 #include <QTimer>
 #include <QMouseEvent>
 #include <QPoint>
+#include <QVariant>
 
 class PaintBoard;
 
-//class ModeInterface : public QGLWidget
 class ModeInterface
 {
-//protected:
-//    Q_OBJECT
 public:
+    QMap<QString, QVector<QVariant> > data;
+    QColor color;
     PaintBoard *Parent;
-    int Weight, Height;
-    QPoint Center;
-    double scale;
 
-    explicit ModeInterface(double, PaintBoard *, int, int);
-    virtual void initializeGL() = 0;
-    virtual void resizeGL(int w, int h) = 0;
-    virtual void paintGL(QPoint &) = 0;
+    explicit ModeInterface(PaintBoard *);
     virtual void mousePressEvent(QMouseEvent *) = 0;
     virtual void mouseMoveEvent(QMouseEvent *) = 0;
     virtual void mouseReleaseEvent(QMouseEvent *) = 0;
-
+    virtual void keyPressEvent(QKeyEvent *event);
+    virtual void keyReleaseEvent(QKeyEvent *);
+    QMap<QString, QVector<QVariant> > GetData() { return data; }
+    QColor GetDataColor() { return color; }
     QPoint RoundCoordinates(double, double);
-    void ScaleEvent(bool, QPoint, double &);
-    QPoint GetCenter() { return Center; }
-
     virtual ~ModeInterface();
 };
 

@@ -5,9 +5,12 @@
 #include <math.h>
 #include <QMap>
 #include <QString>
+#include <QVariant>
+#include <QPointF>
 #include "figures/iobservable.h"
 
 using std::pair;
+using std::function;
 
 typedef pair<double, double> (*GetClampCoordinates)(double, double);
 
@@ -22,28 +25,39 @@ protected:
     QString name;
     QString value;
     double nameX, nameY;
-    double main_color[3];
+    QColor main_color;
     QTreeItem *treeItem;
     QMap<int, GetClampCoordinates> clamp_coordiantes;
-    int type;
+    QString type;
+
+    QMap<QString, QVector<QVariant> > data;
+    QMap<int, function<QPointF (double, double)> > clamp;
 public:
-    FigureInterface() : x(10.0), y(10.0), rotation(0), name("R1") {}
-    FigureInterface(int X, int Y, int R, QString n, QString v, int t);
+    FigureInterface(int X,
+                    int Y,
+                    int R,
+                    QString n,
+                    QString v,
+                    QString t);
     FigureInterface(const FigureInterface *);
 
-    virtual void print(double, PaintBoard *) = 0;
     void Notify();
-    pair<int, double> SelectClamp(QPoint, double, QMap<int, GetClampCoordinates>);
+    pair<int, double> SelectClamp(QPoint, double);
     void MoveFigure(double, double);
     double GetX() { return x; }
     double GetY() { return y; }
+    pair<double, double> GetPos() { return pair<double, double>(x, y); }
     int GetRotation() { return rotation; }
     QString GetName() { return name; }
     QString GetValue() { return value; }
-    int GetType() { return type; }
+    QString GetType() { return type; }
     QMap<int, GetClampCoordinates> GetClams() { return clamp_coordiantes; }
-    pair<double, double> GetClamp(int clamp) { return RotatePoint((*clamp_coordiantes[clamp])(x, y), rotation); }
-    void SetMainColor(double [3]);
+    QPointF GetClamp(int c) { return RotatePoint(clamp[c](x, y), rotation); }
+    QMap<QString, QVector<QVariant> > GetData() { return data; }
+    QColor GetColor() { return main_color; }
+    void SetData(QMap<QString, QVector<QVariant> > d) { data = d; }
+    void SetClamp(QMap<int, function<QPointF (double, double)> > c) { clamp = c; }
+    void SetMainColor(QColor);
     void SetPosition(double, double);
     void SetTreeItem(QTreeItem *item) { treeItem = item; }
     void SetName(QString Name);
@@ -51,6 +65,7 @@ public:
     void Rotate(double);
     void DeleteTreeItem();
     pair<double, double> RotatePoint(pair<double, double>, double);
+    QPointF RotatePoint(QPointF, double);
 };
 
 #endif // FIGUREINTERFACE_H

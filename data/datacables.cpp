@@ -3,7 +3,7 @@
 
 DataCables::DataCables()
 {
-
+    selected.clear();
 }
 
 void DataCables::AddCable(Cable *new_Cable)
@@ -36,10 +36,26 @@ void DataCables::RemoveCables(QList<IObserver *> c)
     }
 }
 
-void DataCables::print(double Scale)
+void DataCables::RemoveCables(QList<Cable *>c)
 {
-    for(int i = 0; i < cables.size(); i++)
-        cables[i]->print(Scale);
+    foreach (Cable *i, c)
+    {
+        RemoveCable(i);
+    }
+}
+
+void DataCables::RemoveSelectedCables()
+{
+    RemoveCables(selected);
+    ClearSelected();
+}
+
+void DataCables::SetCablesColor(QList<Cable *>c, QColor color)
+{
+    foreach (Cable *i, c)
+    {
+        i->SetMainColor(color);
+    }
 }
 
 void DataCables::InsertVertex(Cable *c, double x, double y)
@@ -52,11 +68,38 @@ void DataCables::RemoveLoop(Cable *cable, QPoint pos, double scale)
     cable->RemoveLoops(pos, scale);
 }
 
-bool DataCables::GetDirectionEnd(Cable *cable)
+void DataCables::RemoveFromSelected(QList<Cable *> left)
 {
-    int last_point = cable->GetSize() - 1;
-    if (cable->GetPoint(last_point).first == cable->GetPoint(last_point - 1).first)
-        return false;
-    else
-        return true;
+    foreach (Cable *i, left)
+    {
+        selected.removeOne(i);
+    }
+}
+
+void DataCables::AddToSelected(QList<Cable *> additional)
+{
+    selected.append(additional);
+}
+
+QList<Cable *> DataCables::GetForDeleting(pair<QPoint, QPoint> sections, double scale)
+{
+    QList<Cable *> removing;
+    foreach (Cable *i, cables)
+    {
+        if (i->CheckIntersection(sections, scale))
+            removing.append(i);
+    }
+    return removing;
+}
+
+QList<Cable *> DataCables::GetForDeleting(QPoint brush, double scale)
+{
+    QList<Cable *> removing;
+    foreach (Cable *i, cables)
+    {
+//        if (!i->IsMarked() && i->CheckIntersection(brush, scale))
+        if (i->CheckIntersection(brush, scale))
+            removing.append(i);
+    }
+    return removing;
 }

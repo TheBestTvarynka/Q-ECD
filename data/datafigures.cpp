@@ -4,17 +4,8 @@
 
 DataFigures::DataFigures()
 {
-//    FigureInterface *tmp = new capacitor;
-//    figures.push_back(tmp);
     selected_figure = nullptr;
     selected_clamp = -1;
-}
-
-void DataFigures::print(double Scale, PaintBoard *Parent)
-{
-    for (int i = 0; i < figures.size(); i++) {
-        figures[i]->print(Scale, Parent);
-    }
 }
 
 void DataFigures::add(FigureInterface *new_Figure)
@@ -44,7 +35,12 @@ QList<IObserver *> DataFigures::erase(FigureInterface *select)
 void DataFigures::select_figure(QPoint position, double Scale)
 {
     if (selected_figure != nullptr)
-        selected_figure->SetMainColor(new double[3]{0.0, 1.0, 0.0});
+        selected_figure->SetMainColor(QColor(0, 0, 255));
+    if (figures.size() == 0)
+    {
+        selected_figure = nullptr;
+        return;
+    }
     double distance;
     double min_distance = sqrt(pow(position.x() - Scale * figures[0]->GetX(), 2) + pow(position.y() - Scale * figures[0]->GetY(), 2));
     selected_figure = figures[0];
@@ -57,7 +53,7 @@ void DataFigures::select_figure(QPoint position, double Scale)
             selected_figure = (*i);
         }
     }
-    selected_figure->SetMainColor(new double[3]{1.0, 0.0, 0.0});
+    selected_figure->SetMainColor(QColor(255, 0, 0));
 }
 
 void DataFigures::MoveSelectedFigure(FigureInterface *figure, double dX, double dY)
@@ -67,8 +63,6 @@ void DataFigures::MoveSelectedFigure(FigureInterface *figure, double dX, double 
 
 FigureInterface *DataFigures::GetSelectedFigure()
 {
-//    if (selected_figure == nullptr)
-//        return  nullptr;
     return selected_figure;
 }
 
@@ -97,30 +91,67 @@ void DataFigures::Register(FigureInterface *select, int clamp, IObserver *cable,
 void DataFigures::SetSelectedFigure(FigureInterface *f)
 {
     if (selected_figure != nullptr)
-        selected_figure->SetMainColor(new double[3]{0.0, 1.0, 0.0});
+        selected_figure->SetMainColor(QColor(0, 0, 255));
     selected_figure = f;
-    selected_figure->SetMainColor(new double[3]{1.0, 0.0, 0.0});
+    selected_figure->SetMainColor(QColor(255, 0, 0));
+    emit LoadFigurePropereties(selected_figure->GetName(), selected_figure->GetValue());
 }
 
-pair<QPoint, double> DataFigures::SelectClamp(QPoint mouse_pos, double Scale, FigureInterface *(&select), int &s_clamp)
+void DataFigures::RemoveSelectedFigure()
+{
+    QList<IObserver *> cabs = erase(selected_figure);
+    emit RemoveCables(cabs);
+    emit ClearPropereties();
+}
+
+void DataFigures::SetNameSelectedFigure(const QString &name)
+{
+    if (selected_figure == nullptr)
+        return;
+    selected_figure->SetName(name);
+}
+
+void DataFigures::SetValueSelectedFigure(const QString &value)
+{
+    if (selected_figure == nullptr)
+        return;
+    selected_figure->SetValue(value);
+}
+
+void DataFigures::RotateSelectedFigureRight()
+{
+    if (selected_figure == nullptr)
+        return;
+    selected_figure->Rotate(90);
+    selected_figure->Notify();
+}
+
+void DataFigures::RotateSelectedFigureLeft()
+{
+    if (selected_figure == nullptr)
+        return;
+    selected_figure->Rotate(-90);
+    selected_figure->Notify();
+}
+
+pair<FigureInterface *, int> DataFigures::SelectClamp(QPoint mouse_pos, double Scale)
 {
     if (figures.size() == 0)
     {
-        return pair<QPoint, double>(QPoint(0, 0), -1);
+        return pair<FigureInterface *, int>(nullptr, -1.0);
     }
-    pair<int, double> clamp, best_clamp = figures[0]->SelectClamp(mouse_pos, Scale, figures[0]->GetClams());
-    select = figures[0];
-    for (int i = 1; i < figures.size(); i++)
+    pair<FigureInterface *, int> result(nullptr, -1.0);
+    pair<int, double> cur;
+    double min_dis = Scale * 3;
+    for (int i = 0; i < figures.size(); i++)
     {
-        clamp = figures[i]->SelectClamp(mouse_pos, Scale, figures[i]->GetClams());
-        if (clamp.second < best_clamp.second && !qFuzzyCompare(clamp.first, -1.0))
+        cur = figures[i]->SelectClamp(mouse_pos, Scale);
+        if (cur.first != -1 && cur.second < min_dis)
         {
-            select = figures[i];
-            best_clamp = clamp;
+            min_dis = cur.second;
+            result.first = figures[i];
+            result.second = cur.first;
         }
     }
-    s_clamp = best_clamp.first;
-    qDebug() << "initialaizing";
-    pair<double, double> res_clamp = select->GetClamp(best_clamp.first);
-    return pair<QPoint, double>(QPoint(int(res_clamp.first), int(res_clamp.second)), best_clamp.second);
+    return result;
 }

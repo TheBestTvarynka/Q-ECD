@@ -30,39 +30,46 @@ SOURCES += \
     modes/modeinterface.cpp \
     figures/figureinterface.cpp \
     figures/iobservable.cpp \
-    figures/resistor.cpp \
     data/datafigures.cpp \
     modes/objectmode.cpp \
     paintboard.cpp \
-    figures/capacitor.cpp \
     cables/cable.cpp \
     modes/drawcablemode.cpp \
     cables/iobserver.cpp \
     data/datacables.cpp \
     figures/figurecreator.cpp \
     view/qtreeitem.cpp \
-    view/qtree.cpp
+    view/qtree.cpp \
+    modes/removecablemode.cpp \
+    view/settingpanels/themesettings.cpp \
+    view/style/qstylesheetstring.cpp \
+    view/settingsform.cpp \
+    view/additionalobjects/qcolordialogwindow.cpp
 
 HEADERS += \
         mainguiwindow.h \
     modes/modeinterface.h \
     figures/figureinterface.h \
     figures/iobservable.h \
-    figures/resistor.h \
     data/datafigures.h \
     modes/objectmode.h \
     paintboard.h \
-    figures/capacitor.h \
     cables/cable.h \
     modes/drawcablemode.h \
     cables/iobserver.h \
     data/datacables.h \
     figures/figurecreator.h \
     view/qtreeitem.h \
-    view/qtree.h
+    view/qtree.h \
+    modes/removecablemode.h \
+    view/settingpanels/themesettings.h \
+    view/style/qstylesheetstring.h \
+    view/settingsform.h \
+    view/additionalobjects/qcolordialogwindow.h
 
 FORMS += \
-        mainguiwindow.ui
+        mainguiwindow.ui \
+    view/settingsform.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
