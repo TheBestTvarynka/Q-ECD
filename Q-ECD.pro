@@ -41,6 +41,7 @@ SOURCES += \
     view/qtreeitem.cpp \
     view/qtree.cpp \
     modes/removecablemode.cpp \
+    view/settingpanels/themesettings.cpp \
     view/style/qstylesheetstring.cpp \
     view/settingsform.cpp \
     view/additionalobjects/qcolordialogwindow.cpp
@@ -61,6 +62,7 @@ HEADERS += \
     view/qtreeitem.h \
     view/qtree.h \
     modes/removecablemode.h \
+    view/settingpanels/themesettings.h \
     view/style/qstylesheetstring.h \
     view/settingsform.h \
     view/additionalobjects/qcolordialogwindow.h
