@@ -1,32 +1,42 @@
 #include "themesettings.h"
 #include <QDebug>
+#include <QFile>
+#include <QJsonDocument>
 
 ThemeSettings::ThemeSettings(QString path)
 {
+    path = "/home/qkation/.config/q-ecd/theme/";
+
+    QFile bar_css(path + "barStyle.css");
+    bar_css.open(QFile::ReadOnly);
+    if (!bar_css.isOpen())
+    {
+        qDebug() << "error: file not found";
+    }
     barStyle = new QStyleSheetString("QWidget");
-    barStyle->SetBorder("2", "#1d7f88", "5");
-    barStyle->SetBackground("#6ac7bc");
-    barStyle->SetTextColor("#000000");
-    barStyle->EraseBlock("QWidget::hover");
+    barStyle->SetStyleSheet(QLatin1String(bar_css.readAll()));
+    bar_css.close();
 
+    QFile button_css(path + "buttonStyle.css");
+    button_css.open(QFile::ReadOnly);
     buttonStyle = new QStyleSheetString("QPushButton");
-    buttonStyle->SetBorder("2", "#67d43f", "5");
-    buttonStyle->SetHoverBorder("2", "#1d7f88", "5");
-    buttonStyle->SetBackground("#ffffff");
-    buttonStyle->SetHoverBackground("#f24bef");
-    buttonStyle->SetTextColor("#86ab29");
+    buttonStyle->SetStyleSheet(QLatin1String(button_css.readAll()));
+    button_css.close();
 
-    figure.setNamedColor("#ff0000");
-    figure_seleced.setNamedColor("#ff0000");
-    cable.setNamedColor("#ff0000");
-    cable_selected.setNamedColor("#ff0000");
-    grid.setNamedColor("#ff0000");
+    QFile paintboard_theme(path + "paintboard.json");
+    paintboard_theme.open(QIODevice::ReadOnly | QIODevice::Text);
+    QString data_grid = paintboard_theme.readAll();
+    QJsonDocument grid_json = QJsonDocument::fromJson(data_grid.toUtf8());
+    paintboard_theme.close();
 
-    QLabel *title = new QLabel("Color theme settings");
+    figure.setNamedColor(grid_json["figure"].toString());
+    figure_seleced.setNamedColor(grid_json["figure_seleced"].toString());
+    cable.setNamedColor(grid_json["cable"].toString());
+    cable_selected.setNamedColor(grid_json["cable_seleced"].toString());
+    grid.setNamedColor(grid_json["grid"].toString());
 
     QVBoxLayout *page = new QVBoxLayout;
     QSpacerItem *space = new QSpacerItem(40, 60, QSizePolicy::Preferred, QSizePolicy::Expanding);
-    page->addWidget(title);
     page->addWidget(SetBarSettings());
     page->addWidget(SetButtonSettings());
     page->addWidget(SetBorderSettings());
@@ -232,6 +242,7 @@ QWidget *ThemeSettings::SetBorderSettings()
                                       "color: black;"
                                       "border: none; }");
     button_figure = new QPushButton("");
+    plainButton.SetBackground(figure.name());
     button_figure->setStyleSheet(plainButton.GetStyleSheet());
 
     QLabel *figure_selected_color_lable = new QLabel("Selected figure color");
@@ -240,6 +251,7 @@ QWidget *ThemeSettings::SetBorderSettings()
                                       "color: black;"
                                       "border: none; }");
     button_figure_seleced = new QPushButton("");
+    plainButton.SetBackground(figure_seleced.name());
     button_figure_seleced->setStyleSheet(plainButton.GetStyleSheet());
 
     QLabel *cable_color_lable = new QLabel("Cable color");
@@ -248,6 +260,7 @@ QWidget *ThemeSettings::SetBorderSettings()
                                       "color: black;"
                                       "border: none; }");
     button_cable = new QPushButton("");
+    plainButton.SetBackground(cable.name());
     button_cable->setStyleSheet(plainButton.GetStyleSheet());
 
     QLabel *cable_selected_color_lable = new QLabel("Selected figure color");
@@ -256,6 +269,7 @@ QWidget *ThemeSettings::SetBorderSettings()
                                       "color: black;"
                                       "border: none; }");
     button_cable_selected = new QPushButton("");
+    plainButton.SetBackground(cable_selected.name());
     button_cable_selected->setStyleSheet(plainButton.GetStyleSheet());
 
     QLabel *grid_color_lable = new QLabel("Grid color");
@@ -264,6 +278,7 @@ QWidget *ThemeSettings::SetBorderSettings()
                                       "color: black;"
                                       "border: none; }");
     button_grid = new QPushButton("");
+    plainButton.SetBackground(grid.name());
     button_grid->setStyleSheet(plainButton.GetStyleSheet());
 
     QHBoxLayout *figure_layout = new QHBoxLayout;
