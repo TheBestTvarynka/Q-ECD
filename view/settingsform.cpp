@@ -66,7 +66,13 @@ SettingsForm::~SettingsForm()
 
 void SettingsForm::ApplySettings()
 {
-
+    int size =  panels->count();
+    QWidget *current_panel;
+    for (int i = 0; i < size; i++)
+    {
+        current_panel = panels->widget(i);
+        emit current_panel->windowTitleChanged("");
+    }
 }
 
 void SettingsForm::Cancel()

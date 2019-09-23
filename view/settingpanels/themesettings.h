@@ -8,6 +8,7 @@
 #include <QSpinBox>
 #include <QColor>
 #include <QPushButton>
+#include <QString>
 
 #include "view/style/qstylesheetstring.h"
 #include "view/additionalobjects/qcolordialogwindow.h"
@@ -22,6 +23,7 @@ class ThemeSettings : public QWidget
     QColor figure_seleced;
     QColor cable;
     QColor cable_selected;
+    QString PATH;
 
     QWidget *colorTheme;
     QList<QWidget *> bars;
@@ -51,6 +53,8 @@ public:
     QWidget *SetBorderSettings();
     ~ThemeSettings();
 public slots:
+    void WriteSettings();
+
     void ClikedBarBorderColor();
     void ClikedBarBackgroundColor();
     void ChangedBarBorderSize(int);

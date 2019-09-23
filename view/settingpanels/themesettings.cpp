@@ -2,10 +2,12 @@
 #include <QDebug>
 #include <QFile>
 #include <QJsonDocument>
+#include <QJsonObject>
 
 ThemeSettings::ThemeSettings(QString path)
 {
     path = "/home/qkation/.config/q-ecd/theme/";
+    PATH = path;
 
     QFile bar_css(path + "barStyle.css");
     bar_css.open(QFile::ReadOnly);
@@ -46,6 +48,8 @@ ThemeSettings::ThemeSettings(QString path)
     this->setStyleSheet("QWidget {"
                         "background-color: #d0f3f7;"
                         "color: black; }");
+
+    connect(this, SIGNAL(windowTitleChanged(QString)), this, SLOT(WriteSettings()));
 }
 
 QWidget *ThemeSettings::SetBarSettings()
@@ -318,6 +322,43 @@ QWidget *ThemeSettings::SetBorderSettings()
     bars.append(board_settings);
 
     return board_settings;
+}
+
+void ThemeSettings::WriteSettings()
+{
+    QFile bar_css(PATH + "barStyle.css");
+    bar_css.open(QFile::WriteOnly);
+    if (!bar_css.isOpen())
+    {
+        qDebug() << "error: file not found";
+    }
+    bar_css.write(barStyle->GetStyleSheet().toUtf8());
+    bar_css.close();
+
+    QFile button_css(PATH + "buttonStyle.css");
+    button_css.open(QFile::WriteOnly);
+    if (!button_css.isOpen())
+    {
+        qDebug() << "error: file not found";
+    }
+    button_css.write(buttonStyle->GetStyleSheet().toUtf8());
+    button_css.close();
+
+    QJsonObject grid_json;
+    grid_json["figure"] = figure.name();
+    grid_json["figure_seleced"] = figure_seleced.name();
+    grid_json["cable"] = cable.name();
+    grid_json["cable_seleced"] = cable_selected.name();
+    grid_json["grid"] = grid.name();
+
+    QFile paintboard_theme(PATH + "paintboard1.json");
+    paintboard_theme.open(QFile::WriteOnly);
+    if (!paintboard_theme.isOpen())
+    {
+        qDebug() << "error: file not found";
+    }
+    paintboard_theme.write(QJsonDocument(grid_json).toJson(QJsonDocument::Indented));
+    paintboard_theme.close();
 }
 
 ThemeSettings::~ThemeSettings()
