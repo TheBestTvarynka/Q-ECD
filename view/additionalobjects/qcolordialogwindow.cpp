@@ -3,6 +3,7 @@
 
 QColorDialogWindow::QColorDialogWindow(QColor initial)
 {
+    this->setModal(true);
     this->setWindowTitle("Choose a color:");
     color = initial;
 
