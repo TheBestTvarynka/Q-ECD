@@ -11,6 +11,7 @@
 #include <QLabel>
 #include <QListWidget>
 #include <QComboBox>
+#include <QJsonDocument>
 
 #include "view/qtree.h"
 #include "view/style/qstylesheetstring.h"
@@ -23,6 +24,7 @@ class MainGUIWindow;
 class MainGUIWindow : public QMainWindow
 {
     Q_OBJECT
+    QString PATH;
     QWidget *modes;
     QWidget *actions;
     QWidget *allFigures;
@@ -49,7 +51,7 @@ private slots:
     void LoadPropereties(QString, QString);
     void ClearPropereties();
     void on_actionSettings_triggered();
-    void UpdateStyle(QString, QString);
+    void ReadSettings();
 };
 
 #endif // MAINGUIWINDOW_H

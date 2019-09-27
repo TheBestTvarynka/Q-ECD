@@ -4,7 +4,7 @@
 MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainGUIWindow)
 {
     ui->setupUi(this);
-
+    PATH = "/home/qkation/.config/q-ecd/theme/";
 
     barStyle = new QStyleSheetString("QWidget");
     barStyle->SetBorder("2", "#1d7f88", "5");
@@ -149,6 +149,8 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     connect(name, SIGNAL(textChanged(const QString &)), ui->widget->GetDataFigures(), SLOT(SetNameSelectedFigure(const QString &)));
     connect(value, SIGNAL(textChanged(const QString &)), ui->widget->GetDataFigures(), SLOT(SetValueSelectedFigure(const QString &)));
     connect(ui->widget->GetDataFigures(), SIGNAL(RemoveCables(QList<IObserver *>)), ui->widget->GetDataCables(), SLOT(RemoveCables(QList<IObserver *>)));
+
+    ReadSettings();
 }
 
 void MainGUIWindow::keyPressEvent(QKeyEvent *event)
@@ -329,9 +331,17 @@ void MainGUIWindow::on_actionSettings_triggered()
     settings->show();
 }
 
-void MainGUIWindow::UpdateStyle(QString bar, QString button)
+void MainGUIWindow::ReadSettings()
 {
-    barStyle->SetStyleSheet(bar);
+    QFile bar_css(PATH + "barStyle.css");
+    bar_css.open(QFile::ReadOnly);
+    if (!bar_css.isOpen())
+    {
+        qDebug() << "error: file not found";
+    }
+    barStyle->SetStyleSheet(QLatin1String(bar_css.readAll()));
+    bar_css.close();
+
     modes->setStyleSheet(barStyle->GetStyleSheet());
     actions->setStyleSheet(barStyle->GetStyleSheet());
     allFigures->setStyleSheet(barStyle->GetStyleSheet());
@@ -341,6 +351,16 @@ void MainGUIWindow::UpdateStyle(QString bar, QString button)
     QStyleSheetString str(*barStyle);
     str.SetName("QLabel");
     logo->setStyleSheet(str.GetStyleSheet());
+
+    QFile button_css(PATH + "buttonStyle.css");
+    button_css.open(QFile::ReadOnly);
+    if (!button_css.isOpen())
+    {
+        qDebug() << "error: file not found";
+    }
+    buttonStyle = new QStyleSheetString("QPushButton");
+    buttonStyle->SetStyleSheet(QLatin1String(button_css.readAll()));
+    button_css.close();
 
     QWidget *w;
     QLayout *act = actions->layout();
@@ -357,4 +377,16 @@ void MainGUIWindow::UpdateStyle(QString bar, QString button)
         if (w != nullptr)
             w->setStyleSheet(buttonStyle->GetStyleSheet());
     }
+
+    QFile paintboard_theme(PATH + "paintboard.json");
+    paintboard_theme.open(QIODevice::ReadOnly | QIODevice::Text);
+    QString data_grid = paintboard_theme.readAll();
+    QJsonDocument grid_json = QJsonDocument::fromJson(data_grid.toUtf8());
+    paintboard_theme.close();
+
+    ui->widget->SetFigureColor(grid_json["figure"].toString());
+    ui->widget->SetFigureSelectedColor(grid_json["figure_seleced"].toString());
+    ui->widget->SetCableColor(grid_json["cable"].toString());
+    ui->widget->SetCableSelectedColor(grid_json["cable_seleced"].toString());
+    ui->widget->SetGridColor(grid_json["grid"].toString());
 }

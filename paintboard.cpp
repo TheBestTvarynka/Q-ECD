@@ -20,6 +20,11 @@ PaintBoard::PaintBoard(QWidget *parent, ModeInterface *start_state): QGLWidget(p
 
     if (start_state == nullptr)
         mode = new ObjectMode(this);
+    grid.setNamedColor("#5c4b1e");
+    figure.setNamedColor("#0000ff");
+    figure_selected.setNamedColor("#ff0000");
+    cable.setNamedColor("#000000");
+    cable_selected.setNamedColor("#e6cb83");
 }
 
 void PaintBoard::initializeGL()
@@ -53,7 +58,7 @@ void PaintBoard::paintGL()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // draw central point
-    glColor3d(0.0, 0.0, 1.0);
+    glColor3ub(GLubyte(grid.red()), GLubyte(grid.green()), GLubyte(grid.blue()));
     glPointSize(20);
     glBegin(GL_POINTS);
     glVertex2f(float(0), float(0));

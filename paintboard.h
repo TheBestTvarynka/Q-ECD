@@ -25,7 +25,7 @@ class PaintBoard : public QGLWidget
     Q_OBJECT
     QColor grid;
     QColor figure;
-    QColor figure_seleced;
+    QColor figure_selected;
     QColor cable;
     QColor cable_selected;
 
@@ -61,12 +61,18 @@ public:
     void TEXT(QVector<QVariant>, QColor);
     void CIRCLE(QVector<QVariant>, QColor);
     void CIRCLE_FULL(QVector<QVariant>, QColor);
-    /////////////////
+    // setters
+    void SetGridColor(QString name) { grid.setNamedColor(name); }
+    void SetFigureColor(QString name) { figure.setNamedColor(name); }
+    void SetFigureSelectedColor(QString name) { figure_selected.setNamedColor(name); }
+    void SetCableColor(QString name) { cable.setNamedColor(name); }
+    void SetCableSelectedColor(QString name) { cable_selected.setNamedColor(name); }
+    void SetMode(ModeInterface *);
+    //////////
     double GetScale() { return Scale; }
     QPoint GetCenter() { return Center; }
     DataFigures *GetDataFigures() { return &figures; }
     DataCables *GetDataCables() { return &cables; }
-    void SetMode(ModeInterface *);
     void CreateCustomFigure(QString, int, int, int, QString, QString);
 public slots:
     void CreateFigure(QListWidgetItem *);
