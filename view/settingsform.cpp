@@ -52,6 +52,7 @@ SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, Ma
     connect(apply, SIGNAL(clicked()), this, SLOT(ApplySettings()));
     connect(ok, SIGNAL(clicked()), this, SLOT(Ok()));
     connect(cansel, SIGNAL(clicked()), this, SLOT(Cancel()));
+    connect(this, SIGNAL(ReadSettings()), parent, SLOT(ReadSettings()));
 
     this->setLayout(layout);
     this->setStyleSheet("QWidget {"
@@ -73,6 +74,7 @@ void SettingsForm::ApplySettings()
         current_panel = panels->widget(i);
         emit current_panel->windowTitleChanged("");
     }
+    emit ReadSettings();
 }
 
 void SettingsForm::Cancel()
@@ -83,5 +85,5 @@ void SettingsForm::Cancel()
 void SettingsForm::Ok()
 {
     ApplySettings();
-    Cancel();
+    this->close();
 }

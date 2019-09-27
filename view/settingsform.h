@@ -38,6 +38,8 @@ public slots:
     void Ok();
 private:
     Ui::SettingsForm *ui;
+signals:
+    void ReadSettings();
 };
 
 #endif // SETTINGSFORM_H
