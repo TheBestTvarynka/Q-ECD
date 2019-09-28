@@ -30,7 +30,7 @@ class SettingsForm : public QWidget
     QStyleSheetString *barStyle;
     QStyleSheetString *buttonStyle;
 public:
-    explicit SettingsForm(QStyleSheetString *, QStyleSheetString *, MainGUIWindow *parent);
+    explicit SettingsForm(MainGUIWindow *parent);
     ~SettingsForm();
 public slots:
     void ApplySettings();

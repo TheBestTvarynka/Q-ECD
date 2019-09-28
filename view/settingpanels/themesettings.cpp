@@ -321,6 +321,12 @@ QWidget *ThemeSettings::SetBorderSettings()
     board_settings->setLayout(layout);
     bars.append(board_settings);
 
+    connect(button_figure, SIGNAL(clicked()), this, SLOT(ClikedButtonFigureColor()));
+    connect(button_figure_seleced, SIGNAL(clicked()), this, SLOT(ClikedButtonFigureSelectedColor()));
+    connect(button_cable, SIGNAL(clicked()), this, SLOT(ClikedButtonCableColor()));
+    connect(button_cable_selected, SIGNAL(clicked()), this, SLOT(ClikedButtonCableSelectedColor()));
+    connect(button_grid, SIGNAL(clicked()), this, SLOT(ClikedButtonGridColor()));
+
     return board_settings;
 }
 
@@ -480,4 +486,74 @@ void ThemeSettings::ChangedButtonBorderRadius(int radius)
 {
     QList<QString> border = buttonStyle->GetBorder();
     buttonStyle->SetBorder(border[0], border[1], QString::number(radius));
+}
+
+void ThemeSettings::ClikedButtonFigureColor()
+{
+    QStyleSheetString str;
+    str.SetStyleSheet(button_figure->styleSheet());
+    QColorDialogWindow *color = new QColorDialogWindow(figure.name());
+    QColor buttonColor = color->GetColor();
+    delete color;
+    if (!buttonColor.isValid())
+        return;
+    figure = buttonColor;
+    str.SetBackground(buttonColor.name());
+    button_figure->setStyleSheet(str.GetStyleSheet());
+}
+
+void ThemeSettings::ClikedButtonFigureSelectedColor()
+{
+    QStyleSheetString str;
+    str.SetStyleSheet(button_figure_seleced->styleSheet());
+    QColorDialogWindow *color = new QColorDialogWindow(figure.name());
+    QColor buttonColor = color->GetColor();
+    delete color;
+    if (!buttonColor.isValid())
+        return;
+    figure_seleced = buttonColor;
+    str.SetBackground(buttonColor.name());
+    button_figure_seleced->setStyleSheet(str.GetStyleSheet());
+}
+
+void ThemeSettings::ClikedButtonCableColor()
+{
+    QStyleSheetString str;
+    str.SetStyleSheet(button_cable->styleSheet());
+    QColorDialogWindow *color = new QColorDialogWindow(figure.name());
+    QColor buttonColor = color->GetColor();
+    delete color;
+    if (!buttonColor.isValid())
+        return;
+    cable = buttonColor;
+    str.SetBackground(buttonColor.name());
+    button_cable->setStyleSheet(str.GetStyleSheet());
+}
+
+void ThemeSettings::ClikedButtonCableSelectedColor()
+{
+    QStyleSheetString str;
+    str.SetStyleSheet(button_cable_selected->styleSheet());
+    QColorDialogWindow *color = new QColorDialogWindow(figure.name());
+    QColor buttonColor = color->GetColor();
+    delete color;
+    if (!buttonColor.isValid())
+        return;
+    cable_selected = buttonColor;
+    str.SetBackground(buttonColor.name());
+    button_cable_selected->setStyleSheet(str.GetStyleSheet());
+}
+
+void ThemeSettings::ClikedButtonGridColor()
+{
+    QStyleSheetString str;
+    str.SetStyleSheet(button_figure->styleSheet());
+    QColorDialogWindow *color = new QColorDialogWindow(figure.name());
+    QColor buttonColor = color->GetColor();
+    delete color;
+    if (!buttonColor.isValid())
+        return;
+    figure = buttonColor;
+    str.SetBackground(buttonColor.name());
+    button_figure->setStyleSheet(str.GetStyleSheet());
 }

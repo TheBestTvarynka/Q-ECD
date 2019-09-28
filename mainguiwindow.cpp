@@ -6,6 +6,7 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     ui->setupUi(this);
     PATH = "/home/qkation/.config/q-ecd/theme/";
 
+    // set defoult settings for case when we can't open configure files
     barStyle = new QStyleSheetString("QWidget");
     barStyle->SetBorder("2", "#1d7f88", "5");
     barStyle->SetBackground("#6ac7bc");
@@ -327,7 +328,7 @@ void MainGUIWindow::ClearPropereties()
 
 void MainGUIWindow::on_actionSettings_triggered()
 {
-    SettingsForm *settings = new SettingsForm(barStyle, buttonStyle, this);
+    SettingsForm *settings = new SettingsForm(this);
     settings->show();
 }
 

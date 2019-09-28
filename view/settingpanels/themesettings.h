@@ -66,6 +66,12 @@ public slots:
     void ClikedButtonTextColor();
     void ChangedButtonBorderSize(int);
     void ChangedButtonBorderRadius(int);
+
+    void ClikedButtonFigureColor();
+    void ClikedButtonFigureSelectedColor();
+    void ClikedButtonCableColor();
+    void ClikedButtonCableSelectedColor();
+    void ClikedButtonGridColor();
 };
 
 #endif // THEMESETTINGA_H

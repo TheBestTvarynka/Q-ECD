@@ -3,9 +3,8 @@
 #include "mainguiwindow.h"
 #include <QDebug>
 
-SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, MainGUIWindow *parent) : QWidget(nullptr), ui(new Ui::SettingsForm)
+SettingsForm::SettingsForm(MainGUIWindow *parent) : QWidget(nullptr), ui(new Ui::SettingsForm)
 {
-    qDebug() << "start builidng setting foerm";
     Parent = parent;
     ui->setupUi(this);
     this->setWindowTitle("Settings");
@@ -22,7 +21,7 @@ SettingsForm::SettingsForm(QStyleSheetString *bar, QStyleSheetString *button, Ma
     buttonStyle->SetBackground("#ffffff");
     buttonStyle->SetHoverBackground("#f24bef");
     buttonStyle->SetTextColor("#86ab29");
-    qDebug() << "before";
+
     QHBoxLayout *result = new QHBoxLayout;
     QSpacerItem *result_space = new QSpacerItem(40, 60, QSizePolicy::Expanding, QSizePolicy::Preferred);
     QPushButton *cansel = new QPushButton("Cancel");
