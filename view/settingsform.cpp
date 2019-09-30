@@ -3,7 +3,7 @@
 #include "mainguiwindow.h"
 #include <QDebug>
 
-SettingsForm::SettingsForm(MainGUIWindow *parent) : QWidget(nullptr), ui(new Ui::SettingsForm)
+SettingsForm::SettingsForm(MainGUIWindow *parent) : ui(new Ui::SettingsForm)
 {
     Parent = parent;
     ui->setupUi(this);

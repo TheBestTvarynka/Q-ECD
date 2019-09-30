@@ -329,7 +329,9 @@ void MainGUIWindow::ClearPropereties()
 void MainGUIWindow::on_actionSettings_triggered()
 {
     SettingsForm *settings = new SettingsForm(this);
-    settings->show();
+    settings->setModal(true);
+    settings->exec();
+    delete settings;
 }
 
 void MainGUIWindow::ReadSettings()

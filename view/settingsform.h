@@ -11,6 +11,7 @@
 #include <QPushButton>
 #include <QList>
 #include <QTabWidget>
+#include <QDialog>
 
 #include "view/style/qstylesheetstring.h"
 #include "view/additionalobjects/qcolordialogwindow.h"
@@ -22,7 +23,7 @@ class SettingsForm;
 
 class MainGUIWindow;
 
-class SettingsForm : public QWidget
+class SettingsForm : public QDialog
 {
     Q_OBJECT
     MainGUIWindow *Parent;
