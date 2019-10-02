@@ -23,6 +23,16 @@ class ListFiguresSettings : public QWidget
     QWidget *colorTheme;
     QList<QWidget *> bars;
     QList<QPushButton *> buttons;
+
+    QPushButton *button_background;
+    QPushButton *button_text_color;
+    QPushButton *button_selection;
+    QSpinBox *spin_font_size;
+    QPushButton *button_item_alternate;
+    QPushButton *button_item_selected;
+    QPushButton *button_item_selected_active;
+    QPushButton *button_item_selected_non_active;
+    QPushButton *button_item_hover;
 public:
     ListFiguresSettings(QString);
 };
