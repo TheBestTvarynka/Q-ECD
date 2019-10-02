@@ -41,6 +41,7 @@ SOURCES += \
     view/qtreeitem.cpp \
     view/qtree.cpp \
     modes/removecablemode.cpp \
+    view/settingpanels/listfiguressettings.cpp \
     view/settingpanels/themesettings.cpp \
     view/style/qstylesheetstring.cpp \
     view/settingsform.cpp \
@@ -62,6 +63,7 @@ HEADERS += \
     view/qtreeitem.h \
     view/qtree.h \
     modes/removecablemode.h \
+    view/settingpanels/listfiguressettings.h \
     view/settingpanels/themesettings.h \
     view/style/qstylesheetstring.h \
     view/settingsform.h \

@@ -39,9 +39,12 @@ SettingsForm::SettingsForm(MainGUIWindow *parent) : ui(new Ui::SettingsForm)
     result->addWidget(ok);
     result->setSpacing(15);
 
-    ThemeSettings *pan = new ThemeSettings("");
     panels = new QTabWidget;
+    ThemeSettings *pan = new ThemeSettings("");
     panels->addTab(pan, "Colors");
+    panels->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    ListFiguresSettings *list = new ListFiguresSettings("");
+    panels->addTab(list, "List figures");
     panels->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
     QVBoxLayout *layout = new QVBoxLayout;

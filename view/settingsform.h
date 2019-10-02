@@ -16,6 +16,7 @@
 #include "view/style/qstylesheetstring.h"
 #include "view/additionalobjects/qcolordialogwindow.h"
 #include "view/settingpanels/themesettings.h"
+#include "view/settingpanels/listfiguressettings.h"
 
 namespace Ui {
 class SettingsForm;
