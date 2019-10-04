@@ -1,161 +1,143 @@
 #include "qstylesheetstring.h"
 #include <QDebug>
 
-void QStyleSheetString::Border(int gPos, QString size, QString color, QString radius)
+void QStyleSheetString::CreateState(QString state, QString propereties, QString value)
 {
-    int posS = styleSheet.indexOf("border", gPos);
-    int posE = styleSheet.indexOf("px", posS);
-    if (posS == -1 || posE == -1)
-        return;
-    styleSheet = styleSheet.replace(posS + 8, posE - posS - 8, size);
-
-    posE = styleSheet.indexOf("#", posS);
-    if (posE == -1)
-        return;
-    styleSheet = styleSheet.replace(posE, 7, color);
-
-    posS = styleSheet.indexOf("border-radius", gPos);
-    posE = styleSheet.indexOf("px", posS);
-    if (posS == -1 || posE == -1)
-        return;
-    styleSheet = styleSheet.replace(posS + 15, posE - posS - 15, radius);
+	QString new_state = name + state + QLatin1String(" {"
+													 "") + propereties + ": " + value +
+									   QLatin1String("; }"
+													 "");
+	style_sheet.append(new_state);
 }
 
-void QStyleSheetString::Background(int gPos, QString color)
+void QStyleSheetString::AddState(QString state)
 {
-    int pos = styleSheet.indexOf("background", gPos);
-    if (pos == -1)
-        return;
-    styleSheet = styleSheet.replace(pos + 12, 7, color);
+	style_sheet.append(name + state + QLatin1String(""
+											 ""));
 }
 
-void QStyleSheetString::TextColor(int gPos, QString color)
+void QStyleSheetString::CreatePropereties(int position, QString propereties, QString value)
 {
-    int pos = styleSheet.indexOf("color", gPos);
-    if (pos == -1)
-        return;
-    styleSheet = styleSheet.replace(pos + 7, 7, color);
+	QString new_propereties = propereties + ": " + value + ";" + QLatin1String(""
+																			   "");
+	int start = style_sheet.indexOf("{", position);
+	style_sheet.insert(start + 1, new_propereties);
 }
 
-QStyleSheetString::QStyleSheetString(const QStyleSheetString &s)
+void QStyleSheetString::RenameObject(QString new_name)
 {
-    this->SetStyleSheet(s.styleSheet);
+	int size = name.size();
+	int pos = style_sheet.indexOf(name);
+	while (pos != -1)
+	{
+		style_sheet.replace(pos, size, new_name);
+		pos = style_sheet.indexOf(name);
+	}
+	name = new_name;
 }
 
-QStyleSheetString::QStyleSheetString()
+QStyleSheetString::QStyleSheetString(QString object)
 {
-    styleSheet = QLatin1String("QWidget {"
-                               "background: #6ac7bc;"
-                               "border: 2px solid #1d7f88;"
-                               "border-radius: 5px;"
-                               "color: #ffffff; }"
-                               "QPushButton::hover {"
-                               "background-color: #f24bef;"
-                               "color: #585957; }");
+	name = object;
+	style_sheet = name + QLatin1String(" {"
+									   "background: white;"
+									   "color: black; }"
+									   "");
 }
 
-QStyleSheetString::QStyleSheetString(QString name)
+QStyleSheetString::QStyleSheetString(const QStyleSheetString &other)
 {
-    styleSheet = "." + name + QLatin1String(" {"
-                              "background: #6ac7bc;"
-                              "border: 2px solid #1d7f88;"
-                              "border-radius: 5px;"
-                              "color: #ffffff; }"
-                              ".") + name + "::hover {"
-                              "background: #6ac7bc;"
-                              "border: 2px solid #1d7f88;"
-                              "border-radius: 5px;"
-                              "color: #ffffff; }";
+	style_sheet = other.style_sheet;
 }
 
-QList<QString> QStyleSheetString::GetBorder()
+void QStyleSheetString::SetStyleSheet(QString style)
 {
-    QList<QString> border;
-    int posS = styleSheet.indexOf("border");
-    int posE = styleSheet.indexOf("px", posS);
-    border.append(styleSheet.mid(posS + 8, posE - posS - 8));
-    border.append(styleSheet.mid(posE + 9, 7));
-    posS = styleSheet.indexOf("border-radius");
-    posE = styleSheet.indexOf("px", posS);
-    border.append(styleSheet.mid(posS + 15, posE - posS - 15));
-    return border;
+	style_sheet = style;
 }
 
-QString QStyleSheetString::GetBackground()
+void QStyleSheetString::SetPropereties(QString state, QString propereties, QString value)
 {
-    int pos = styleSheet.indexOf("background");
-    if (pos == -1)
-        return "#ffffff";
-    return styleSheet.mid(pos + 12, 7);
+	int start = style_sheet.indexOf(name+state);
+	if (start == -1)
+	{
+		CreateState(state, propereties, value);
+		return;
+	}
+	int range = style_sheet.indexOf("}", start);
+	int prop_loc = style_sheet.indexOf(propereties, start);
+	if (prop_loc == -1 || prop_loc > range)
+	{
+		CreatePropereties(start, propereties, value);
+		return;
+	}
+	int value_loc = style_sheet.indexOf(":", prop_loc) + 2;
+	int value_end = style_sheet.indexOf(";", value_loc);
+	style_sheet.replace(value_loc, value_end - value_loc, value);
 }
 
-QString QStyleSheetString::GetTextColor()
+void QStyleSheetString::SetPropereties(QString propereties, QString value)
 {
-    int pos = styleSheet.indexOf("color");
-    if (pos == -1)
-        return "#ffffff";
-    return styleSheet.mid(pos + 7, 7);
+	if (propereties.indexOf(':') == -1)
+	{
+		return;
+	}
+        int p = propereties.indexOf(':', 2);
+	QString state = propereties.left(p);
+	qDebug() << state;
+        propereties = propereties.mid(p+1);
+	qDebug() << propereties;
+	SetPropereties(state, propereties, value);
 }
 
-QString QStyleSheetString::GetHoverBackground()
+QString QStyleSheetString::GetStyleSheet()
 {
-    int pos = styleSheet.indexOf("hover");
-    pos = styleSheet.indexOf("background", pos);
-    if (pos == -1)
-        return "#ffffff";
-    return styleSheet.mid(pos + 12, 7);
+	return style_sheet;
 }
 
-void QStyleSheetString::SetBorder(QString size, QString color, QString radius)
+QString QStyleSheetString::GetPropereties(QString state, QString propereties)
 {
-    Border(0, size, color, radius);
+	int start = style_sheet.indexOf(name+state);
+	if (start == -1)
+	{
+		return "";
+	}
+	int range = style_sheet.indexOf("}", start);
+	int prop_loc = style_sheet.indexOf(propereties, start);
+	if (prop_loc == -1 || prop_loc > range)
+	{
+		return "";
+	}
+	int value_loc = style_sheet.indexOf(":", prop_loc) + 2;
+	int value_end = style_sheet.indexOf(";", value_loc);
+	return style_sheet.mid(value_loc, value_end - value_loc);
 }
 
-void QStyleSheetString::SetBackground(QString color)
+bool QStyleSheetString::RemovePropereties(QString state, QString propereties)
 {
-    Background(0, color);
+	int start = style_sheet.indexOf(name+state);
+	if (start == -1)
+	{
+		return false;
+	}
+	int range = style_sheet.indexOf("}", start);
+	int prop_loc = style_sheet.indexOf(propereties, start);
+	if (prop_loc == -1 || prop_loc > range)
+	{
+		return false;
+	}
+	int end_prop = style_sheet.indexOf(";", prop_loc);
+	style_sheet.remove(prop_loc, end_prop - prop_loc + 1);
+	return true;
 }
 
-void QStyleSheetString::SetTextColor(QString color)
+bool QStyleSheetString::RemoveState(QString state)
 {
-    TextColor(0, color);
-}
-
-void QStyleSheetString::SetHoverBorder(QString size, QString color, QString radius)
-{
-    int globalPos = styleSheet.indexOf("hover");
-    Border(globalPos, size, color, radius);
-}
-
-void QStyleSheetString::SetHoverBackground(QString color)
-{
-    int globalPos = styleSheet.indexOf("hover");
-    Background(globalPos, color);
-}
-
-void QStyleSheetString::SetHoverTextColor(QString color)
-{
-    int globalPos = styleSheet.indexOf("hover");
-    TextColor(globalPos, color);
-}
-
-void QStyleSheetString::SetName(QString new_name)
-{
-    int pos = styleSheet.indexOf('{');
-    QString name = styleSheet.left(pos - 1);
-    pos = styleSheet.indexOf(name);
-    while (pos != -1)
-    {
-        styleSheet.replace(pos, name.length(), new_name);
-        pos = styleSheet.indexOf(name, pos);
-    }
-}
-
-void QStyleSheetString::EraseBlock(QString block)
-{
-    int posS = styleSheet.indexOf(block);
-    int posE = styleSheet.indexOf("}", posS);
-    if (posS == -1 || posE == -1)
-        return;
-    styleSheet = styleSheet.remove(posS - 1, posE - posS + 2);
+	int start = style_sheet.indexOf(name+state);
+	if (start == -1)
+	{
+		return false;
+	}
+	int end = style_sheet.indexOf("}", start);
+	style_sheet.remove(start, end - start + 1);
+	return true;
 }

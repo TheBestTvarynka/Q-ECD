@@ -6,31 +6,22 @@
 
 class QStyleSheetString
 {
-    QString styleSheet;
-    void Border(int, QString, QString, QString);
-    void Background(int, QString);
-    void TextColor(int, QString);
+	QString style_sheet;
+	QString name;
 public:
-    QStyleSheetString(const QStyleSheetString &);
-    QStyleSheetString();
-    QStyleSheetString(QString);
-    QString GetStyleSheet() { return styleSheet; }
-
-    QList<QString> GetBorder();
-    QString GetBackground();
-    QString GetTextColor();
-    QString GetHoverBackground();
-
-    void SetStyleSheet(QString style) { styleSheet = style; }
-    void SetBorder(QString, QString, QString);
-    void SetBackground(QString);
-    void SetTextColor(QString);
-    void SetHoverBorder(QString, QString, QString);
-    void SetHoverBackground(QString);
-    void SetHoverTextColor(QString);
-    void SetName(QString);
-    void EraseBlock(QString);
-    ~QStyleSheetString() { styleSheet.clear(); }
+	QStyleSheetString(QString object);
+	QStyleSheetString(const QStyleSheetString &other);
+	void CreateState(QString state, QString propereties, QString value);
+	void AddState(QString state);
+	void CreatePropereties(int position, QString propereties, QString value);
+	void RenameObject(QString new_name);
+	void SetStyleSheet(QString style);
+	void SetPropereties(QString state, QString propereties, QString value);
+	void SetPropereties(QString propereties, QString value);
+	QString GetStyleSheet();
+	QString GetPropereties(QString state, QString propereties);
+	bool RemovePropereties(QString state, QString propereties);
+	bool RemoveState(QString state);
 };
 
 #endif // QSTYLESHEETSTRING_H
