@@ -68,6 +68,9 @@ QWidget *SettingsForm::CreateForm()
     barLayout->addLayout(CreateOptionLine("Border-width", (QChooseNumberBox *)colorSelectors["Bar border-width"]));
     barLayout->addLayout(CreateOptionLine("Border-color", (QChooseNumberBox *)colorSelectors["Bar border-color"]));
     barLayout->addLayout(CreateOptionLine("Text color", (QChooseNumberBox *)colorSelectors["Bar text color"]));
+    QWidget *barWidget = new QWidget;
+    barWidget->setLayout(barLayout);
+    barWidget->setStyleSheet(barStyle->GetStyleSheet());
 
     colorSelectors["Button background color"] = new QChooseColorButton(buttonStyle->GetPropereties("", "background"));
     colorSelectors["Button border-radius"] = new QChooseNumberBox(buttonStyle->GetPropereties("", "borer-radius").toInt());
@@ -93,6 +96,9 @@ QWidget *SettingsForm::CreateForm()
     buttonLayout->addLayout(CreateOptionLine("Border-width hover", (QChooseNumberBox *)colorSelectors["Button hover border-width"]));
     buttonLayout->addLayout(CreateOptionLine("Border-color hover", (QChooseNumberBox *)colorSelectors["Button hover border-color"]));
     buttonLayout->addLayout(CreateOptionLine("Text color hover", (QChooseNumberBox *)colorSelectors["Button hover text color"]));
+    QWidget *buttonWidget = new QWidget;
+    buttonWidget->setLayout(buttonLayout);
+    buttonWidget->setStyleSheet(barStyle->GetStyleSheet());
 
     colorSelectors["List background"] = new QChooseColorButton("#ffffff");
     colorSelectors["List text color"] = new QChooseColorButton("#ffffff");
@@ -112,11 +118,14 @@ QWidget *SettingsForm::CreateForm()
     listNewLayout->addLayout(CreateOptionLine("List background item selected active color", (QChooseColorButton *)colorSelectors["List background item selected active"]));
     listNewLayout->addLayout(CreateOptionLine("List background item selected !active color", (QChooseColorButton *)colorSelectors["List background item selected !active"]));
     listNewLayout->addLayout(CreateOptionLine("List background item hover color", (QChooseColorButton *)colorSelectors["List background item hover"]));
+    QWidget *listNewWidget = new QWidget;
+    listNewWidget->setLayout(listNewLayout);
+    listNewWidget->setStyleSheet(barStyle->GetStyleSheet());
 
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->addLayout(barLayout);
-    layout->addLayout(buttonLayout);
-    layout->addLayout(listNewLayout);
+    layout->addWidget(barWidget);
+    layout->addWidget(buttonWidget);
+    layout->addWidget(listNewWidget);
     QWidget *pageSettings = new QWidget;
     pageSettings->setLayout(layout);
 
