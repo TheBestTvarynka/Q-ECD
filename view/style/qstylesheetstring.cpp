@@ -36,6 +36,15 @@ void QStyleSheetString::RenameObject(QString new_name)
     name = new_name;
 }
 
+QStyleSheetString::QStyleSheetString()
+{
+    name = "QWidget";
+    style_sheet = QLatin1String(" {"
+                                "background: white;"
+                                "color: black; }"
+                                "");
+}
+
 QStyleSheetString::QStyleSheetString(QString object)
 {
     name = object;

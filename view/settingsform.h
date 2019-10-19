@@ -10,8 +10,8 @@
 #include <QList>
 #include <QMap>
 
-#include "view/style/qstylesheetstring.h"
-#include "view/additionalobjects/qcolordialogwindow.h"
+#include "additionalobjects/qchoosecolorbutton.h"
+#include "additionalobjects/qchoosenumberbox.h"
 
 namespace Ui {
 class SettingsForm;
@@ -26,10 +26,13 @@ class SettingsForm : public QDialog
     QStyleSheetString *barStyle;
     QStyleSheetString *buttonStyle;
     QString PATH;
-    QMap<QString, QPushButton *> colorSelectors;
+
+    QMap<QString, ISetter *> colorSelectors;
 public:
     explicit SettingsForm(MainGUIWindow *parent);
-    QLayout *CreateButtonParamenter(QString, QList<QWidget *>);
+    QColor SelectColor(QString);
+    QLayout *CreateForm();
+    QLayout *CreateOptionLine(QString, QWidget *);
     ~SettingsForm();
 public slots:
     void LoadSettings();

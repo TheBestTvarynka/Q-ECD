@@ -38,6 +38,9 @@ SOURCES += \
     cables/iobserver.cpp \
     data/datacables.cpp \
     figures/figurecreator.cpp \
+    view/additionalobjects/isetter.cpp \
+    view/additionalobjects/qchoosecolorbutton.cpp \
+    view/additionalobjects/qchoosenumberbox.cpp \
     view/qtreeitem.cpp \
     view/qtree.cpp \
     modes/removecablemode.cpp \
@@ -58,6 +61,9 @@ HEADERS += \
     cables/iobserver.h \
     data/datacables.h \
     figures/figurecreator.h \
+    view/additionalobjects/isetter.h \
+    view/additionalobjects/qchoosecolorbutton.h \
+    view/additionalobjects/qchoosenumberbox.h \
     view/qtreeitem.h \
     view/qtree.h \
     modes/removecablemode.h \

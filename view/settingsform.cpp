@@ -11,15 +11,6 @@ SettingsForm::SettingsForm(MainGUIWindow *parent) : ui(new Ui::SettingsForm)
     this->setWindowTitle("Settings");
     LoadSettings();
 
-    QPushButton *backgroundBarButton = new QPushButton("");
-
-    QPushButton *borderBarButton = new QPushButton("");
-
-    QPushButton *textColorBarButton = new QPushButton("");
-
-    QVBoxLayout *page = new QVBoxLayout;
-    page->addWidget(backgroundBarButton);
-
     QHBoxLayout *result = new QHBoxLayout;
     QSpacerItem *result_space = new QSpacerItem(40, 60, QSizePolicy::Expanding, QSizePolicy::Preferred);
     QPushButton *cansel = new QPushButton("Cancel");
@@ -38,7 +29,7 @@ SettingsForm::SettingsForm(MainGUIWindow *parent) : ui(new Ui::SettingsForm)
     result->setSpacing(15);
 
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->addLayout(page);
+    layout->addLayout(CreateForm());
     layout->addLayout(result);
 
     connect(apply, SIGNAL(clicked()), this, SLOT(ApplySettings()));
@@ -51,18 +42,35 @@ SettingsForm::SettingsForm(MainGUIWindow *parent) : ui(new Ui::SettingsForm)
                         "color: black; }");
 }
 
-QLayout *SettingsForm::CreateButtonParamenter(QString text, QList<QWidget *> parameters)
+QColor SettingsForm::SelectColor(QString startColor)
+{
+    QColorDialogWindow *color = new QColorDialogWindow(startColor);
+    QColor barColor = color->GetColor();
+    delete color;
+    return  barColor;
+}
+
+QLayout *SettingsForm::CreateForm()
+{
+    colorSelectors["Bar background color"] = new QChooseColorButton(barStyle->GetPropereties("", "background"));
+    colorSelectors["Bar border-radius"] = new QChooseNumberBox(barStyle->GetPropereties("", "borer-radius"));
+    qDebug() << "qqqqqq";
+    QVBoxLayout *box = new QVBoxLayout;
+    box->addLayout(CreateOptionLine("Bar background color", (QChooseColorButton *)colorSelectors["Bar background color"]));
+    box->addLayout(CreateOptionLine("Bar border-radius", (QChooseNumberBox *)colorSelectors["Bar border-radius"]));
+    return box;
+}
+
+QLayout *SettingsForm::CreateOptionLine(QString text, QWidget *parameter)
 {
     QLabel *itemText = new QLabel(text);
     QSpacerItem *space = new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Preferred);
     QHBoxLayout *settingItem = new QHBoxLayout;
     settingItem->addWidget(itemText);
     settingItem->addItem(space);
-    QListIterator<QWidget *> it(parameters);
-    while (it.hasNext())
-    {
-        settingItem->addWidget(it.next());
-    }
+    qDebug() << "aaaa";
+    settingItem->addWidget(parameter);
+    qDebug() << "aaaa";
     return settingItem;
 }
 

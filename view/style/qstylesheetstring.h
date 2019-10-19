@@ -9,6 +9,7 @@ class QStyleSheetString
     QString style_sheet;
     QString name;
 public:
+    QStyleSheetString();
     QStyleSheetString(QString object);
     QStyleSheetString(const QStyleSheetString &other);
     void CreateState(QString state, QString propereties, QString value);
