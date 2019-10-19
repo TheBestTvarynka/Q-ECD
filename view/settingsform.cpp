@@ -94,9 +94,29 @@ QWidget *SettingsForm::CreateForm()
     buttonLayout->addLayout(CreateOptionLine("Border-color hover", (QChooseNumberBox *)colorSelectors["Button hover border-color"]));
     buttonLayout->addLayout(CreateOptionLine("Text color hover", (QChooseNumberBox *)colorSelectors["Button hover text color"]));
 
+    colorSelectors["List background"] = new QChooseColorButton("#ffffff");
+    colorSelectors["List text color"] = new QChooseColorButton("#ffffff");
+    colorSelectors["List selection-background-color"] = new QChooseColorButton("#ffffff");
+    colorSelectors["List background item alternate"] = new QChooseColorButton("#ffffff");
+    colorSelectors["List background item selected"] = new QChooseColorButton("#ffffff");
+    colorSelectors["List background item selected active"] = new QChooseColorButton("#ffffff");
+    colorSelectors["List background item selected !active"] = new QChooseColorButton("#ffffff");
+    colorSelectors["List background item hover"] = new QChooseColorButton("#ffffff");
+
+    QVBoxLayout *listNewLayout = new QVBoxLayout;
+    listNewLayout->addLayout(CreateOptionLine("List background color", (QChooseColorButton *)colorSelectors["List background"]));
+    listNewLayout->addLayout(CreateOptionLine("List text color", (QChooseColorButton *)colorSelectors["List text color"]));
+    listNewLayout->addLayout(CreateOptionLine("List selection-background-color", (QChooseColorButton *)colorSelectors["List selection-background-color"]));
+    listNewLayout->addLayout(CreateOptionLine("List background item alternate color", (QChooseColorButton *)colorSelectors["List background item alternate"]));
+    listNewLayout->addLayout(CreateOptionLine("List background item selected color", (QChooseColorButton *)colorSelectors["List background item selected"]));
+    listNewLayout->addLayout(CreateOptionLine("List background item selected active color", (QChooseColorButton *)colorSelectors["List background item selected active"]));
+    listNewLayout->addLayout(CreateOptionLine("List background item selected !active color", (QChooseColorButton *)colorSelectors["List background item selected !active"]));
+    listNewLayout->addLayout(CreateOptionLine("List background item hover color", (QChooseColorButton *)colorSelectors["List background item hover"]));
+
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addLayout(barLayout);
     layout->addLayout(buttonLayout);
+    layout->addLayout(listNewLayout);
     QWidget *pageSettings = new QWidget;
     pageSettings->setLayout(layout);
 
