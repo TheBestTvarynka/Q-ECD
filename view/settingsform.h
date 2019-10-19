@@ -2,6 +2,7 @@
 #define SETTINGSFORM_H
 
 #include <QLabel>
+#include <QScrollArea>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QFormLayout>

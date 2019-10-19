@@ -28,8 +28,12 @@ SettingsForm::SettingsForm(MainGUIWindow *parent) : ui(new Ui::SettingsForm)
     result->addWidget(ok);
     result->setSpacing(15);
 
+    QScrollArea *baseSettings = new QScrollArea;
+    baseSettings->setWidget(CreateForm());
+    baseSettings->setWidgetResizable(true);
+
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(CreateForm());
+    layout->addWidget(baseSettings);
     layout->addLayout(result);
 
     connect(apply, SIGNAL(clicked()), this, SLOT(ApplySettings()));
