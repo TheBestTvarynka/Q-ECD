@@ -8,17 +8,24 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
 
     // set defoult settings for case when we can't open configure files
     barStyle = new QStyleSheetString("QWidget");
-    barStyle->SetBorder("2", "#1d7f88", "5");
-    barStyle->SetBackground("#6ac7bc");
-    barStyle->SetTextColor("#000000");
-    barStyle->EraseBlock("QWidget::hover");
+    barStyle->SetPropereties("", "border-style", "solid");
+    barStyle->SetPropereties("", "border-width", "2px");
+    barStyle->SetPropereties("", "border-color", "#1d7f88");
+    barStyle->SetPropereties("", "border-radius", "5px");
+    barStyle->SetPropereties("", "background", "#6ac7bc");
+    barStyle->SetPropereties("", "color", "#000000");
+    barStyle->RemoveState("::hover");
 
     buttonStyle = new QStyleSheetString("QPushButton");
-    buttonStyle->SetBorder("2", "#67d43f", "5");
-    buttonStyle->SetHoverBorder("2", "#1d7f88", "5");
-    buttonStyle->SetBackground("#ffffff");
-    buttonStyle->SetHoverBackground("#f24bef");
-    buttonStyle->SetTextColor("#86ab29");
+    buttonStyle->SetPropereties("", "border-style", "solid");
+    buttonStyle->SetPropereties("", "border-width", "2px");
+    buttonStyle->SetPropereties("", "border-color", "#67d43f");
+    buttonStyle->SetPropereties("", "border-radius", "5px");
+    buttonStyle->SetPropereties("::hover", "border", "2px #1d7f88");
+    buttonStyle->SetPropereties("::hover", "border-radius", "5px");
+    buttonStyle->SetPropereties("", "background", "#ffffff");
+    buttonStyle->SetPropereties("::hover", "background", "#f24bef");
+    buttonStyle->SetPropereties("", "color", "#86ab29");
 
     actions = new QWidget(this);
     actions->setLayout(new QHBoxLayout);
@@ -61,7 +68,6 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     connect(list_new, SIGNAL(itemClicked(QListWidgetItem *)), ui->widget, SLOT(CreateFigure(QListWidgetItem *)));
     list_new->setStyleSheet("QListWidget{"
                             "border: none;"
-//                            "border-radius: 5px;"
                             "background: #d0f3f7;"
                             "color: black;"
                             "selection-background-color: darkgray;"
@@ -85,18 +91,16 @@ MainGUIWindow::MainGUIWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     modes->setStyleSheet(barStyle->GetStyleSheet());
 
     logo = new QLabel("Q-ECD");
-//    logo->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     QStyleSheetString str(*barStyle);
-    str.SetName("QLabel");
+    str.RenameObject("QLabel");
     logo->setStyleSheet(str.GetStyleSheet());
 
+
     QPushButton *setObjectMode = new QPushButton("Object Mode");
-//    setObjectMode->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     setObjectMode->setStyleSheet(buttonStyle->GetStyleSheet());
     setObjectMode->setFixedHeight(40);
 
     QPushButton *setDrawCableMode = new QPushButton("Draw Cable Mode");
-//    setDrawCableMode->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     setDrawCableMode->setStyleSheet(buttonStyle->GetStyleSheet());
     setDrawCableMode->setFixedHeight(40);
 
@@ -352,7 +356,7 @@ void MainGUIWindow::ReadSettings()
     listNew->setStyleSheet(barStyle->GetStyleSheet());
 
     QStyleSheetString str(*barStyle);
-    str.SetName("QLabel");
+    str.RenameObject("QLabel");
     logo->setStyleSheet(str.GetStyleSheet());
 
     QFile button_css(PATH + "buttonStyle.css");
