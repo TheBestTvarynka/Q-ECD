@@ -29,7 +29,7 @@ SettingsForm::SettingsForm(MainGUIWindow *parent) : ui(new Ui::SettingsForm)
     result->setSpacing(15);
 
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->addLayout(CreateForm());
+    layout->addWidget(CreateForm());
     layout->addLayout(result);
 
     connect(apply, SIGNAL(clicked()), this, SLOT(ApplySettings()));
@@ -50,15 +50,53 @@ QColor SettingsForm::SelectColor(QString startColor)
     return  barColor;
 }
 
-QLayout *SettingsForm::CreateForm()
+QWidget *SettingsForm::CreateForm()
 {
     colorSelectors["Bar background color"] = new QChooseColorButton(barStyle->GetPropereties("", "background"));
-    colorSelectors["Bar border-radius"] = new QChooseNumberBox(barStyle->GetPropereties("", "borer-radius"));
-    qDebug() << "qqqqqq";
-    QVBoxLayout *box = new QVBoxLayout;
-    box->addLayout(CreateOptionLine("Bar background color", (QChooseColorButton *)colorSelectors["Bar background color"]));
-    box->addLayout(CreateOptionLine("Bar border-radius", (QChooseNumberBox *)colorSelectors["Bar border-radius"]));
-    return box;
+    colorSelectors["Bar border-radius"] = new QChooseNumberBox(barStyle->GetPropereties("", "borer-radius").toInt());
+    colorSelectors["Bar border-width"] = new QChooseNumberBox(barStyle->GetPropereties("", "borer-width").toInt());
+    colorSelectors["Bar border-color"] = new QChooseColorButton(barStyle->GetPropereties("", "border-color"));
+    colorSelectors["Bar text color"] = new QChooseColorButton(barStyle->GetPropereties("", "color"));
+
+    QVBoxLayout *barLayout = new QVBoxLayout;
+    barLayout->addLayout(CreateOptionLine("Background color", (QChooseColorButton *)colorSelectors["Bar background color"]));
+    barLayout->addLayout(CreateOptionLine("Border-radius", (QChooseNumberBox *)colorSelectors["Bar border-radius"]));
+    barLayout->addLayout(CreateOptionLine("Border-width", (QChooseNumberBox *)colorSelectors["Bar border-width"]));
+    barLayout->addLayout(CreateOptionLine("Border-color", (QChooseNumberBox *)colorSelectors["Bar border-color"]));
+    barLayout->addLayout(CreateOptionLine("Text color", (QChooseNumberBox *)colorSelectors["Bar text color"]));
+
+    colorSelectors["Button background color"] = new QChooseColorButton(buttonStyle->GetPropereties("", "background"));
+    colorSelectors["Button border-radius"] = new QChooseNumberBox(buttonStyle->GetPropereties("", "borer-radius").toInt());
+    colorSelectors["Button border-width"] = new QChooseNumberBox(buttonStyle->GetPropereties("", "borer-width").toInt());
+    colorSelectors["Button border-color"] = new QChooseColorButton(buttonStyle->GetPropereties("", "border-color"));
+    colorSelectors["Button text color"] = new QChooseColorButton(buttonStyle->GetPropereties("", "color"));
+
+    colorSelectors["Button hover background color"] = new QChooseColorButton(buttonStyle->GetPropereties("::hover", "background"));
+    colorSelectors["Button hover border-radius"] = new QChooseNumberBox(buttonStyle->GetPropereties("::hover", "borer-radius").toInt());
+    colorSelectors["Button hover border-width"] = new QChooseNumberBox(buttonStyle->GetPropereties("::hover", "borer-width").toInt());
+    colorSelectors["Button hover border-color"] = new QChooseColorButton(buttonStyle->GetPropereties("::hover", "border-color"));
+    colorSelectors["Button hover text color"] = new QChooseColorButton(buttonStyle->GetPropereties("::hover", "color"));
+
+    QVBoxLayout *buttonLayout = new QVBoxLayout;
+    buttonLayout->addLayout(CreateOptionLine("Background color", (QChooseColorButton *)colorSelectors["Button background color"]));
+    buttonLayout->addLayout(CreateOptionLine("Border-radius", (QChooseNumberBox *)colorSelectors["Button border-radius"]));
+    buttonLayout->addLayout(CreateOptionLine("Border-width", (QChooseNumberBox *)colorSelectors["Button border-width"]));
+    buttonLayout->addLayout(CreateOptionLine("Border-color", (QChooseNumberBox *)colorSelectors["Button border-color"]));
+    buttonLayout->addLayout(CreateOptionLine("Text color", (QChooseNumberBox *)colorSelectors["Button text color"]));
+
+    buttonLayout->addLayout(CreateOptionLine("Background hover color", (QChooseColorButton *)colorSelectors["Button hover background color"]));
+    buttonLayout->addLayout(CreateOptionLine("Border-radius hover", (QChooseNumberBox *)colorSelectors["Button hover border-radius"]));
+    buttonLayout->addLayout(CreateOptionLine("Border-width hover", (QChooseNumberBox *)colorSelectors["Button hover border-width"]));
+    buttonLayout->addLayout(CreateOptionLine("Border-color hover", (QChooseNumberBox *)colorSelectors["Button hover border-color"]));
+    buttonLayout->addLayout(CreateOptionLine("Text color hover", (QChooseNumberBox *)colorSelectors["Button hover text color"]));
+
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addLayout(barLayout);
+    layout->addLayout(buttonLayout);
+    QWidget *pageSettings = new QWidget;
+    pageSettings->setLayout(layout);
+
+    return pageSettings;
 }
 
 QLayout *SettingsForm::CreateOptionLine(QString text, QWidget *parameter)
@@ -68,9 +106,8 @@ QLayout *SettingsForm::CreateOptionLine(QString text, QWidget *parameter)
     QHBoxLayout *settingItem = new QHBoxLayout;
     settingItem->addWidget(itemText);
     settingItem->addItem(space);
-    qDebug() << "aaaa";
+    parameter->setFixedWidth(200);
     settingItem->addWidget(parameter);
-    qDebug() << "aaaa";
     return settingItem;
 }
 

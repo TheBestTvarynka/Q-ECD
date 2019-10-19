@@ -31,7 +31,7 @@ class SettingsForm : public QDialog
 public:
     explicit SettingsForm(MainGUIWindow *parent);
     QColor SelectColor(QString);
-    QLayout *CreateForm();
+    QWidget *CreateForm();
     QLayout *CreateOptionLine(QString, QWidget *);
     ~SettingsForm();
 public slots:

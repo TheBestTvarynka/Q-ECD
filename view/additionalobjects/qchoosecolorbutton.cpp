@@ -6,6 +6,7 @@ QChooseColorButton::QChooseColorButton(QVariant startValue) : ISetter(startValue
                                       "border: 2px solid white; }"));
     style.SetPropereties("", "background", GetValue().toString());
     this->setStyleSheet(style.GetStyleSheet());
+    this->setFixedHeight(30);
     connect(this, SIGNAL(clicked()), this, SLOT(ChooseColor()));
 }
 
