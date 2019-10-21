@@ -29,7 +29,9 @@ class SettingsForm : public QDialog
     QStyleSheetString *listNewStyle;
     QString PATH;
 
-    QMap<QString, ISetter *> colorSelectors;
+    QMap<QString, ISetter *> barTheme;
+    QMap<QString, ISetter *> buttonsTheme;
+    QMap<QString, ISetter *> listNewTheme;
 public:
     explicit SettingsForm(MainGUIWindow *parent);
     QColor SelectColor(QString);
