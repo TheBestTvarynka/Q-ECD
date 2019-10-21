@@ -100,14 +100,14 @@ QWidget *SettingsForm::CreateForm()
     buttonWidget->setLayout(buttonLayout);
     buttonWidget->setStyleSheet(barStyle->GetStyleSheet());
 
-    colorSelectors["List background"] = new QChooseColorButton("#ffffff");
-    colorSelectors["List text color"] = new QChooseColorButton("#ffffff");
-    colorSelectors["List selection-background-color"] = new QChooseColorButton("#ffffff");
-    colorSelectors["List background item alternate"] = new QChooseColorButton("#ffffff");
-    colorSelectors["List background item selected"] = new QChooseColorButton("#ffffff");
-    colorSelectors["List background item selected active"] = new QChooseColorButton("#ffffff");
-    colorSelectors["List background item selected !active"] = new QChooseColorButton("#ffffff");
-    colorSelectors["List background item hover"] = new QChooseColorButton("#ffffff");
+    colorSelectors["List background"] = new QChooseColorButton(listNewStyle->GetPropereties("", "background"));
+    colorSelectors["List text color"] = new QChooseColorButton(listNewStyle->GetPropereties("", "color"));
+    colorSelectors["List selection-background-color"] = new QChooseColorButton(listNewStyle->GetPropereties("", "selection-background-color"));
+    colorSelectors["List background item alternate"] = new QChooseColorButton(listNewStyle->GetPropereties("::item:alternate", "background"));
+    colorSelectors["List background item selected"] = new QChooseColorButton(listNewStyle->GetPropereties("::item:selected", "background"));
+    colorSelectors["List background item selected active"] = new QChooseColorButton(listNewStyle->GetPropereties("::item:selected:!active", "background"));
+    colorSelectors["List background item selected !active"] = new QChooseColorButton(listNewStyle->GetPropereties("::item:selected:active", "background"));
+    colorSelectors["List background item hover"] = new QChooseColorButton(listNewStyle->GetPropereties("::item:hover", "background"));
 
     QVBoxLayout *listNewLayout = new QVBoxLayout;
     listNewLayout->addLayout(CreateOptionLine("List background color", (QChooseColorButton *)colorSelectors["List background"]));
@@ -170,6 +170,16 @@ void SettingsForm::LoadSettings()
     buttonStyle = new QStyleSheetString("QPushButton");
     buttonStyle->SetStyleSheet(QLatin1String(button_css.readAll()));
     button_css.close();
+
+    QFile list_new_css(PATH + "listNew.css");
+    list_new_css.open(QFile::ReadOnly);
+    if (!list_new_css.isOpen())
+    {
+        qDebug() << "error: file not found";
+    }
+    listNewStyle = new QStyleSheetString("QListWidget");
+    listNewStyle->SetStyleSheet(QLatin1String(list_new_css.readAll()));
+    list_new_css.close();
 }
 
 void SettingsForm::ApplySettings()

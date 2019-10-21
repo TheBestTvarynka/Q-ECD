@@ -26,6 +26,7 @@ class SettingsForm : public QDialog
     MainGUIWindow *Parent;
     QStyleSheetString *barStyle;
     QStyleSheetString *buttonStyle;
+    QStyleSheetString *listNewStyle;
     QString PATH;
 
     QMap<QString, ISetter *> colorSelectors;
