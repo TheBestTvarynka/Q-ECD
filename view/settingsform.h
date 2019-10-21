@@ -34,7 +34,6 @@ class SettingsForm : public QDialog
     QMap<QString, ISetter *> listNewTheme;
 public:
     explicit SettingsForm(MainGUIWindow *parent);
-    QColor SelectColor(QString);
     QWidget *CreateForm();
     QLayout *CreateOptionLine(QString, QWidget *);
     ~SettingsForm();

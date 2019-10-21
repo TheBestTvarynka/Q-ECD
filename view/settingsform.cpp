@@ -46,26 +46,18 @@ SettingsForm::SettingsForm(MainGUIWindow *parent) : ui(new Ui::SettingsForm)
                         "color: black; }");
 }
 
-QColor SettingsForm::SelectColor(QString startColor)
-{
-    QColorDialogWindow *color = new QColorDialogWindow(startColor);
-    QColor barColor = color->GetColor();
-    delete color;
-    return  barColor;
-}
-
 QWidget *SettingsForm::CreateForm()
 {
     qDebug() << "==========START========";
 
-    barTheme[":backgound"] = new QChooseColorButton(barStyle->GetPropereties("", "background"));
-    barTheme[":border-radius"] = new QChooseNumberBox(barStyle->GetPropereties("", "borer-radius").toInt());
-    barTheme[":border-width"] = new QChooseNumberBox(barStyle->GetPropereties("", "borer-width").toInt());
+    barTheme[":background"] = new QChooseColorButton(barStyle->GetPropereties("", "background"));
+    barTheme[":border-radius"] = new QChooseNumberBox(barStyle->GetPropereties("", "border-radius"));
+    barTheme[":border-width"] = new QChooseNumberBox(barStyle->GetPropereties("", "border-width"));
     barTheme[":border-color"] = new QChooseColorButton(barStyle->GetPropereties("", "border-color"));
     barTheme[":color"] = new QChooseColorButton(barStyle->GetPropereties("", "color"));
 
     QVBoxLayout *barLayout = new QVBoxLayout;
-    barLayout->addLayout(CreateOptionLine("Background color", (QChooseColorButton *)barTheme[":backgound"]));
+    barLayout->addLayout(CreateOptionLine("Background color", (QChooseColorButton *)barTheme[":background"]));
     barLayout->addLayout(CreateOptionLine("Border-radius", (QChooseNumberBox *)barTheme[":border-radius"]));
     barLayout->addLayout(CreateOptionLine("Border-width", (QChooseNumberBox *)barTheme[":border-width"]));
     barLayout->addLayout(CreateOptionLine("Border-color", (QChooseColorButton *)barTheme[":border-color"]));
@@ -75,14 +67,14 @@ QWidget *SettingsForm::CreateForm()
     barWidget->setStyleSheet(barStyle->GetStyleSheet());
 
     buttonsTheme[":background"] = new QChooseColorButton(buttonStyle->GetPropereties("", "background"));
-    buttonsTheme[":border-radius"] = new QChooseNumberBox(buttonStyle->GetPropereties("", "borer-radius").toInt());
-    buttonsTheme[":border-width"] = new QChooseNumberBox(buttonStyle->GetPropereties("", "borer-width").toInt());
+    buttonsTheme[":border-radius"] = new QChooseNumberBox(buttonStyle->GetPropereties("", "border-radius"));
+    buttonsTheme[":border-width"] = new QChooseNumberBox(buttonStyle->GetPropereties("", "border-width"));
     buttonsTheme[":border-color"] = new QChooseColorButton(buttonStyle->GetPropereties("", "border-color"));
     buttonsTheme[":color"] = new QChooseColorButton(buttonStyle->GetPropereties("", "color"));
 
     buttonsTheme["hover:background"] = new QChooseColorButton(buttonStyle->GetPropereties("::hover", "background"));
-    buttonsTheme["hover:border-radius"] = new QChooseNumberBox(buttonStyle->GetPropereties("::hover", "borer-radius").toInt());
-    buttonsTheme["hover:border-width"] = new QChooseNumberBox(buttonStyle->GetPropereties("::hover", "borer-width").toInt());
+    buttonsTheme["hover:border-radius"] = new QChooseNumberBox(buttonStyle->GetPropereties("::hover", "border-radius"));
+    buttonsTheme["hover:border-width"] = new QChooseNumberBox(buttonStyle->GetPropereties("::hover", "border-width"));
     buttonsTheme["hover:border-color"] = new QChooseColorButton(buttonStyle->GetPropereties("::hover", "border-color"));
     buttonsTheme["hover:color"] = new QChooseColorButton(buttonStyle->GetPropereties("::hover", "color"));
 
@@ -186,14 +178,37 @@ void SettingsForm::LoadSettings()
 
 void SettingsForm::ApplySettings()
 {
-//    int size =  panels->count();
-//    QWidget *current_panel;
-//    for (int i = 0; i < size; i++)
-//    {
-//        current_panel = panels->widget(i);
-//        emit current_panel->windowTitleChanged("");
-//    }
-//    emit ReadSettings();
+    QMapIterator<QString, ISetter *> itBar(barTheme);
+    while (itBar.hasNext())
+    {
+        itBar.next();
+        barStyle->SetPropereties(itBar.key(), itBar.value()->GetValue().toString());
+    }
+    QFile barThemeFile("/home/qkation/.config/q-ecd/theme/barStyle.css");
+    barThemeFile.open(QIODevice::WriteOnly | QIODevice::Text);
+    barThemeFile.write(barStyle->GetStyleSheet().toUtf8());
+    barThemeFile.close();
+    QMapIterator<QString, ISetter *> itButton(buttonsTheme);
+    while (itButton.hasNext())
+    {
+        itButton.next();
+        buttonStyle->SetPropereties(itButton.key(), itButton.value()->GetValue().toString());
+    }
+    QFile buttonThemeFile("/home/qkation/.config/q-ecd/theme/buttonStyle.css");
+    buttonThemeFile.open(QIODevice::WriteOnly | QIODevice::Text);
+    buttonThemeFile.write(buttonStyle->GetStyleSheet().toUtf8());
+    buttonThemeFile.close();
+    QMapIterator<QString, ISetter *> itListNew(listNewTheme);
+    while (itListNew.hasNext())
+    {
+        itListNew.next();
+        listNewStyle->SetPropereties(itListNew.key(), itListNew.value()->GetValue().toString());
+    }
+    QFile listNewThemeFile("/home/qkation/.config/q-ecd/theme/listNew.css");
+    listNewThemeFile.open(QIODevice::WriteOnly | QIODevice::Text);
+    listNewThemeFile.write(listNewStyle->GetStyleSheet().toUtf8());
+    listNewThemeFile.close();
+    emit ReadSettings();
 }
 
 void SettingsForm::Cancel()

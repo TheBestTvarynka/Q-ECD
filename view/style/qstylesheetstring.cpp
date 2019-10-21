@@ -4,9 +4,9 @@
 void QStyleSheetString::CreateState(QString state, QString propereties, QString value)
 {
     QString new_state = name + state + QLatin1String(" {"
-													 "") + propereties + ": " + value +
-									   QLatin1String("; }"
-													 "");
+                                                     "") + propereties + ": " + value +
+                                       QLatin1String("; }"
+                                                     "");
     style_sheet.append(new_state);
 }
 
@@ -49,20 +49,22 @@ QStyleSheetString::QStyleSheetString(QString object)
 {
     name = object;
     style_sheet = name + QLatin1String(" {"
-                                       "background: white;"
-                                       "color: black; }"
-                                       "");
+                                                                       "background: white;"
+                                                                       "color: black; }"
+                                                                       "");
 }
 
 QStyleSheetString::QStyleSheetString(const QStyleSheetString &other)
 {
-	style_sheet = other.style_sheet;
-	name = other.name;
+    style_sheet = other.style_sheet;
+    name = other.name;
 }
 
 void QStyleSheetString::SetStyleSheet(QString style)
 {
-	style_sheet = style;
+    style_sheet = style;
+    int p = style_sheet.indexOf(" ");
+    name = style_sheet.left(p);
 }
 
 void QStyleSheetString::SetPropereties(QString state, QString propereties, QString value)
@@ -91,7 +93,7 @@ void QStyleSheetString::SetPropereties(QString propereties, QString value)
     int f = propereties.indexOf(':');
     while (f != -1)
     {
-    	p = f;
+        p = f;
         f = propereties.indexOf(':', p + 1);
     }
     if (p == -1)
@@ -105,7 +107,7 @@ void QStyleSheetString::SetPropereties(QString propereties, QString value)
 
 QString QStyleSheetString::GetStyleSheet()
 {
-	return style_sheet;
+    return style_sheet;
 }
 
 QString QStyleSheetString::GetPropereties(QString state, QString propereties)
@@ -128,7 +130,7 @@ QString QStyleSheetString::GetPropereties(QString state, QString propereties)
 
 QString QStyleSheetString::GetName()
 {
-	return name;
+    return name;
 }
 
 bool QStyleSheetString::RemovePropereties(QString state, QString propereties)
@@ -160,4 +162,3 @@ bool QStyleSheetString::RemoveState(QString state)
     style_sheet.remove(start, end - start + 1);
     return true;
 }
-
