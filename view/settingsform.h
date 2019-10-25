@@ -28,6 +28,9 @@ class SettingsForm : public QDialog
     QStyleSheetString *buttonStyle;
     QStyleSheetString *listNewStyle;
     QString PATH;
+    QWidget *formSettings;
+    QList<QWidget *> allBars;
+    QList<QWidget *> allButtons;
 
     QMap<QString, ISetter *> barTheme;
     QMap<QString, ISetter *> buttonsTheme;

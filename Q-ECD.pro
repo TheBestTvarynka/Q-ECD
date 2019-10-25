@@ -72,8 +72,7 @@ HEADERS += \
     view/additionalobjects/qcolordialogwindow.h
 
 FORMS += \
-        mainguiwindow.ui \
-    view/settingsform.ui
+        mainguiwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -1,25 +1,26 @@
 #include "settingsform.h"
-#include "ui_settingsform.h"
 #include "mainguiwindow.h"
 #include <QDebug>
 
-SettingsForm::SettingsForm(MainGUIWindow *parent) : ui(new Ui::SettingsForm)
+SettingsForm::SettingsForm(MainGUIWindow *parent)
 {
     PATH = "/home/qkation/.config/q-ecd/theme/";
     Parent = parent;
-    ui->setupUi(this);
     this->setWindowTitle("Settings");
     LoadSettings();
 
     QHBoxLayout *result = new QHBoxLayout;
     QSpacerItem *result_space = new QSpacerItem(40, 60, QSizePolicy::Expanding, QSizePolicy::Preferred);
     QPushButton *cansel = new QPushButton("Cancel");
+    allButtons.append(cansel);
     cansel->setStyleSheet(buttonStyle->GetStyleSheet());
     cansel->setFixedSize(120, 35);
     QPushButton *apply = new QPushButton("Apply changes");
+    allButtons.append(apply);
     apply->setStyleSheet(buttonStyle->GetStyleSheet());
     apply->setFixedSize(120, 35);
     QPushButton *ok = new QPushButton("Ok");
+    allButtons.append(ok);
     ok->setStyleSheet(buttonStyle->GetStyleSheet());
     ok->setFixedSize(120, 35);
     result->addItem(result_space);
@@ -28,11 +29,16 @@ SettingsForm::SettingsForm(MainGUIWindow *parent) : ui(new Ui::SettingsForm)
     result->addWidget(ok);
     result->setSpacing(15);
 
+    formSettings = CreateForm();
     QScrollArea *baseSettings = new QScrollArea;
-    baseSettings->setWidget(CreateForm());
+    baseSettings->setStyleSheet("QScrollArea {"
+                                "background: transparent; }");
+    baseSettings->setWidget(formSettings);
     baseSettings->setWidgetResizable(true);
 
     QVBoxLayout *layout = new QVBoxLayout;
+    layout->setSpacing(5);
+    layout->setMargin(5);
     layout->addWidget(baseSettings);
     layout->addLayout(result);
 
@@ -41,15 +47,14 @@ SettingsForm::SettingsForm(MainGUIWindow *parent) : ui(new Ui::SettingsForm)
     connect(cansel, SIGNAL(clicked()), this, SLOT(Cancel()));
 
     this->setLayout(layout);
-    this->setStyleSheet("QWidget {"
-                        "background-color: #d0f3f7;"
-                        "color: black; }");
+    this->setStyleSheet("background: " + barStyle->GetPropereties("", "background"));
+    QStyleSheetString forMainPage(*barStyle);
+    forMainPage.SetPropereties("", "border", "none");
+    formSettings->setStyleSheet(forMainPage.GetStyleSheet());
 }
 
 QWidget *SettingsForm::CreateForm()
 {
-    qDebug() << "==========START========";
-
     barTheme[":background"] = new QChooseColorButton(barStyle->GetPropereties("", "background"));
     barTheme[":border-radius"] = new QChooseNumberBox(barStyle->GetPropereties("", "border-radius"));
     barTheme[":border-width"] = new QChooseNumberBox(barStyle->GetPropereties("", "border-width"));
@@ -65,6 +70,7 @@ QWidget *SettingsForm::CreateForm()
     QWidget *barWidget = new QWidget;
     barWidget->setLayout(barLayout);
     barWidget->setStyleSheet(barStyle->GetStyleSheet());
+    allBars.append(barWidget);
 
     buttonsTheme[":background"] = new QChooseColorButton(buttonStyle->GetPropereties("", "background"));
     buttonsTheme[":border-radius"] = new QChooseNumberBox(buttonStyle->GetPropereties("", "border-radius"));
@@ -72,11 +78,11 @@ QWidget *SettingsForm::CreateForm()
     buttonsTheme[":border-color"] = new QChooseColorButton(buttonStyle->GetPropereties("", "border-color"));
     buttonsTheme[":color"] = new QChooseColorButton(buttonStyle->GetPropereties("", "color"));
 
-    buttonsTheme["hover:background"] = new QChooseColorButton(buttonStyle->GetPropereties("::hover", "background"));
-    buttonsTheme["hover:border-radius"] = new QChooseNumberBox(buttonStyle->GetPropereties("::hover", "border-radius"));
-    buttonsTheme["hover:border-width"] = new QChooseNumberBox(buttonStyle->GetPropereties("::hover", "border-width"));
-    buttonsTheme["hover:border-color"] = new QChooseColorButton(buttonStyle->GetPropereties("::hover", "border-color"));
-    buttonsTheme["hover:color"] = new QChooseColorButton(buttonStyle->GetPropereties("::hover", "color"));
+    buttonsTheme["::hover:background"] = new QChooseColorButton(buttonStyle->GetPropereties("::hover", "background"));
+    buttonsTheme["::hover:border-radius"] = new QChooseNumberBox(buttonStyle->GetPropereties("::hover", "border-radius"));
+    buttonsTheme["::hover:border-width"] = new QChooseNumberBox(buttonStyle->GetPropereties("::hover", "border-width"));
+    buttonsTheme["::hover:border-color"] = new QChooseColorButton(buttonStyle->GetPropereties("::hover", "border-color"));
+    buttonsTheme["::hover:color"] = new QChooseColorButton(buttonStyle->GetPropereties("::hover", "color"));
 
     QVBoxLayout *buttonLayout = new QVBoxLayout;
     buttonLayout->addLayout(CreateOptionLine("Background color", (QChooseColorButton *)buttonsTheme[":background"]));
@@ -85,14 +91,15 @@ QWidget *SettingsForm::CreateForm()
     buttonLayout->addLayout(CreateOptionLine("Border-color", (QChooseColorButton *)buttonsTheme[":border-color"]));
     buttonLayout->addLayout(CreateOptionLine("Text color", (QChooseColorButton *)buttonsTheme[":color"]));
 
-    buttonLayout->addLayout(CreateOptionLine("Background hover color", (QChooseColorButton *)buttonsTheme["hover:background"]));
-    buttonLayout->addLayout(CreateOptionLine("Border-radius hover", (QChooseNumberBox *)buttonsTheme["hover:border-radius"]));
-    buttonLayout->addLayout(CreateOptionLine("Border-width hover", (QChooseNumberBox *)buttonsTheme["hover:border-width"]));
-    buttonLayout->addLayout(CreateOptionLine("Border-color hover", (QChooseColorButton *)buttonsTheme["hover:border-color"]));
-    buttonLayout->addLayout(CreateOptionLine("Text color hover", (QChooseColorButton *)buttonsTheme["hover:color"]));
+    buttonLayout->addLayout(CreateOptionLine("Background hover color", (QChooseColorButton *)buttonsTheme["::hover:background"]));
+    buttonLayout->addLayout(CreateOptionLine("Border-radius hover", (QChooseNumberBox *)buttonsTheme["::hover:border-radius"]));
+    buttonLayout->addLayout(CreateOptionLine("Border-width hover", (QChooseNumberBox *)buttonsTheme["::hover:border-width"]));
+    buttonLayout->addLayout(CreateOptionLine("Border-color hover", (QChooseColorButton *)buttonsTheme["::hover:border-color"]));
+    buttonLayout->addLayout(CreateOptionLine("Text color hover", (QChooseColorButton *)buttonsTheme["::hover:color"]));
     QWidget *buttonWidget = new QWidget;
     buttonWidget->setLayout(buttonLayout);
     buttonWidget->setStyleSheet(barStyle->GetStyleSheet());
+    allBars.append(buttonWidget);
 
     listNewTheme[":background"] = new QChooseColorButton(listNewStyle->GetPropereties("", "background"));
     listNewTheme[":color"] = new QChooseColorButton(listNewStyle->GetPropereties("", "color"));
@@ -115,6 +122,7 @@ QWidget *SettingsForm::CreateForm()
     QWidget *listNewWidget = new QWidget;
     listNewWidget->setLayout(listNewLayout);
     listNewWidget->setStyleSheet(barStyle->GetStyleSheet());
+    allBars.append(listNewWidget);
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(barWidget);
@@ -140,7 +148,7 @@ QLayout *SettingsForm::CreateOptionLine(QString text, QWidget *parameter)
 
 SettingsForm::~SettingsForm()
 {
-    delete ui;
+
 }
 
 void SettingsForm::LoadSettings()
@@ -184,30 +192,41 @@ void SettingsForm::ApplySettings()
         itBar.next();
         barStyle->SetPropereties(itBar.key(), itBar.value()->GetValue().toString());
     }
-    QFile barThemeFile("/home/qkation/.config/q-ecd/theme/barStyle.css");
+    QFile barThemeFile(PATH + "barStyle.css");
     barThemeFile.open(QIODevice::WriteOnly | QIODevice::Text);
     barThemeFile.write(barStyle->GetStyleSheet().toUtf8());
     barThemeFile.close();
+
     QMapIterator<QString, ISetter *> itButton(buttonsTheme);
     while (itButton.hasNext())
     {
         itButton.next();
         buttonStyle->SetPropereties(itButton.key(), itButton.value()->GetValue().toString());
     }
-    QFile buttonThemeFile("/home/qkation/.config/q-ecd/theme/buttonStyle.css");
+    QFile buttonThemeFile(PATH + "buttonStyle.css");
     buttonThemeFile.open(QIODevice::WriteOnly | QIODevice::Text);
     buttonThemeFile.write(buttonStyle->GetStyleSheet().toUtf8());
     buttonThemeFile.close();
+
     QMapIterator<QString, ISetter *> itListNew(listNewTheme);
     while (itListNew.hasNext())
     {
         itListNew.next();
         listNewStyle->SetPropereties(itListNew.key(), itListNew.value()->GetValue().toString());
     }
-    QFile listNewThemeFile("/home/qkation/.config/q-ecd/theme/listNew.css");
+    QFile listNewThemeFile(PATH + "listNew.css");
     listNewThemeFile.open(QIODevice::WriteOnly | QIODevice::Text);
     listNewThemeFile.write(listNewStyle->GetStyleSheet().toUtf8());
     listNewThemeFile.close();
+
+    this->setStyleSheet("background: " + barStyle->GetPropereties("", "background"));
+    for (QList<QWidget *>::iterator bar = allBars.begin(); bar != allBars.end(); bar++)
+        (*bar)->setStyleSheet(barStyle->GetStyleSheet());
+    for (QList<QWidget *>::iterator button = allButtons.begin(); button != allButtons.end(); button++)
+        (*button)->setStyleSheet(buttonStyle->GetStyleSheet());
+    QStyleSheetString forMainPage(*barStyle);
+    forMainPage.SetPropereties("", "border", "none");
+    formSettings->setStyleSheet(forMainPage.GetStyleSheet());
     emit ReadSettings();
 }
 

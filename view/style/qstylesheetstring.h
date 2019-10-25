@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QLatin1String>
+#include <QRegExp>
 
 class QStyleSheetString
 {

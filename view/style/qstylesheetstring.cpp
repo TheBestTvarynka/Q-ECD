@@ -72,15 +72,17 @@ void QStyleSheetString::SetPropereties(QString state, QString propereties, QStri
     int start = style_sheet.indexOf(name+state);
     if (start == -1)
     {
-            CreateState(state, propereties, value);
-            return;
+        CreateState(state, propereties, value);
+        return;
     }
     int range = style_sheet.indexOf("}", start);
-    int prop_loc = style_sheet.indexOf(propereties, start);
+
+    QRegExp regular(QString("[{};\n]") + propereties + QString(":"));
+    int prop_loc = style_sheet.indexOf(regular, start);
     if (prop_loc == -1 || prop_loc > range)
     {
-            CreatePropereties(start, propereties, value);
-            return;
+        CreatePropereties(start, propereties, value);
+        return;
     }
     int value_loc = style_sheet.indexOf(":", prop_loc) + 2;
     int value_end = style_sheet.indexOf(";", value_loc);
@@ -98,7 +100,7 @@ void QStyleSheetString::SetPropereties(QString propereties, QString value)
     }
     if (p == -1)
     {
-            return;
+        return;
     }
     QString state = propereties.left(p);
     propereties = propereties.mid(p+1);
@@ -118,7 +120,9 @@ QString QStyleSheetString::GetPropereties(QString state, QString propereties)
             return "";
     }
     int range = style_sheet.indexOf("}", start);
-    int prop_loc = style_sheet.indexOf(propereties, start);
+
+    QRegExp regular(QString("[{};\n]") + propereties + QString(":"));
+    int prop_loc = style_sheet.indexOf(regular, start);
     if (prop_loc == -1 || prop_loc > range)
     {
             return "";

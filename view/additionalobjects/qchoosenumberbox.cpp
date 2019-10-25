@@ -5,7 +5,6 @@ QChooseNumberBox::QChooseNumberBox(QVariant startValue) : ISetter(startValue)
 {
     this->setMinimum(0);
     this->setSingleStep(1);
-    qDebug() << startValue.toString();
     this->setValue(startValue.toString().toInt());
     this->setFixedHeight(30);
     connect(this, SIGNAL(valueChanged(int)), this, SLOT(NumberEdited(int)));

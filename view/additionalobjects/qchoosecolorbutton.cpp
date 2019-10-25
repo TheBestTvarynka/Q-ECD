@@ -1,4 +1,5 @@
 #include "qchoosecolorbutton.h"
+#include <QDebug>
 
 QChooseColorButton::QChooseColorButton(QVariant startValue) : ISetter(startValue)
 {
